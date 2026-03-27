@@ -1,0 +1,184 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../generated/prisma"
+  previewFeatures = ["driverAdapters"] // Add this to enable adapter usage
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  role         UserRole
+  teamId       String?
+  team         Team?    @relation(fields: [teamId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  notes        Note[]
+
+  @@map("users")
+}
+
+model Team {
+  id          String    @id @default(cuid())
+  name        String
+  sport       String
+  institution String?
+  users       User[]
+  athletes    Athlete[]
+  events      Event[]
+  createdAt   DateTime  @default(now())
+
+  @@map("teams")
+}
+
+model Athlete {
+  id                   String            @id @default(cuid())
+  teamId               String
+  name                 String
+  jerseyNumber         Int?
+  height               Float?
+  weight               Float?
+  classYear            String?
+  sport                String?
+  events               String[]
+  eventRecords         Json? // New: { "100m": { personalBest: 10.5, historical: [10.7, 10.6] } }
+  gpa                  Float?
+  academicStanding     AcademicStanding?
+  eligibilityYearsLeft Float?
+  recruitingStatus     String?
+  contactInfo          String?
+  transferProbability  Float?
+  medicalStatus        MedicalStatus?
+  complianceStatus     ComplianceStatus?
+  riskFlag             RiskFlag?
+  team                 Team              @relation(fields: [teamId], references: [id])
+  academicRecords      AcademicRecord[]
+  healthRecords        HealthRecord[]
+  notes                Note[]
+
+  @@index([teamId])
+  @@map("athletes")
+}
+
+model AcademicRecord {
+  id                String            @id @default(cuid())
+  athleteId         String
+  semester          String
+  finalScore        Float?
+  termGpa           Float?
+  academicStanding  AcademicStanding?
+  complianceStatus  ComplianceStatus?
+  attendancePercent Float?
+  tutoringHours     Float?
+  advisorNotes      String?
+  createdAt         DateTime          @default(now())
+  athlete           Athlete           @relation(fields: [athleteId], references: [id])
+
+  @@index([athleteId])
+  @@index([semester, academicStanding])
+  @@map("academic_records")
+}
+
+model HealthRecord {
+  id                    String         @id @default(cuid())
+  athleteId             String
+  injuryType            String?
+  injuryDate            DateTime?
+  status                MedicalStatus?
+  rehabSessions         Int?
+  appointmentAttendance Float?
+  notes                 String?
+  createdAt             DateTime       @default(now())
+  athlete               Athlete        @relation(fields: [athleteId], references: [id])
+
+  @@index([athleteId])
+  @@map("health_records")
+}
+
+model Event {
+  id              String     @id @default(cuid())
+  teamId          String
+  type            EventType
+  title           String
+  description     String?
+  startTime       DateTime
+  endTime         DateTime
+  location        String?
+  opponent        String?
+  group           EventGroup
+  createdByUserId String?
+  createdAt       DateTime   @default(now())
+  team            Team       @relation(fields: [teamId], references: [id])
+
+  @@index([teamId, startTime])
+  @@map("events")
+}
+
+model Note {
+  id        String       @id @default(cuid())
+  athleteId String?
+  userId    String
+  category  NoteCategory
+  body      String
+  createdAt DateTime     @default(now())
+  athlete   Athlete?     @relation(fields: [athleteId], references: [id])
+  user      User         @relation(fields: [userId], references: [id])
+
+  @@index([athleteId])
+  @@map("notes")
+}
+
+enum UserRole {
+  AD
+  COACH
+}
+
+enum AcademicStanding {
+  GOOD
+  NEUTRAL
+  BAD
+}
+
+enum MedicalStatus {
+  CLEARED
+  LIMITED
+  NOT_CLEARED
+}
+
+enum ComplianceStatus {
+  COMPLIANT
+  WARNING
+  NON_COMPLIANT
+}
+
+enum RiskFlag {
+  HIGH
+  MODERATE
+  LOW
+  NONE
+}
+
+enum EventType {
+  GAME
+  PRACTICE
+  MEETING
+  MEDICAL
+  ACADEMIC
+  RECRUITING
+}
+
+enum EventGroup {
+  TEAM
+  PERSONAL
+}
+
+enum NoteCategory {
+  ACADEMIC
+  MEDICAL
+  GENERAL
+}
