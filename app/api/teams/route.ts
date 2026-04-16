@@ -1,18 +1,43 @@
-// app/api/teams/route.ts
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
 import { auth } from "@/app/lib/auth";
-import { requireRole } from "@/lib/rbac";
+import { getAccessibleTeamIds, type SessionUser } from "@/lib/access";
+import { handleApiError } from "@/lib/api";
+import prisma from "@/lib/prisma";
+import { requireSession } from "@/lib/rbac";
 
-export async function GET(request: Request) {
-  const session = await auth();
-  const guardError = requireRole(session, "COACH", "AD");
-  if (guardError) return guardError;
+function getSessionUser(session: { user?: SessionUser } | null): SessionUser {
+  const user = session?.user;
+  if (!user) {
+    throw new Error("Missing session user.");
+  }
 
-  const teams = await prisma.team.findMany({
-    orderBy: { name: "asc" },
-    select: { id: true, name: true, sport: true },
-  });
+  return {
+    id: user.id,
+    role: user.role,
+  };
+}
 
-  return NextResponse.json(teams);
+export async function GET() {
+  try {
+    const session = await auth();
+    const guardError = requireSession(session);
+    if (guardError) return guardError;
+
+    const user = getSessionUser(session);
+    const teamIds = await getAccessibleTeamIds(user);
+
+    const teams = await prisma.team.findMany({
+      where: {
+        id: {
+          in: teamIds,
+        },
+      },
+      orderBy: { name: "asc" },
+      select: { id: true, name: true, sport: true },
+    });
+
+    return NextResponse.json(teams);
+  } catch (error) {
+    return handleApiError(error);
+  }
 }
