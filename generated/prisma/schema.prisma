@@ -1,7 +1,6 @@
 generator client {
-  provider        = "prisma-client-js"
-  output          = "../generated/prisma"
-  previewFeatures = ["driverAdapters"] // Add this to enable adapter usage
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -10,28 +9,34 @@ datasource db {
 }
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
-  passwordHash String
-  role         UserRole
-  teamId       String?
-  team         Team?    @relation(fields: [teamId], references: [id])
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  notes        Note[]
+  id                      String            @id @default(cuid())
+  email                   String            @unique
+  passwordHash            String
+  role                    UserRole
+  teams                   String[] // Array of team IDs (supports multiple teams for coaches)
+  athletes                Athlete[]
+  createdWorkoutTemplates WorkoutTemplate[]
+  createdWorkoutInstances WorkoutInstance[]
+  createdMeetEntries      MeetEntry[]
+  journals                AthleteJournal[]
+  createdAt               DateTime          @default(now())
+  updatedAt               DateTime          @updatedAt
+  notes                   Note[]
+  userSettings            UserSettings?
 
   @@map("users")
 }
 
 model Team {
-  id          String    @id @default(cuid())
-  name        String
-  sport       String
-  institution String?
-  users       User[]
-  athletes    Athlete[]
-  events      Event[]
-  createdAt   DateTime  @default(now())
+  id               String            @id @default(cuid())
+  name             String
+  sport            Sport
+  institution      String?
+  athletes         Athlete[]
+  events           Event[]
+  workoutTemplates WorkoutTemplate[]
+  meetEntries      MeetEntry[]
+  createdAt        DateTime          @default(now())
 
   @@map("teams")
 }
@@ -45,6 +50,8 @@ model Athlete {
   weight               Float?
   classYear            String?
   sport                String?
+  userId               String?
+  user                 User?             @relation(fields: [userId], references: [id])
   events               String[]
   eventRecords         Json? // New: { "100m": { personalBest: 10.5, historical: [10.7, 10.6] } }
   gpa                  Float?
@@ -60,6 +67,11 @@ model Athlete {
   academicRecords      AcademicRecord[]
   healthRecords        HealthRecord[]
   notes                Note[]
+  workoutInstances     WorkoutInstance[]
+  eventRankings        EventRanking[]
+  personalRecords      PersonalRecord[]
+  meetEntries          MeetEntry[]
+  journals             AthleteJournal[]
 
   @@index([teamId])
   @@map("athletes")
@@ -133,9 +145,153 @@ model Note {
   @@map("notes")
 }
 
+model WorkoutTemplate {
+  id              String            @id @default(cuid())
+  teamId          String
+  createdByUserId String?
+  name            String
+  description     String?
+  sport           Sport
+  params          Json?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  team            Team              @relation(fields: [teamId], references: [id])
+  createdBy       User?             @relation(fields: [createdByUserId], references: [id])
+  metrics         WorkoutMetric[]
+  instances       WorkoutInstance[]
+
+  @@index([teamId, sport])
+  @@map("workout_templates")
+}
+
+model WorkoutMetric {
+  id                String           @id @default(cuid())
+  workoutTemplateId String
+  name              String
+  targetValue       Float?
+  unit              MeasurementUnit?
+  params            Json?
+  createdAt         DateTime         @default(now())
+  workoutTemplate   WorkoutTemplate  @relation(fields: [workoutTemplateId], references: [id])
+
+  @@index([workoutTemplateId])
+  @@map("workout_metrics")
+}
+
+model WorkoutInstance {
+  id                String           @id @default(cuid())
+  workoutTemplateId String?
+  athleteId         String
+  createdByUserId   String?
+  performedAt       DateTime         @default(now())
+  notes             String?
+  results           Json?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  workoutTemplate   WorkoutTemplate? @relation(fields: [workoutTemplateId], references: [id])
+  athlete           Athlete          @relation(fields: [athleteId], references: [id])
+  createdBy         User?            @relation(fields: [createdByUserId], references: [id])
+
+  @@index([athleteId])
+  @@index([workoutTemplateId])
+  @@map("workout_instances")
+}
+
+model RankingSource {
+  id            String         @id @default(cuid())
+  name          String
+  type          String?
+  details       Json?
+  createdAt     DateTime       @default(now())
+  eventRankings EventRanking[]
+
+  @@map("ranking_sources")
+}
+
+model EventRanking {
+  id              String        @id @default(cuid())
+  athleteId       String
+  rankingSourceId String
+  eventName       String
+  rank            Int
+  region          String?
+  score           Float?
+  recordedAt      DateTime      @default(now())
+  athlete         Athlete       @relation(fields: [athleteId], references: [id])
+  rankingSource   RankingSource @relation(fields: [rankingSourceId], references: [id])
+
+  @@index([athleteId])
+  @@index([rankingSourceId])
+  @@map("event_rankings")
+}
+
+model PersonalRecord {
+  id         String          @id @default(cuid())
+  athleteId  String
+  eventName  String
+  result     Float
+  unit       MeasurementUnit
+  recordedAt DateTime        @default(now())
+  notes      String?
+  athlete    Athlete         @relation(fields: [athleteId], references: [id])
+
+  @@index([athleteId])
+  @@map("personal_records")
+}
+
+model MeetEntry {
+  id              String   @id @default(cuid())
+  athleteId       String
+  teamId          String
+  eventName       String
+  heat            String?
+  lane            String?
+  status          String?
+  importedFrom    String?
+  createdByUserId String?
+  createdAt       DateTime @default(now())
+  athlete         Athlete  @relation(fields: [athleteId], references: [id])
+  team            Team     @relation(fields: [teamId], references: [id])
+  createdBy       User?    @relation(fields: [createdByUserId], references: [id])
+
+  @@index([teamId, athleteId])
+  @@map("meet_entries")
+}
+
+model AthleteJournal {
+  id         String   @id @default(cuid())
+  athleteId  String
+  authorId   String
+  authorRole UserRole
+  title      String?
+  body       String
+  visibility String?  @default("PRIVATE")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  athlete    Athlete  @relation(fields: [athleteId], references: [id])
+  author     User     @relation(fields: [authorId], references: [id])
+
+  @@index([athleteId, authorId])
+  @@map("athlete_journals")
+}
+
+model UserSettings {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id])
+  gpaThresholds   Json? // e.g., { ineligible: 2.0, atRisk: 2.5 }
+  medicalStatuses Json? // e.g., { attendanceThreshold: 80 }
+  defaultFilters  Json? // e.g., { classYear: ["Senior"], riskFlag: ["HIGH"] }
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("user_settings")
+}
+
 enum UserRole {
   AD
   COACH
+  ATHLETE
 }
 
 enum AcademicStanding {
@@ -181,4 +337,20 @@ enum NoteCategory {
   ACADEMIC
   MEDICAL
   GENERAL
+}
+
+enum Sport {
+  TRACK_AND_FIELD
+  FOOTBALL
+  SOCCER
+  GENERAL
+}
+
+enum MeasurementUnit {
+  METERS
+  KILOMETERS
+  YARDS
+  SECONDS
+  MINUTES
+  HOURS
 }

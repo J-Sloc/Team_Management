@@ -2,28 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 
 const {
-  PrismaClientKnownRequestError,
-  PrismaClientUnknownRequestError,
-  PrismaClientRustPanicError,
-  PrismaClientInitializationError,
-  PrismaClientValidationError,
-  getPrismaClient,
-  sqltag,
-  empty,
-  join,
-  raw,
-  skip,
   Decimal,
-  Debug,
   objectEnumValues,
   makeStrictEnum,
-  Extensions,
-  warnOnce,
-  defineDmmfProperty,
   Public,
   getRuntime,
-  createParam,
-} = require('./runtime/wasm.js')
+  skip
+} = require('./runtime/index-browser.js')
 
 
 const Prisma = {}
@@ -40,27 +25,71 @@ Prisma.prismaVersion = {
   engine: "acc0b9dd43eb689cbd20c9470515d719db10d0b0"
 }
 
-Prisma.PrismaClientKnownRequestError = PrismaClientKnownRequestError;
-Prisma.PrismaClientUnknownRequestError = PrismaClientUnknownRequestError
-Prisma.PrismaClientRustPanicError = PrismaClientRustPanicError
-Prisma.PrismaClientInitializationError = PrismaClientInitializationError
-Prisma.PrismaClientValidationError = PrismaClientValidationError
+Prisma.PrismaClientKnownRequestError = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`PrismaClientKnownRequestError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)};
+Prisma.PrismaClientUnknownRequestError = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`PrismaClientUnknownRequestError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+Prisma.PrismaClientRustPanicError = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`PrismaClientRustPanicError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+Prisma.PrismaClientInitializationError = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`PrismaClientInitializationError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+Prisma.PrismaClientValidationError = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`PrismaClientValidationError is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
 Prisma.Decimal = Decimal
 
 /**
  * Re-export of sql-template-tag
  */
-Prisma.sql = sqltag
-Prisma.empty = empty
-Prisma.join = join
-Prisma.raw = raw
+Prisma.sql = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`sqltag is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+Prisma.empty = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`empty is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+Prisma.join = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`join is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+Prisma.raw = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`raw is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
 Prisma.validator = Public.validator
 
 /**
 * Extensions
 */
-Prisma.getExtensionContext = Extensions.getExtensionContext
-Prisma.defineExtension = Extensions.defineExtension
+Prisma.getExtensionContext = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`Extensions.getExtensionContext is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
+Prisma.defineExtension = () => {
+  const runtimeName = getRuntime().prettyName;
+  throw new Error(`Extensions.defineExtension is unable to run in this browser environment, or has been bundled for the browser (running in ${runtimeName}).
+In case this error is unexpected for you, please report it in https://pris.ly/prisma-prisma-bug-report`,
+)}
 
 /**
  * Shorthand utilities for JSON filtering
@@ -77,11 +106,10 @@ Prisma.NullTypes = {
 
 
 
-
-
 /**
  * Enums
  */
+
 exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   ReadUncommitted: 'ReadUncommitted',
   ReadCommitted: 'ReadCommitted',
@@ -94,7 +122,7 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   passwordHash: 'passwordHash',
   role: 'role',
-  teamId: 'teamId',
+  teams: 'teams',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -116,6 +144,7 @@ exports.Prisma.AthleteScalarFieldEnum = {
   weight: 'weight',
   classYear: 'classYear',
   sport: 'sport',
+  userId: 'userId',
   events: 'events',
   eventRecords: 'eventRecords',
   gpa: 'gpa',
@@ -179,6 +208,104 @@ exports.Prisma.NoteScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.WorkoutTemplateScalarFieldEnum = {
+  id: 'id',
+  teamId: 'teamId',
+  createdByUserId: 'createdByUserId',
+  name: 'name',
+  description: 'description',
+  sport: 'sport',
+  params: 'params',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.WorkoutMetricScalarFieldEnum = {
+  id: 'id',
+  workoutTemplateId: 'workoutTemplateId',
+  name: 'name',
+  targetValue: 'targetValue',
+  unit: 'unit',
+  params: 'params',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.WorkoutInstanceScalarFieldEnum = {
+  id: 'id',
+  workoutTemplateId: 'workoutTemplateId',
+  athleteId: 'athleteId',
+  createdByUserId: 'createdByUserId',
+  performedAt: 'performedAt',
+  notes: 'notes',
+  results: 'results',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.RankingSourceScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  type: 'type',
+  details: 'details',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.EventRankingScalarFieldEnum = {
+  id: 'id',
+  athleteId: 'athleteId',
+  rankingSourceId: 'rankingSourceId',
+  eventName: 'eventName',
+  rank: 'rank',
+  region: 'region',
+  score: 'score',
+  recordedAt: 'recordedAt'
+};
+
+exports.Prisma.PersonalRecordScalarFieldEnum = {
+  id: 'id',
+  athleteId: 'athleteId',
+  eventName: 'eventName',
+  result: 'result',
+  unit: 'unit',
+  recordedAt: 'recordedAt',
+  notes: 'notes'
+};
+
+exports.Prisma.MeetEntryScalarFieldEnum = {
+  id: 'id',
+  athleteId: 'athleteId',
+  teamId: 'teamId',
+  eventName: 'eventName',
+  heat: 'heat',
+  lane: 'lane',
+  status: 'status',
+  importedFrom: 'importedFrom',
+  createdByUserId: 'createdByUserId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AthleteJournalScalarFieldEnum = {
+  id: 'id',
+  athleteId: 'athleteId',
+  authorId: 'authorId',
+  authorRole: 'authorRole',
+  title: 'title',
+  body: 'body',
+  visibility: 'visibility',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserSettingsScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  gpaThresholds: 'gpaThresholds',
+  medicalStatuses: 'medicalStatuses',
+  defaultFilters: 'defaultFilters',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -206,7 +333,15 @@ exports.Prisma.JsonNullValueFilter = {
 };
 exports.UserRole = exports.$Enums.UserRole = {
   AD: 'AD',
-  COACH: 'COACH'
+  COACH: 'COACH',
+  ATHLETE: 'ATHLETE'
+};
+
+exports.Sport = exports.$Enums.Sport = {
+  TRACK_AND_FIELD: 'TRACK_AND_FIELD',
+  FOOTBALL: 'FOOTBALL',
+  SOCCER: 'SOCCER',
+  GENERAL: 'GENERAL'
 };
 
 exports.AcademicStanding = exports.$Enums.AcademicStanding = {
@@ -254,6 +389,15 @@ exports.NoteCategory = exports.$Enums.NoteCategory = {
   GENERAL: 'GENERAL'
 };
 
+exports.MeasurementUnit = exports.$Enums.MeasurementUnit = {
+  METERS: 'METERS',
+  KILOMETERS: 'KILOMETERS',
+  YARDS: 'YARDS',
+  SECONDS: 'SECONDS',
+  MINUTES: 'MINUTES',
+  HOURS: 'HOURS'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Team: 'Team',
@@ -261,85 +405,45 @@ exports.Prisma.ModelName = {
   AcademicRecord: 'AcademicRecord',
   HealthRecord: 'HealthRecord',
   Event: 'Event',
-  Note: 'Note'
+  Note: 'Note',
+  WorkoutTemplate: 'WorkoutTemplate',
+  WorkoutMetric: 'WorkoutMetric',
+  WorkoutInstance: 'WorkoutInstance',
+  RankingSource: 'RankingSource',
+  EventRanking: 'EventRanking',
+  PersonalRecord: 'PersonalRecord',
+  MeetEntry: 'MeetEntry',
+  AthleteJournal: 'AthleteJournal',
+  UserSettings: 'UserSettings'
 };
+
 /**
- * Create the Client
+ * This is a stub Prisma Client that will error at runtime if called.
  */
-const config = {
-  "generator": {
-    "name": "client",
-    "provider": {
-      "fromEnvVar": null,
-      "value": "prisma-client-js"
-    },
-    "output": {
-      "value": "/Users/jaden/team_management/generated/prisma",
-      "fromEnvVar": null
-    },
-    "config": {
-      "engineType": "library"
-    },
-    "binaryTargets": [
-      {
-        "fromEnvVar": null,
-        "value": "darwin",
-        "native": true
-      }
-    ],
-    "previewFeatures": [
-      "driverAdapters"
-    ],
-    "sourceFilePath": "/Users/jaden/team_management/prisma/schema.prisma",
-    "isCustomOutput": true
-  },
-  "relativeEnvPaths": {
-    "rootEnvPath": null
-  },
-  "relativePath": "../../prisma",
-  "clientVersion": "6.3.0",
-  "engineVersion": "acc0b9dd43eb689cbd20c9470515d719db10d0b0",
-  "datasourceNames": [
-    "db"
-  ],
-  "activeProvider": "postgresql",
-  "inlineDatasources": {
-    "db": {
-      "url": {
-        "fromEnvVar": "DATABASE_URL",
-        "value": null
-      }
-    }
-  },
-  "inlineSchema": "generator client {\n  provider        = \"prisma-client-js\"\n  output          = \"../generated/prisma\"\n  previewFeatures = [\"driverAdapters\"] // Add this to enable adapter usage\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id           String   @id @default(cuid())\n  email        String   @unique\n  passwordHash String\n  role         UserRole\n  teamId       String?\n  team         Team?    @relation(fields: [teamId], references: [id])\n  createdAt    DateTime @default(now())\n  updatedAt    DateTime @updatedAt\n  notes        Note[]\n\n  @@map(\"users\")\n}\n\nmodel Team {\n  id          String    @id @default(cuid())\n  name        String\n  sport       String\n  institution String?\n  users       User[]\n  athletes    Athlete[]\n  events      Event[]\n  createdAt   DateTime  @default(now())\n\n  @@map(\"teams\")\n}\n\nmodel Athlete {\n  id                   String            @id @default(cuid())\n  teamId               String\n  name                 String\n  jerseyNumber         Int?\n  height               Float?\n  weight               Float?\n  classYear            String?\n  sport                String?\n  events               String[]\n  eventRecords         Json? // New: { \"100m\": { personalBest: 10.5, historical: [10.7, 10.6] } }\n  gpa                  Float?\n  academicStanding     AcademicStanding?\n  eligibilityYearsLeft Float?\n  recruitingStatus     String?\n  contactInfo          String?\n  transferProbability  Float?\n  medicalStatus        MedicalStatus?\n  complianceStatus     ComplianceStatus?\n  riskFlag             RiskFlag?\n  team                 Team              @relation(fields: [teamId], references: [id])\n  academicRecords      AcademicRecord[]\n  healthRecords        HealthRecord[]\n  notes                Note[]\n\n  @@index([teamId])\n  @@map(\"athletes\")\n}\n\nmodel AcademicRecord {\n  id                String            @id @default(cuid())\n  athleteId         String\n  semester          String\n  finalScore        Float?\n  termGpa           Float?\n  academicStanding  AcademicStanding?\n  complianceStatus  ComplianceStatus?\n  attendancePercent Float?\n  tutoringHours     Float?\n  advisorNotes      String?\n  createdAt         DateTime          @default(now())\n  athlete           Athlete           @relation(fields: [athleteId], references: [id])\n\n  @@index([athleteId])\n  @@index([semester, academicStanding])\n  @@map(\"academic_records\")\n}\n\nmodel HealthRecord {\n  id                    String         @id @default(cuid())\n  athleteId             String\n  injuryType            String?\n  injuryDate            DateTime?\n  status                MedicalStatus?\n  rehabSessions         Int?\n  appointmentAttendance Float?\n  notes                 String?\n  createdAt             DateTime       @default(now())\n  athlete               Athlete        @relation(fields: [athleteId], references: [id])\n\n  @@index([athleteId])\n  @@map(\"health_records\")\n}\n\nmodel Event {\n  id              String     @id @default(cuid())\n  teamId          String\n  type            EventType\n  title           String\n  description     String?\n  startTime       DateTime\n  endTime         DateTime\n  location        String?\n  opponent        String?\n  group           EventGroup\n  createdByUserId String?\n  createdAt       DateTime   @default(now())\n  team            Team       @relation(fields: [teamId], references: [id])\n\n  @@index([teamId, startTime])\n  @@map(\"events\")\n}\n\nmodel Note {\n  id        String       @id @default(cuid())\n  athleteId String?\n  userId    String\n  category  NoteCategory\n  body      String\n  createdAt DateTime     @default(now())\n  athlete   Athlete?     @relation(fields: [athleteId], references: [id])\n  user      User         @relation(fields: [userId], references: [id])\n\n  @@index([athleteId])\n  @@map(\"notes\")\n}\n\nenum UserRole {\n  AD\n  COACH\n}\n\nenum AcademicStanding {\n  GOOD\n  NEUTRAL\n  BAD\n}\n\nenum MedicalStatus {\n  CLEARED\n  LIMITED\n  NOT_CLEARED\n}\n\nenum ComplianceStatus {\n  COMPLIANT\n  WARNING\n  NON_COMPLIANT\n}\n\nenum RiskFlag {\n  HIGH\n  MODERATE\n  LOW\n  NONE\n}\n\nenum EventType {\n  GAME\n  PRACTICE\n  MEETING\n  MEDICAL\n  ACADEMIC\n  RECRUITING\n}\n\nenum EventGroup {\n  TEAM\n  PERSONAL\n}\n\nenum NoteCategory {\n  ACADEMIC\n  MEDICAL\n  GENERAL\n}\n",
-  "inlineSchemaHash": "444ad06bfda48358d8236d3338fae93daf8f5ef0e3ee7dd4cc0aec13e7412023",
-  "copyEngine": true
-}
-config.dirname = '/'
+class PrismaClient {
+  constructor() {
+    return new Proxy(this, {
+      get(target, prop) {
+        let message
+        const runtime = getRuntime()
+        if (runtime.isEdge) {
+          message = `PrismaClient is not configured to run in ${runtime.prettyName}. In order to run Prisma Client on edge runtime, either:
+- Use Prisma Accelerate: https://pris.ly/d/accelerate
+- Use Driver Adapters: https://pris.ly/d/driver-adapters
+`;
+        } else {
+          message = 'PrismaClient is unable to run in this browser environment, or has been bundled for the browser (running in `' + runtime.prettyName + '`).'
+        }
+        
+        message += `
+If this is unexpected, please open an issue: https://pris.ly/prisma-prisma-bug-report`
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"passwordHash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"UserRole\"},{\"name\":\"teamId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"team\",\"kind\":\"object\",\"type\":\"Team\",\"relationName\":\"TeamToUser\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"notes\",\"kind\":\"object\",\"type\":\"Note\",\"relationName\":\"NoteToUser\"}],\"dbName\":\"users\"},\"Team\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sport\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"institution\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"users\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"TeamToUser\"},{\"name\":\"athletes\",\"kind\":\"object\",\"type\":\"Athlete\",\"relationName\":\"AthleteToTeam\"},{\"name\":\"events\",\"kind\":\"object\",\"type\":\"Event\",\"relationName\":\"EventToTeam\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"teams\"},\"Athlete\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"teamId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"jerseyNumber\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"height\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"weight\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"classYear\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"sport\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"events\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"eventRecords\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"gpa\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"academicStanding\",\"kind\":\"enum\",\"type\":\"AcademicStanding\"},{\"name\":\"eligibilityYearsLeft\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"recruitingStatus\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"contactInfo\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"transferProbability\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"medicalStatus\",\"kind\":\"enum\",\"type\":\"MedicalStatus\"},{\"name\":\"complianceStatus\",\"kind\":\"enum\",\"type\":\"ComplianceStatus\"},{\"name\":\"riskFlag\",\"kind\":\"enum\",\"type\":\"RiskFlag\"},{\"name\":\"team\",\"kind\":\"object\",\"type\":\"Team\",\"relationName\":\"AthleteToTeam\"},{\"name\":\"academicRecords\",\"kind\":\"object\",\"type\":\"AcademicRecord\",\"relationName\":\"AcademicRecordToAthlete\"},{\"name\":\"healthRecords\",\"kind\":\"object\",\"type\":\"HealthRecord\",\"relationName\":\"AthleteToHealthRecord\"},{\"name\":\"notes\",\"kind\":\"object\",\"type\":\"Note\",\"relationName\":\"AthleteToNote\"}],\"dbName\":\"athletes\"},\"AcademicRecord\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"athleteId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"semester\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"finalScore\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"termGpa\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"academicStanding\",\"kind\":\"enum\",\"type\":\"AcademicStanding\"},{\"name\":\"complianceStatus\",\"kind\":\"enum\",\"type\":\"ComplianceStatus\"},{\"name\":\"attendancePercent\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"tutoringHours\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"advisorNotes\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"athlete\",\"kind\":\"object\",\"type\":\"Athlete\",\"relationName\":\"AcademicRecordToAthlete\"}],\"dbName\":\"academic_records\"},\"HealthRecord\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"athleteId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"injuryType\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"injuryDate\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"status\",\"kind\":\"enum\",\"type\":\"MedicalStatus\"},{\"name\":\"rehabSessions\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"appointmentAttendance\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"notes\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"athlete\",\"kind\":\"object\",\"type\":\"Athlete\",\"relationName\":\"AthleteToHealthRecord\"}],\"dbName\":\"health_records\"},\"Event\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"teamId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"EventType\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"startTime\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"endTime\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"location\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"opponent\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"group\",\"kind\":\"enum\",\"type\":\"EventGroup\"},{\"name\":\"createdByUserId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"team\",\"kind\":\"object\",\"type\":\"Team\",\"relationName\":\"EventToTeam\"}],\"dbName\":\"events\"},\"Note\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"athleteId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category\",\"kind\":\"enum\",\"type\":\"NoteCategory\"},{\"name\":\"body\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"athlete\",\"kind\":\"object\",\"type\":\"Athlete\",\"relationName\":\"AthleteToNote\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"NoteToUser\"}],\"dbName\":\"notes\"}},\"enums\":{},\"types\":{}}")
-defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
-config.engineWasm = {
-  getRuntime: () => require('./query_engine_bg.js'),
-  getQueryEngineWasmModule: async () => {
-    const loader = (await import('#wasm-engine-loader')).default
-    const engine = (await loader).default
-    return engine 
+        throw new Error(message)
+      }
+    })
   }
 }
-config.compilerWasm = undefined
 
-config.injectableEdgeEnv = () => ({
-  parsed: {
-    DATABASE_URL: typeof globalThis !== 'undefined' && globalThis['DATABASE_URL'] || typeof process !== 'undefined' && process.env && process.env.DATABASE_URL || undefined
-  }
-})
-
-if (typeof globalThis !== 'undefined' && globalThis['DEBUG'] || typeof process !== 'undefined' && process.env && process.env.DEBUG || undefined) {
-  Debug.enable(typeof globalThis !== 'undefined' && globalThis['DEBUG'] || typeof process !== 'undefined' && process.env && process.env.DEBUG || undefined)
-}
-
-const PrismaClient = getPrismaClient(config)
 exports.PrismaClient = PrismaClient
-Object.assign(exports, Prisma)
 
+Object.assign(exports, Prisma)

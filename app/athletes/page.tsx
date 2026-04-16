@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
+import { usePagination } from "@/lib/hooks/usePagination";
 
 const commonInputClass = "input text-black placeholder:text-slate-400 focus:text-black";
 
@@ -58,6 +59,7 @@ export default function AthletesPage() {
   const [loading, setLoading] = useState(false);
   const [view, setView] = useState<"table" | "cards">("table");
   const [unitSystem, setUnitSystem] = useState<"metric" | "imperial">("imperial");
+  usePagination(10);
 
   useEffect(() => {
     if (status === "loading") return;
@@ -248,7 +250,7 @@ export default function AthletesPage() {
         <div className="text-center">
           <h1 className="text-3xl font-semibold text-slate-900 mb-2">403 - Forbidden</h1>
           <p className="text-slate-600 mb-4">You do not have permission to access this page.</p>
-          <Link href="/" className="text-blue-600 hover:underline">← Go back home</Link>
+          <Link href="/overview" className="text-blue-600 hover:underline">← Back to Dashboard</Link>
         </div>
       </main>
     );

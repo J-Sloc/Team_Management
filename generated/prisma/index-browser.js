@@ -122,7 +122,7 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   passwordHash: 'passwordHash',
   role: 'role',
-  teamId: 'teamId',
+  teams: 'teams',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -144,6 +144,7 @@ exports.Prisma.AthleteScalarFieldEnum = {
   weight: 'weight',
   classYear: 'classYear',
   sport: 'sport',
+  userId: 'userId',
   events: 'events',
   eventRecords: 'eventRecords',
   gpa: 'gpa',
@@ -207,6 +208,104 @@ exports.Prisma.NoteScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.WorkoutTemplateScalarFieldEnum = {
+  id: 'id',
+  teamId: 'teamId',
+  createdByUserId: 'createdByUserId',
+  name: 'name',
+  description: 'description',
+  sport: 'sport',
+  params: 'params',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.WorkoutMetricScalarFieldEnum = {
+  id: 'id',
+  workoutTemplateId: 'workoutTemplateId',
+  name: 'name',
+  targetValue: 'targetValue',
+  unit: 'unit',
+  params: 'params',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.WorkoutInstanceScalarFieldEnum = {
+  id: 'id',
+  workoutTemplateId: 'workoutTemplateId',
+  athleteId: 'athleteId',
+  createdByUserId: 'createdByUserId',
+  performedAt: 'performedAt',
+  notes: 'notes',
+  results: 'results',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.RankingSourceScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  type: 'type',
+  details: 'details',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.EventRankingScalarFieldEnum = {
+  id: 'id',
+  athleteId: 'athleteId',
+  rankingSourceId: 'rankingSourceId',
+  eventName: 'eventName',
+  rank: 'rank',
+  region: 'region',
+  score: 'score',
+  recordedAt: 'recordedAt'
+};
+
+exports.Prisma.PersonalRecordScalarFieldEnum = {
+  id: 'id',
+  athleteId: 'athleteId',
+  eventName: 'eventName',
+  result: 'result',
+  unit: 'unit',
+  recordedAt: 'recordedAt',
+  notes: 'notes'
+};
+
+exports.Prisma.MeetEntryScalarFieldEnum = {
+  id: 'id',
+  athleteId: 'athleteId',
+  teamId: 'teamId',
+  eventName: 'eventName',
+  heat: 'heat',
+  lane: 'lane',
+  status: 'status',
+  importedFrom: 'importedFrom',
+  createdByUserId: 'createdByUserId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AthleteJournalScalarFieldEnum = {
+  id: 'id',
+  athleteId: 'athleteId',
+  authorId: 'authorId',
+  authorRole: 'authorRole',
+  title: 'title',
+  body: 'body',
+  visibility: 'visibility',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserSettingsScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  gpaThresholds: 'gpaThresholds',
+  medicalStatuses: 'medicalStatuses',
+  defaultFilters: 'defaultFilters',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -234,7 +333,15 @@ exports.Prisma.JsonNullValueFilter = {
 };
 exports.UserRole = exports.$Enums.UserRole = {
   AD: 'AD',
-  COACH: 'COACH'
+  COACH: 'COACH',
+  ATHLETE: 'ATHLETE'
+};
+
+exports.Sport = exports.$Enums.Sport = {
+  TRACK_AND_FIELD: 'TRACK_AND_FIELD',
+  FOOTBALL: 'FOOTBALL',
+  SOCCER: 'SOCCER',
+  GENERAL: 'GENERAL'
 };
 
 exports.AcademicStanding = exports.$Enums.AcademicStanding = {
@@ -282,6 +389,15 @@ exports.NoteCategory = exports.$Enums.NoteCategory = {
   GENERAL: 'GENERAL'
 };
 
+exports.MeasurementUnit = exports.$Enums.MeasurementUnit = {
+  METERS: 'METERS',
+  KILOMETERS: 'KILOMETERS',
+  YARDS: 'YARDS',
+  SECONDS: 'SECONDS',
+  MINUTES: 'MINUTES',
+  HOURS: 'HOURS'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Team: 'Team',
@@ -289,7 +405,16 @@ exports.Prisma.ModelName = {
   AcademicRecord: 'AcademicRecord',
   HealthRecord: 'HealthRecord',
   Event: 'Event',
-  Note: 'Note'
+  Note: 'Note',
+  WorkoutTemplate: 'WorkoutTemplate',
+  WorkoutMetric: 'WorkoutMetric',
+  WorkoutInstance: 'WorkoutInstance',
+  RankingSource: 'RankingSource',
+  EventRanking: 'EventRanking',
+  PersonalRecord: 'PersonalRecord',
+  MeetEntry: 'MeetEntry',
+  AthleteJournal: 'AthleteJournal',
+  UserSettings: 'UserSettings'
 };
 
 /**
