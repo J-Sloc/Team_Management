@@ -95,6 +95,8 @@ TL;DR: Phase 1 and Phase 2 from the outline are already done; Phase 3 (role-awar
 - Add `React Query` caches
 - Add forms and zod schema validations
 - Add analytics and notifications for risk change
+- Add persisted performance analytics snapshots for workouts, PRs, and rankings so charts and future AI context use the same computed data
+- Add deterministic projection math first, with AI consuming stored trend summaries later rather than generating analytics directly
 - Add CSV import/exports
 
 ---

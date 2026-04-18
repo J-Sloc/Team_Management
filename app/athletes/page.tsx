@@ -502,7 +502,14 @@ export default function AthletesPage() {
                 <tbody>
                   {athletes.map((athlete) => (
                     <tr key={athlete.id} className="border-t">
-                      <td className="px-3 py-2">{athlete.name}</td>
+                      <td className="px-3 py-2">
+                        <Link
+                          href={`/athletes/${athlete.id}`}
+                          className="font-medium text-blue-700 hover:underline"
+                        >
+                          {athlete.name}
+                        </Link>
+                      </td>
                       <td>{athlete.team?.name || athlete.teamId}</td>
                       <td>{athlete.sport ?? "-"}</td>
                       <td>{athlete.events?.join(", ") ?? "-"}</td>
@@ -538,7 +545,11 @@ export default function AthletesPage() {
             <div className="grid gap-3 sm:grid-cols-2">
               {athletes.map((athlete) => (
                 <article key={athlete.id} className="rounded border p-3 bg-slate-50">
-                  <h3 className="font-semibold text-slate-900">{athlete.name}</h3>
+                  <Link href={`/athletes/${athlete.id}`} className="block">
+                    <h3 className="font-semibold text-slate-900 hover:text-blue-700">
+                      {athlete.name}
+                    </h3>
+                  </Link>
                   <p className="text-xs text-slate-700">Sport: {athlete.sport ?? "-"}</p>
                   <p className="text-xs text-slate-700">
                     Events: {athlete.events?.join(", ") ?? "-"}

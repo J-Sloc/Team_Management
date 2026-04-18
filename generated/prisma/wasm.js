@@ -187,6 +187,7 @@ exports.Prisma.HealthRecordScalarFieldEnum = {
 exports.Prisma.EventScalarFieldEnum = {
   id: 'id',
   teamId: 'teamId',
+  athleteId: 'athleteId',
   type: 'type',
   title: 'title',
   description: 'description',
@@ -386,7 +387,8 @@ exports.EventGroup = exports.$Enums.EventGroup = {
 exports.NoteCategory = exports.$Enums.NoteCategory = {
   ACADEMIC: 'ACADEMIC',
   MEDICAL: 'MEDICAL',
-  GENERAL: 'GENERAL'
+  GENERAL: 'GENERAL',
+  SPORT_SPECIFIC: 'SPORT_SPECIFIC'
 };
 
 exports.MeasurementUnit = exports.$Enums.MeasurementUnit = {

@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { NoteCategory } from "../generated/prisma";
 
 const authMock = vi.hoisted(() => vi.fn());
 const prismaMock = vi.hoisted(() => ({
@@ -136,13 +137,14 @@ describe("API route hardening", () => {
       new Request("http://localhost/api/notes?id=note-1", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ body: "Updated note" }),
+        body: JSON.stringify({ body: "Updated note", category: "GENERAL" }),
       }),
     );
     const data = await response.json();
 
     expect(response.status).toBe(200);
     expect(data.body).toBe("Updated note");
+    expect(NoteCategory.SPORT_SPECIFIC).toBe("SPORT_SPECIFIC");
   });
 
   it("persists validated user settings", async () => {

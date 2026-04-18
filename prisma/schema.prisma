@@ -67,6 +67,7 @@ model Athlete {
   academicRecords      AcademicRecord[]
   healthRecords        HealthRecord[]
   notes                Note[]
+  calendarEntries      Event[]
   workoutInstances     WorkoutInstance[]
   eventRankings        EventRanking[]
   personalRecords      PersonalRecord[]
@@ -115,6 +116,7 @@ model HealthRecord {
 model Event {
   id              String     @id @default(cuid())
   teamId          String
+  athleteId       String?
   type            EventType
   title           String
   description     String?
@@ -126,8 +128,10 @@ model Event {
   createdByUserId String?
   createdAt       DateTime   @default(now())
   team            Team       @relation(fields: [teamId], references: [id])
+  athlete         Athlete?   @relation(fields: [athleteId], references: [id])
 
   @@index([teamId, startTime])
+  @@index([athleteId, startTime])
   @@map("events")
 }
 
@@ -337,6 +341,7 @@ enum NoteCategory {
   ACADEMIC
   MEDICAL
   GENERAL
+  SPORT_SPECIFIC
 }
 
 enum Sport {

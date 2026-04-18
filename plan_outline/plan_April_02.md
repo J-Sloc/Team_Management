@@ -12,7 +12,8 @@ TL;DR: Keep existing Roadmap structure (V1/V1.1/V1.2/V2) and append Track & Fiel
 - Multi-sport sport-specific architecture built on generic templates.
 - Workout data model: attached to sport/team; model JSON parameters optional customization; planned vs instance analytics and future graphs/projections.
 - Unit conversion per sport (yards/meters/kilometers). store as metadata.
-- For now, external integrations + AI in V2; realtime projections algorithm first if feasible.
+- For now, external integrations + AI in V2; deterministic in-app projections should come before ML or LLM-generated forecasting.
+- Analytics should be persisted as reusable snapshots/summaries, not only computed ad hoc in the UI.
 
 3. Proposed roadmap outline (to be followed):
 
@@ -60,14 +61,35 @@ TL;DR: Keep existing Roadmap structure (V1/V1.1/V1.2/V2) and append Track & Fiel
 - RBAC in `lib/rbac.ts` including `ATHLETE` role.
 - Add expect to make athlete’s data separate from coach view in `app/overview`.
 
-### Phase 2 (V1.2/V2): Analytics, AI, Integrations
-- add graphs and projections for workout performance; start with custom math algorithms (no LLM dependency). can use `recharts` and maybe `d3`.
-- prototypes:
-  - reps x time chart
-  - planned treadmill line vs actual
-  - compute projected performance from trend (simple linear regression in backend `lib/workoutAnalysis.ts`)
+### Phase 2 (V1.2/V2): Analytics, projections, AI, integrations
+- Add an in-app analytics foundation under V1.2 using deterministic TypeScript logic in `lib/`, not an external analytics program and not LLM-generated calculations.
+- Persist analytics summaries/snapshots alongside raw workout, PR, and ranking data so charts and future AI flows can reuse the same computed outputs.
+- Recommended persisted summary entities:
+  - `AthletePerformanceSnapshot`
+  - `EventPerformanceTrend`
+  - `WorkoutAnalyticsSnapshot`
+- Minimum persisted outputs:
+  - planned-vs-actual deltas by workout metric
+  - rolling 7/14/30 day workout adherence and volume summaries
+  - PR improvement trend by event
+  - ranking movement trend by event/source
+  - simple projected next-result range for supported events
+  - analytics freshness metadata
+- Add analytics read endpoints so UI and AI do not recompute from raw tables:
+  - `GET /api/analytics/performance?teamId=...&athleteId=...`
+  - `GET /api/analytics/projections?athleteId=...&eventName=...`
+  - `GET /api/analytics/workouts?athleteId=...`
+- Start charts with `Recharts`:
+  - workout planned-vs-actual overlays
+  - PR trend lines by event
+  - ranking movement over time
+  - compact athlete summary cards
+  - projection card with trend and confidence/quality marker
+- Projection math should start with normalization, rolling averages, deltas, baselines, trend slopes, and simple linear regression in backend helpers such as `lib/workoutAnalysis.ts`.
+- Add data sufficiency/confidence rules so projections only appear when enough history exists, and label them as estimates rather than guarantees.
 - Add `app/api/ai/assistant/route.ts` stub and `app/api/integrations/milesplit/` planned.
-- V2: external integrators (Milesplit, timing systems, race entry API), AI chatbot as second-phase.
+- In V2, the assistant should read persisted analytics snapshots first and only drill into raw workouts/PRs/rankings when it needs extra detail or citation context.
+- V2 still owns external integrators (Milesplit, timing systems, race entry API) and the chat assistant experience; ML or separate prediction services come later after enough historical data exists.
 
 ### Phase 3 (V2+): Multi-team/multi-org + standard sports infra
 - Schema: `Institution`, `Sport`, `Team`, `Season`, `Roster` etc.
@@ -75,21 +97,24 @@ TL;DR: Keep existing Roadmap structure (V1/V1.1/V1.2/V2) and append Track & Fiel
 - Standardize sports plugin pattern (example file structure: `app/sports/track-and-field/`, `app/sports/football/`).
 
 4. File changes and feature mapping to keep track:
-- `plan_outline/development_roadmap.md` update: add new sections and checkboxes for Track & Field.
+- `plan_outline/development_roadmap.md` update: add new sections and checkboxes for Track & Field and analytics/projections.
 - `app/api/*` new endpoints.
 - `prisma/schema.prisma` new models for sport/tracking.
 - `app/track-and-field/` new pages plus athlete portals.
 - `lib/rbac.ts`, `lib/workoutAnalysis.ts`, `lib/unitConversion.ts`, `lib/teamSport.ts`.
+- future analytics storage/models for snapshots and trends plus read endpoints under `app/api/analytics/*`.
 - tests in `tests/` for workouts/rankings/prs/meet-entries/journals + athlete access.
 
 5. Verification:
 - manual flows for coach creating/uploading workout and assigning athlete; athlete logging workout and seeing color-coded metrics.
 - unit tests for data model conversions; API auth and ACL.
 - integration tests for athlete-only journal restrictions.
+- analytics tests for rolling windows, trend slopes, regression math, ACL on analytics endpoints, and snapshot refresh after workout/PR/ranking writes.
 
 6. Decision points:
 - Use first-class `sport` type vs string in Team; choose enumerated union in Prisma.
 - Milesplit integration as optional import connector in V2; initially implement manual data entry and scheduled import stub.
-- AI module in V2, but algorithmic projections can start in V1.2 by implementing map/reduce and linear regression locally.
+- AI module in V2, but algorithmic projections should start in V1.2 by implementing deterministic analytics and linear regression locally.
+- Analytics persistence should use a hybrid model: raw performance data remains the source of truth, while summary snapshots are refreshed on write and reused by UI + AI.
 
 ---

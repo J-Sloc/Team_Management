@@ -181,6 +181,7 @@ export default function NotesPage() {
               <option value="ACADEMIC">Academic</option>
               <option value="MEDICAL">Medical</option>
               <option value="GENERAL">General</option>
+              <option value="SPORT_SPECIFIC">Sport Specific</option>
             </select>
             <button
               onClick={fetchNotes}
@@ -217,6 +218,7 @@ export default function NotesPage() {
               <option value="ACADEMIC">Academic</option>
               <option value="MEDICAL">Medical</option>
               <option value="GENERAL">General</option>
+              <option value="SPORT_SPECIFIC">Sport Specific</option>
             </select>
             <textarea
               placeholder="Note body"

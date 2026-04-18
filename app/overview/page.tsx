@@ -3,7 +3,9 @@ import { requireRole } from "@/lib/rbac";
 import prisma from "@/lib/prisma";
 import { getTeamDashboard, getAthletesNeedingAttention, getUpcomingEvents } from "@/lib/dashboardData";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import CalendarWidget from "./CalendarWidget";
+import LogoutButton from "@/app/components/LogoutButton";
 
 export default async function OverviewPage() {
   const session = await auth();
@@ -65,8 +67,13 @@ export default async function OverviewPage() {
             // AD View: Team-based organization with overhead focus
             <>
               <div className="bg-card p-6 rounded-lg shadow border">
-                <h1 className="text-2xl font-bold text-primary mb-4">Team Management Overview</h1>
-                <p className="text-secondary">Comprehensive view across all teams</p>
+                <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                  <div>
+                    <h1 className="text-2xl font-bold text-primary mb-4">Team Management Overview</h1>
+                    <p className="text-secondary">Comprehensive view across all teams</p>
+                  </div>
+                  <LogoutButton className="rounded-md bg-rose-600 px-4 py-2 text-sm font-medium text-white hover:bg-rose-700" />
+                </div>
               </div>
 
               {/* Overall KPIs */}
@@ -128,6 +135,14 @@ export default async function OverviewPage() {
           ) : (
             // Coach View: Focused on their teams
             <>
+              <div className="flex items-center justify-between rounded-lg bg-white p-4 shadow-sm border">
+                <div>
+                  <h1 className="text-2xl font-bold text-slate-900">Coach Dashboard</h1>
+                  <p className="text-sm text-slate-500">Overview for your assigned teams</p>
+                </div>
+                <LogoutButton className="rounded-md bg-rose-600 px-4 py-2 text-sm font-medium text-white hover:bg-rose-700" />
+              </div>
+
               {/* KPI Cards */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div className="bg-card p-6 rounded-lg shadow border">
@@ -169,7 +184,11 @@ export default async function OverviewPage() {
                   ) : (
                     <div className="space-y-3">
                       {urgentAthletes.map((athlete) => (
-                        <div key={athlete.id} className="border rounded p-3 bg-card">
+                        <Link
+                          key={athlete.id}
+                          href={`/athletes/${athlete.id}`}
+                          className="block border rounded p-3 bg-card hover:border-blue-300 hover:bg-blue-50/40"
+                        >
                           <div className="flex justify-between items-start">
                             <div>
                               <h4 className="font-medium text-primary">{athlete.name}</h4>
@@ -186,7 +205,7 @@ export default async function OverviewPage() {
                               {athlete.riskLevel.toUpperCase()}
                             </span>
                           </div>
-                        </div>
+                        </Link>
                       ))}
                     </div>
                   )}
@@ -200,7 +219,11 @@ export default async function OverviewPage() {
                   ) : (
                     <div className="space-y-3">
                       {upcomingEvents.map((event) => (
-                        <div key={event.id} className="border rounded p-3 bg-card">
+                        <Link
+                          key={event.id}
+                          href={`/events?eventId=${encodeURIComponent(event.id)}`}
+                          className="block border rounded p-3 bg-card hover:border-blue-300 hover:bg-blue-50/40"
+                        >
                           <h4 className="font-medium text-primary">{event.title}</h4>
                           <p className="text-sm text-secondary">
                             {event.startTime.toLocaleDateString()} at {event.startTime.toLocaleTimeString()}
@@ -211,7 +234,7 @@ export default async function OverviewPage() {
                           {event.opponent && (
                             <p className="text-sm text-secondary">vs {event.opponent}</p>
                           )}
-                        </div>
+                        </Link>
                       ))}
                     </div>
                   )}

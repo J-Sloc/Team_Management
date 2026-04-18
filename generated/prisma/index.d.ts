@@ -167,7 +167,8 @@ export type EventGroup = (typeof EventGroup)[keyof typeof EventGroup]
 export const NoteCategory: {
   ACADEMIC: 'ACADEMIC',
   MEDICAL: 'MEDICAL',
-  GENERAL: 'GENERAL'
+  GENERAL: 'GENERAL',
+  SPORT_SPECIFIC: 'SPORT_SPECIFIC'
 };
 
 export type NoteCategory = (typeof NoteCategory)[keyof typeof NoteCategory]
@@ -2510,6 +2511,7 @@ export namespace Prisma {
     academicRecords: number
     healthRecords: number
     notes: number
+    calendarEntries: number
     workoutInstances: number
     eventRankings: number
     personalRecords: number
@@ -2521,6 +2523,7 @@ export namespace Prisma {
     academicRecords?: boolean | AthleteCountOutputTypeCountAcademicRecordsArgs
     healthRecords?: boolean | AthleteCountOutputTypeCountHealthRecordsArgs
     notes?: boolean | AthleteCountOutputTypeCountNotesArgs
+    calendarEntries?: boolean | AthleteCountOutputTypeCountCalendarEntriesArgs
     workoutInstances?: boolean | AthleteCountOutputTypeCountWorkoutInstancesArgs
     eventRankings?: boolean | AthleteCountOutputTypeCountEventRankingsArgs
     personalRecords?: boolean | AthleteCountOutputTypeCountPersonalRecordsArgs
@@ -2558,6 +2561,13 @@ export namespace Prisma {
    */
   export type AthleteCountOutputTypeCountNotesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: NoteWhereInput
+  }
+
+  /**
+   * AthleteCountOutputType without action
+   */
+  export type AthleteCountOutputTypeCountCalendarEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventWhereInput
   }
 
   /**
@@ -5415,6 +5425,7 @@ export namespace Prisma {
     academicRecords?: boolean | Athlete$academicRecordsArgs<ExtArgs>
     healthRecords?: boolean | Athlete$healthRecordsArgs<ExtArgs>
     notes?: boolean | Athlete$notesArgs<ExtArgs>
+    calendarEntries?: boolean | Athlete$calendarEntriesArgs<ExtArgs>
     workoutInstances?: boolean | Athlete$workoutInstancesArgs<ExtArgs>
     eventRankings?: boolean | Athlete$eventRankingsArgs<ExtArgs>
     personalRecords?: boolean | Athlete$personalRecordsArgs<ExtArgs>
@@ -5503,6 +5514,7 @@ export namespace Prisma {
     academicRecords?: boolean | Athlete$academicRecordsArgs<ExtArgs>
     healthRecords?: boolean | Athlete$healthRecordsArgs<ExtArgs>
     notes?: boolean | Athlete$notesArgs<ExtArgs>
+    calendarEntries?: boolean | Athlete$calendarEntriesArgs<ExtArgs>
     workoutInstances?: boolean | Athlete$workoutInstancesArgs<ExtArgs>
     eventRankings?: boolean | Athlete$eventRankingsArgs<ExtArgs>
     personalRecords?: boolean | Athlete$personalRecordsArgs<ExtArgs>
@@ -5527,6 +5539,7 @@ export namespace Prisma {
       academicRecords: Prisma.$AcademicRecordPayload<ExtArgs>[]
       healthRecords: Prisma.$HealthRecordPayload<ExtArgs>[]
       notes: Prisma.$NotePayload<ExtArgs>[]
+      calendarEntries: Prisma.$EventPayload<ExtArgs>[]
       workoutInstances: Prisma.$WorkoutInstancePayload<ExtArgs>[]
       eventRankings: Prisma.$EventRankingPayload<ExtArgs>[]
       personalRecords: Prisma.$PersonalRecordPayload<ExtArgs>[]
@@ -5953,6 +5966,7 @@ export namespace Prisma {
     academicRecords<T extends Athlete$academicRecordsArgs<ExtArgs> = {}>(args?: Subset<T, Athlete$academicRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AcademicRecordPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     healthRecords<T extends Athlete$healthRecordsArgs<ExtArgs> = {}>(args?: Subset<T, Athlete$healthRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HealthRecordPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     notes<T extends Athlete$notesArgs<ExtArgs> = {}>(args?: Subset<T, Athlete$notesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotePayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    calendarEntries<T extends Athlete$calendarEntriesArgs<ExtArgs> = {}>(args?: Subset<T, Athlete$calendarEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     workoutInstances<T extends Athlete$workoutInstancesArgs<ExtArgs> = {}>(args?: Subset<T, Athlete$workoutInstancesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkoutInstancePayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     eventRankings<T extends Athlete$eventRankingsArgs<ExtArgs> = {}>(args?: Subset<T, Athlete$eventRankingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventRankingPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     personalRecords<T extends Athlete$personalRecordsArgs<ExtArgs> = {}>(args?: Subset<T, Athlete$personalRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonalRecordPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
@@ -6491,6 +6505,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: NoteScalarFieldEnum | NoteScalarFieldEnum[]
+  }
+
+  /**
+   * Athlete.calendarEntries
+   */
+  export type Athlete$calendarEntriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    where?: EventWhereInput
+    orderBy?: EventOrderByWithRelationInput | EventOrderByWithRelationInput[]
+    cursor?: EventWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EventScalarFieldEnum | EventScalarFieldEnum[]
   }
 
   /**
@@ -8975,6 +9013,7 @@ export namespace Prisma {
   export type EventMinAggregateOutputType = {
     id: string | null
     teamId: string | null
+    athleteId: string | null
     type: $Enums.EventType | null
     title: string | null
     description: string | null
@@ -8990,6 +9029,7 @@ export namespace Prisma {
   export type EventMaxAggregateOutputType = {
     id: string | null
     teamId: string | null
+    athleteId: string | null
     type: $Enums.EventType | null
     title: string | null
     description: string | null
@@ -9005,6 +9045,7 @@ export namespace Prisma {
   export type EventCountAggregateOutputType = {
     id: number
     teamId: number
+    athleteId: number
     type: number
     title: number
     description: number
@@ -9022,6 +9063,7 @@ export namespace Prisma {
   export type EventMinAggregateInputType = {
     id?: true
     teamId?: true
+    athleteId?: true
     type?: true
     title?: true
     description?: true
@@ -9037,6 +9079,7 @@ export namespace Prisma {
   export type EventMaxAggregateInputType = {
     id?: true
     teamId?: true
+    athleteId?: true
     type?: true
     title?: true
     description?: true
@@ -9052,6 +9095,7 @@ export namespace Prisma {
   export type EventCountAggregateInputType = {
     id?: true
     teamId?: true
+    athleteId?: true
     type?: true
     title?: true
     description?: true
@@ -9140,6 +9184,7 @@ export namespace Prisma {
   export type EventGroupByOutputType = {
     id: string
     teamId: string
+    athleteId: string | null
     type: $Enums.EventType
     title: string
     description: string | null
@@ -9172,6 +9217,7 @@ export namespace Prisma {
   export type EventSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     teamId?: boolean
+    athleteId?: boolean
     type?: boolean
     title?: boolean
     description?: boolean
@@ -9183,11 +9229,13 @@ export namespace Prisma {
     createdByUserId?: boolean
     createdAt?: boolean
     team?: boolean | TeamDefaultArgs<ExtArgs>
+    athlete?: boolean | Event$athleteArgs<ExtArgs>
   }, ExtArgs["result"]["event"]>
 
   export type EventSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     teamId?: boolean
+    athleteId?: boolean
     type?: boolean
     title?: boolean
     description?: boolean
@@ -9199,11 +9247,13 @@ export namespace Prisma {
     createdByUserId?: boolean
     createdAt?: boolean
     team?: boolean | TeamDefaultArgs<ExtArgs>
+    athlete?: boolean | Event$athleteArgs<ExtArgs>
   }, ExtArgs["result"]["event"]>
 
   export type EventSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     teamId?: boolean
+    athleteId?: boolean
     type?: boolean
     title?: boolean
     description?: boolean
@@ -9215,11 +9265,13 @@ export namespace Prisma {
     createdByUserId?: boolean
     createdAt?: boolean
     team?: boolean | TeamDefaultArgs<ExtArgs>
+    athlete?: boolean | Event$athleteArgs<ExtArgs>
   }, ExtArgs["result"]["event"]>
 
   export type EventSelectScalar = {
     id?: boolean
     teamId?: boolean
+    athleteId?: boolean
     type?: boolean
     title?: boolean
     description?: boolean
@@ -9232,25 +9284,30 @@ export namespace Prisma {
     createdAt?: boolean
   }
 
-  export type EventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "teamId" | "type" | "title" | "description" | "startTime" | "endTime" | "location" | "opponent" | "group" | "createdByUserId" | "createdAt", ExtArgs["result"]["event"]>
+  export type EventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "teamId" | "athleteId" | "type" | "title" | "description" | "startTime" | "endTime" | "location" | "opponent" | "group" | "createdByUserId" | "createdAt", ExtArgs["result"]["event"]>
   export type EventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     team?: boolean | TeamDefaultArgs<ExtArgs>
+    athlete?: boolean | Event$athleteArgs<ExtArgs>
   }
   export type EventIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     team?: boolean | TeamDefaultArgs<ExtArgs>
+    athlete?: boolean | Event$athleteArgs<ExtArgs>
   }
   export type EventIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     team?: boolean | TeamDefaultArgs<ExtArgs>
+    athlete?: boolean | Event$athleteArgs<ExtArgs>
   }
 
   export type $EventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Event"
     objects: {
       team: Prisma.$TeamPayload<ExtArgs>
+      athlete: Prisma.$AthletePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       teamId: string
+      athleteId: string | null
       type: $Enums.EventType
       title: string
       description: string | null
@@ -9656,6 +9713,7 @@ export namespace Prisma {
   export interface Prisma__EventClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     team<T extends TeamDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TeamDefaultArgs<ExtArgs>>): Prisma__TeamClient<$Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    athlete<T extends Event$athleteArgs<ExtArgs> = {}>(args?: Subset<T, Event$athleteArgs<ExtArgs>>): Prisma__AthleteClient<$Result.GetResult<Prisma.$AthletePayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9687,6 +9745,7 @@ export namespace Prisma {
   interface EventFieldRefs {
     readonly id: FieldRef<"Event", 'String'>
     readonly teamId: FieldRef<"Event", 'String'>
+    readonly athleteId: FieldRef<"Event", 'String'>
     readonly type: FieldRef<"Event", 'EventType'>
     readonly title: FieldRef<"Event", 'String'>
     readonly description: FieldRef<"Event", 'String'>
@@ -10090,6 +10149,25 @@ export namespace Prisma {
      * Limit how many Events to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Event.athlete
+   */
+  export type Event$athleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Athlete
+     */
+    select?: AthleteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Athlete
+     */
+    omit?: AthleteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AthleteInclude<ExtArgs> | null
+    where?: AthleteWhereInput
   }
 
   /**
@@ -21448,6 +21526,7 @@ export namespace Prisma {
   export const EventScalarFieldEnum: {
     id: 'id',
     teamId: 'teamId',
+    athleteId: 'athleteId',
     type: 'type',
     title: 'title',
     description: 'description',
@@ -22028,6 +22107,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordListRelationFilter
     healthRecords?: HealthRecordListRelationFilter
     notes?: NoteListRelationFilter
+    calendarEntries?: EventListRelationFilter
     workoutInstances?: WorkoutInstanceListRelationFilter
     eventRankings?: EventRankingListRelationFilter
     personalRecords?: PersonalRecordListRelationFilter
@@ -22061,6 +22141,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordOrderByRelationAggregateInput
     healthRecords?: HealthRecordOrderByRelationAggregateInput
     notes?: NoteOrderByRelationAggregateInput
+    calendarEntries?: EventOrderByRelationAggregateInput
     workoutInstances?: WorkoutInstanceOrderByRelationAggregateInput
     eventRankings?: EventRankingOrderByRelationAggregateInput
     personalRecords?: PersonalRecordOrderByRelationAggregateInput
@@ -22097,6 +22178,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordListRelationFilter
     healthRecords?: HealthRecordListRelationFilter
     notes?: NoteListRelationFilter
+    calendarEntries?: EventListRelationFilter
     workoutInstances?: WorkoutInstanceListRelationFilter
     eventRankings?: EventRankingListRelationFilter
     personalRecords?: PersonalRecordListRelationFilter
@@ -22328,6 +22410,7 @@ export namespace Prisma {
     NOT?: EventWhereInput | EventWhereInput[]
     id?: StringFilter<"Event"> | string
     teamId?: StringFilter<"Event"> | string
+    athleteId?: StringNullableFilter<"Event"> | string | null
     type?: EnumEventTypeFilter<"Event"> | $Enums.EventType
     title?: StringFilter<"Event"> | string
     description?: StringNullableFilter<"Event"> | string | null
@@ -22339,11 +22422,13 @@ export namespace Prisma {
     createdByUserId?: StringNullableFilter<"Event"> | string | null
     createdAt?: DateTimeFilter<"Event"> | Date | string
     team?: XOR<TeamScalarRelationFilter, TeamWhereInput>
+    athlete?: XOR<AthleteNullableScalarRelationFilter, AthleteWhereInput> | null
   }
 
   export type EventOrderByWithRelationInput = {
     id?: SortOrder
     teamId?: SortOrder
+    athleteId?: SortOrderInput | SortOrder
     type?: SortOrder
     title?: SortOrder
     description?: SortOrderInput | SortOrder
@@ -22355,6 +22440,7 @@ export namespace Prisma {
     createdByUserId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     team?: TeamOrderByWithRelationInput
+    athlete?: AthleteOrderByWithRelationInput
   }
 
   export type EventWhereUniqueInput = Prisma.AtLeast<{
@@ -22363,6 +22449,7 @@ export namespace Prisma {
     OR?: EventWhereInput[]
     NOT?: EventWhereInput | EventWhereInput[]
     teamId?: StringFilter<"Event"> | string
+    athleteId?: StringNullableFilter<"Event"> | string | null
     type?: EnumEventTypeFilter<"Event"> | $Enums.EventType
     title?: StringFilter<"Event"> | string
     description?: StringNullableFilter<"Event"> | string | null
@@ -22374,11 +22461,13 @@ export namespace Prisma {
     createdByUserId?: StringNullableFilter<"Event"> | string | null
     createdAt?: DateTimeFilter<"Event"> | Date | string
     team?: XOR<TeamScalarRelationFilter, TeamWhereInput>
+    athlete?: XOR<AthleteNullableScalarRelationFilter, AthleteWhereInput> | null
   }, "id">
 
   export type EventOrderByWithAggregationInput = {
     id?: SortOrder
     teamId?: SortOrder
+    athleteId?: SortOrderInput | SortOrder
     type?: SortOrder
     title?: SortOrder
     description?: SortOrderInput | SortOrder
@@ -22400,6 +22489,7 @@ export namespace Prisma {
     NOT?: EventScalarWhereWithAggregatesInput | EventScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Event"> | string
     teamId?: StringWithAggregatesFilter<"Event"> | string
+    athleteId?: StringNullableWithAggregatesFilter<"Event"> | string | null
     type?: EnumEventTypeWithAggregatesFilter<"Event"> | $Enums.EventType
     title?: StringWithAggregatesFilter<"Event"> | string
     description?: StringNullableWithAggregatesFilter<"Event"> | string | null
@@ -23327,6 +23417,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordCreateNestedManyWithoutAthleteInput
     healthRecords?: HealthRecordCreateNestedManyWithoutAthleteInput
     notes?: NoteCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventCreateNestedManyWithoutAthleteInput
     workoutInstances?: WorkoutInstanceCreateNestedManyWithoutAthleteInput
     eventRankings?: EventRankingCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
@@ -23358,6 +23449,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUncheckedCreateNestedManyWithoutAthleteInput
     healthRecords?: HealthRecordUncheckedCreateNestedManyWithoutAthleteInput
     notes?: NoteUncheckedCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventUncheckedCreateNestedManyWithoutAthleteInput
     workoutInstances?: WorkoutInstanceUncheckedCreateNestedManyWithoutAthleteInput
     eventRankings?: EventRankingUncheckedCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
@@ -23389,6 +23481,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUpdateManyWithoutAthleteNestedInput
     healthRecords?: HealthRecordUpdateManyWithoutAthleteNestedInput
     notes?: NoteUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUpdateManyWithoutAthleteNestedInput
     workoutInstances?: WorkoutInstanceUpdateManyWithoutAthleteNestedInput
     eventRankings?: EventRankingUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
@@ -23420,6 +23513,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUncheckedUpdateManyWithoutAthleteNestedInput
     healthRecords?: HealthRecordUncheckedUpdateManyWithoutAthleteNestedInput
     notes?: NoteUncheckedUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUncheckedUpdateManyWithoutAthleteNestedInput
     workoutInstances?: WorkoutInstanceUncheckedUpdateManyWithoutAthleteNestedInput
     eventRankings?: EventRankingUncheckedUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
@@ -23687,11 +23781,13 @@ export namespace Prisma {
     createdByUserId?: string | null
     createdAt?: Date | string
     team: TeamCreateNestedOneWithoutEventsInput
+    athlete?: AthleteCreateNestedOneWithoutCalendarEntriesInput
   }
 
   export type EventUncheckedCreateInput = {
     id?: string
     teamId: string
+    athleteId?: string | null
     type: $Enums.EventType
     title: string
     description?: string | null
@@ -23717,11 +23813,13 @@ export namespace Prisma {
     createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     team?: TeamUpdateOneRequiredWithoutEventsNestedInput
+    athlete?: AthleteUpdateOneWithoutCalendarEntriesNestedInput
   }
 
   export type EventUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     teamId?: StringFieldUpdateOperationsInput | string
+    athleteId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23737,6 +23835,7 @@ export namespace Prisma {
   export type EventCreateManyInput = {
     id?: string
     teamId: string
+    athleteId?: string | null
     type: $Enums.EventType
     title: string
     description?: string | null
@@ -23766,6 +23865,7 @@ export namespace Prisma {
   export type EventUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     teamId?: StringFieldUpdateOperationsInput | string
+    athleteId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -25235,9 +25335,15 @@ export namespace Prisma {
     not?: NestedEnumEventGroupFilter<$PrismaModel> | $Enums.EventGroup
   }
 
+  export type AthleteNullableScalarRelationFilter = {
+    is?: AthleteWhereInput | null
+    isNot?: AthleteWhereInput | null
+  }
+
   export type EventCountOrderByAggregateInput = {
     id?: SortOrder
     teamId?: SortOrder
+    athleteId?: SortOrder
     type?: SortOrder
     title?: SortOrder
     description?: SortOrder
@@ -25253,6 +25359,7 @@ export namespace Prisma {
   export type EventMaxOrderByAggregateInput = {
     id?: SortOrder
     teamId?: SortOrder
+    athleteId?: SortOrder
     type?: SortOrder
     title?: SortOrder
     description?: SortOrder
@@ -25268,6 +25375,7 @@ export namespace Prisma {
   export type EventMinOrderByAggregateInput = {
     id?: SortOrder
     teamId?: SortOrder
+    athleteId?: SortOrder
     type?: SortOrder
     title?: SortOrder
     description?: SortOrder
@@ -25305,11 +25413,6 @@ export namespace Prisma {
     in?: $Enums.NoteCategory[] | ListEnumNoteCategoryFieldRefInput<$PrismaModel>
     notIn?: $Enums.NoteCategory[] | ListEnumNoteCategoryFieldRefInput<$PrismaModel>
     not?: NestedEnumNoteCategoryFilter<$PrismaModel> | $Enums.NoteCategory
-  }
-
-  export type AthleteNullableScalarRelationFilter = {
-    is?: AthleteWhereInput | null
-    isNot?: AthleteWhereInput | null
   }
 
   export type UserScalarRelationFilter = {
@@ -26291,6 +26394,13 @@ export namespace Prisma {
     connect?: NoteWhereUniqueInput | NoteWhereUniqueInput[]
   }
 
+  export type EventCreateNestedManyWithoutAthleteInput = {
+    create?: XOR<EventCreateWithoutAthleteInput, EventUncheckedCreateWithoutAthleteInput> | EventCreateWithoutAthleteInput[] | EventUncheckedCreateWithoutAthleteInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutAthleteInput | EventCreateOrConnectWithoutAthleteInput[]
+    createMany?: EventCreateManyAthleteInputEnvelope
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+  }
+
   export type WorkoutInstanceCreateNestedManyWithoutAthleteInput = {
     create?: XOR<WorkoutInstanceCreateWithoutAthleteInput, WorkoutInstanceUncheckedCreateWithoutAthleteInput> | WorkoutInstanceCreateWithoutAthleteInput[] | WorkoutInstanceUncheckedCreateWithoutAthleteInput[]
     connectOrCreate?: WorkoutInstanceCreateOrConnectWithoutAthleteInput | WorkoutInstanceCreateOrConnectWithoutAthleteInput[]
@@ -26345,6 +26455,13 @@ export namespace Prisma {
     connectOrCreate?: NoteCreateOrConnectWithoutAthleteInput | NoteCreateOrConnectWithoutAthleteInput[]
     createMany?: NoteCreateManyAthleteInputEnvelope
     connect?: NoteWhereUniqueInput | NoteWhereUniqueInput[]
+  }
+
+  export type EventUncheckedCreateNestedManyWithoutAthleteInput = {
+    create?: XOR<EventCreateWithoutAthleteInput, EventUncheckedCreateWithoutAthleteInput> | EventCreateWithoutAthleteInput[] | EventUncheckedCreateWithoutAthleteInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutAthleteInput | EventCreateOrConnectWithoutAthleteInput[]
+    createMany?: EventCreateManyAthleteInputEnvelope
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
   }
 
   export type WorkoutInstanceUncheckedCreateNestedManyWithoutAthleteInput = {
@@ -26479,6 +26596,20 @@ export namespace Prisma {
     deleteMany?: NoteScalarWhereInput | NoteScalarWhereInput[]
   }
 
+  export type EventUpdateManyWithoutAthleteNestedInput = {
+    create?: XOR<EventCreateWithoutAthleteInput, EventUncheckedCreateWithoutAthleteInput> | EventCreateWithoutAthleteInput[] | EventUncheckedCreateWithoutAthleteInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutAthleteInput | EventCreateOrConnectWithoutAthleteInput[]
+    upsert?: EventUpsertWithWhereUniqueWithoutAthleteInput | EventUpsertWithWhereUniqueWithoutAthleteInput[]
+    createMany?: EventCreateManyAthleteInputEnvelope
+    set?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    delete?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    update?: EventUpdateWithWhereUniqueWithoutAthleteInput | EventUpdateWithWhereUniqueWithoutAthleteInput[]
+    updateMany?: EventUpdateManyWithWhereWithoutAthleteInput | EventUpdateManyWithWhereWithoutAthleteInput[]
+    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
+  }
+
   export type WorkoutInstanceUpdateManyWithoutAthleteNestedInput = {
     create?: XOR<WorkoutInstanceCreateWithoutAthleteInput, WorkoutInstanceUncheckedCreateWithoutAthleteInput> | WorkoutInstanceCreateWithoutAthleteInput[] | WorkoutInstanceUncheckedCreateWithoutAthleteInput[]
     connectOrCreate?: WorkoutInstanceCreateOrConnectWithoutAthleteInput | WorkoutInstanceCreateOrConnectWithoutAthleteInput[]
@@ -26591,6 +26722,20 @@ export namespace Prisma {
     deleteMany?: NoteScalarWhereInput | NoteScalarWhereInput[]
   }
 
+  export type EventUncheckedUpdateManyWithoutAthleteNestedInput = {
+    create?: XOR<EventCreateWithoutAthleteInput, EventUncheckedCreateWithoutAthleteInput> | EventCreateWithoutAthleteInput[] | EventUncheckedCreateWithoutAthleteInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutAthleteInput | EventCreateOrConnectWithoutAthleteInput[]
+    upsert?: EventUpsertWithWhereUniqueWithoutAthleteInput | EventUpsertWithWhereUniqueWithoutAthleteInput[]
+    createMany?: EventCreateManyAthleteInputEnvelope
+    set?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    delete?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    update?: EventUpdateWithWhereUniqueWithoutAthleteInput | EventUpdateWithWhereUniqueWithoutAthleteInput[]
+    updateMany?: EventUpdateManyWithWhereWithoutAthleteInput | EventUpdateManyWithWhereWithoutAthleteInput[]
+    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
+  }
+
   export type WorkoutInstanceUncheckedUpdateManyWithoutAthleteNestedInput = {
     create?: XOR<WorkoutInstanceCreateWithoutAthleteInput, WorkoutInstanceUncheckedCreateWithoutAthleteInput> | WorkoutInstanceCreateWithoutAthleteInput[] | WorkoutInstanceUncheckedCreateWithoutAthleteInput[]
     connectOrCreate?: WorkoutInstanceCreateOrConnectWithoutAthleteInput | WorkoutInstanceCreateOrConnectWithoutAthleteInput[]
@@ -26699,6 +26844,12 @@ export namespace Prisma {
     connect?: TeamWhereUniqueInput
   }
 
+  export type AthleteCreateNestedOneWithoutCalendarEntriesInput = {
+    create?: XOR<AthleteCreateWithoutCalendarEntriesInput, AthleteUncheckedCreateWithoutCalendarEntriesInput>
+    connectOrCreate?: AthleteCreateOrConnectWithoutCalendarEntriesInput
+    connect?: AthleteWhereUniqueInput
+  }
+
   export type EnumEventTypeFieldUpdateOperationsInput = {
     set?: $Enums.EventType
   }
@@ -26713,6 +26864,16 @@ export namespace Prisma {
     upsert?: TeamUpsertWithoutEventsInput
     connect?: TeamWhereUniqueInput
     update?: XOR<XOR<TeamUpdateToOneWithWhereWithoutEventsInput, TeamUpdateWithoutEventsInput>, TeamUncheckedUpdateWithoutEventsInput>
+  }
+
+  export type AthleteUpdateOneWithoutCalendarEntriesNestedInput = {
+    create?: XOR<AthleteCreateWithoutCalendarEntriesInput, AthleteUncheckedCreateWithoutCalendarEntriesInput>
+    connectOrCreate?: AthleteCreateOrConnectWithoutCalendarEntriesInput
+    upsert?: AthleteUpsertWithoutCalendarEntriesInput
+    disconnect?: AthleteWhereInput | boolean
+    delete?: AthleteWhereInput | boolean
+    connect?: AthleteWhereUniqueInput
+    update?: XOR<XOR<AthleteUpdateToOneWithWhereWithoutCalendarEntriesInput, AthleteUpdateWithoutCalendarEntriesInput>, AthleteUncheckedUpdateWithoutCalendarEntriesInput>
   }
 
   export type AthleteCreateNestedOneWithoutNotesInput = {
@@ -27569,6 +27730,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordCreateNestedManyWithoutAthleteInput
     healthRecords?: HealthRecordCreateNestedManyWithoutAthleteInput
     notes?: NoteCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventCreateNestedManyWithoutAthleteInput
     workoutInstances?: WorkoutInstanceCreateNestedManyWithoutAthleteInput
     eventRankings?: EventRankingCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
@@ -27599,6 +27761,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUncheckedCreateNestedManyWithoutAthleteInput
     healthRecords?: HealthRecordUncheckedCreateNestedManyWithoutAthleteInput
     notes?: NoteUncheckedCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventUncheckedCreateNestedManyWithoutAthleteInput
     workoutInstances?: WorkoutInstanceUncheckedCreateNestedManyWithoutAthleteInput
     eventRankings?: EventRankingUncheckedCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
@@ -28046,6 +28209,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordCreateNestedManyWithoutAthleteInput
     healthRecords?: HealthRecordCreateNestedManyWithoutAthleteInput
     notes?: NoteCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventCreateNestedManyWithoutAthleteInput
     workoutInstances?: WorkoutInstanceCreateNestedManyWithoutAthleteInput
     eventRankings?: EventRankingCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
@@ -28076,6 +28240,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUncheckedCreateNestedManyWithoutAthleteInput
     healthRecords?: HealthRecordUncheckedCreateNestedManyWithoutAthleteInput
     notes?: NoteUncheckedCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventUncheckedCreateNestedManyWithoutAthleteInput
     workoutInstances?: WorkoutInstanceUncheckedCreateNestedManyWithoutAthleteInput
     eventRankings?: EventRankingUncheckedCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
@@ -28105,10 +28270,12 @@ export namespace Prisma {
     group: $Enums.EventGroup
     createdByUserId?: string | null
     createdAt?: Date | string
+    athlete?: AthleteCreateNestedOneWithoutCalendarEntriesInput
   }
 
   export type EventUncheckedCreateWithoutTeamInput = {
     id?: string
+    athleteId?: string | null
     type: $Enums.EventType
     title: string
     description?: string | null
@@ -28239,6 +28406,7 @@ export namespace Prisma {
     NOT?: EventScalarWhereInput | EventScalarWhereInput[]
     id?: StringFilter<"Event"> | string
     teamId?: StringFilter<"Event"> | string
+    athleteId?: StringNullableFilter<"Event"> | string | null
     type?: EnumEventTypeFilter<"Event"> | $Enums.EventType
     title?: StringFilter<"Event"> | string
     description?: StringNullableFilter<"Event"> | string | null
@@ -28438,6 +28606,46 @@ export namespace Prisma {
 
   export type NoteCreateManyAthleteInputEnvelope = {
     data: NoteCreateManyAthleteInput | NoteCreateManyAthleteInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type EventCreateWithoutAthleteInput = {
+    id?: string
+    type: $Enums.EventType
+    title: string
+    description?: string | null
+    startTime: Date | string
+    endTime: Date | string
+    location?: string | null
+    opponent?: string | null
+    group: $Enums.EventGroup
+    createdByUserId?: string | null
+    createdAt?: Date | string
+    team: TeamCreateNestedOneWithoutEventsInput
+  }
+
+  export type EventUncheckedCreateWithoutAthleteInput = {
+    id?: string
+    teamId: string
+    type: $Enums.EventType
+    title: string
+    description?: string | null
+    startTime: Date | string
+    endTime: Date | string
+    location?: string | null
+    opponent?: string | null
+    group: $Enums.EventGroup
+    createdByUserId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type EventCreateOrConnectWithoutAthleteInput = {
+    where: EventWhereUniqueInput
+    create: XOR<EventCreateWithoutAthleteInput, EventUncheckedCreateWithoutAthleteInput>
+  }
+
+  export type EventCreateManyAthleteInputEnvelope = {
+    data: EventCreateManyAthleteInput | EventCreateManyAthleteInput[]
     skipDuplicates?: boolean
   }
 
@@ -28753,6 +28961,22 @@ export namespace Prisma {
     data: XOR<NoteUpdateManyMutationInput, NoteUncheckedUpdateManyWithoutAthleteInput>
   }
 
+  export type EventUpsertWithWhereUniqueWithoutAthleteInput = {
+    where: EventWhereUniqueInput
+    update: XOR<EventUpdateWithoutAthleteInput, EventUncheckedUpdateWithoutAthleteInput>
+    create: XOR<EventCreateWithoutAthleteInput, EventUncheckedCreateWithoutAthleteInput>
+  }
+
+  export type EventUpdateWithWhereUniqueWithoutAthleteInput = {
+    where: EventWhereUniqueInput
+    data: XOR<EventUpdateWithoutAthleteInput, EventUncheckedUpdateWithoutAthleteInput>
+  }
+
+  export type EventUpdateManyWithWhereWithoutAthleteInput = {
+    where: EventScalarWhereInput
+    data: XOR<EventUpdateManyMutationInput, EventUncheckedUpdateManyWithoutAthleteInput>
+  }
+
   export type WorkoutInstanceUpsertWithWhereUniqueWithoutAthleteInput = {
     where: WorkoutInstanceWhereUniqueInput
     update: XOR<WorkoutInstanceUpdateWithoutAthleteInput, WorkoutInstanceUncheckedUpdateWithoutAthleteInput>
@@ -28883,6 +29107,7 @@ export namespace Prisma {
     team: TeamCreateNestedOneWithoutAthletesInput
     healthRecords?: HealthRecordCreateNestedManyWithoutAthleteInput
     notes?: NoteCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventCreateNestedManyWithoutAthleteInput
     workoutInstances?: WorkoutInstanceCreateNestedManyWithoutAthleteInput
     eventRankings?: EventRankingCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
@@ -28913,6 +29138,7 @@ export namespace Prisma {
     riskFlag?: $Enums.RiskFlag | null
     healthRecords?: HealthRecordUncheckedCreateNestedManyWithoutAthleteInput
     notes?: NoteUncheckedCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventUncheckedCreateNestedManyWithoutAthleteInput
     workoutInstances?: WorkoutInstanceUncheckedCreateNestedManyWithoutAthleteInput
     eventRankings?: EventRankingUncheckedCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
@@ -28959,6 +29185,7 @@ export namespace Prisma {
     team?: TeamUpdateOneRequiredWithoutAthletesNestedInput
     healthRecords?: HealthRecordUpdateManyWithoutAthleteNestedInput
     notes?: NoteUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUpdateManyWithoutAthleteNestedInput
     workoutInstances?: WorkoutInstanceUpdateManyWithoutAthleteNestedInput
     eventRankings?: EventRankingUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
@@ -28989,6 +29216,7 @@ export namespace Prisma {
     riskFlag?: NullableEnumRiskFlagFieldUpdateOperationsInput | $Enums.RiskFlag | null
     healthRecords?: HealthRecordUncheckedUpdateManyWithoutAthleteNestedInput
     notes?: NoteUncheckedUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUncheckedUpdateManyWithoutAthleteNestedInput
     workoutInstances?: WorkoutInstanceUncheckedUpdateManyWithoutAthleteNestedInput
     eventRankings?: EventRankingUncheckedUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
@@ -29019,6 +29247,7 @@ export namespace Prisma {
     team: TeamCreateNestedOneWithoutAthletesInput
     academicRecords?: AcademicRecordCreateNestedManyWithoutAthleteInput
     notes?: NoteCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventCreateNestedManyWithoutAthleteInput
     workoutInstances?: WorkoutInstanceCreateNestedManyWithoutAthleteInput
     eventRankings?: EventRankingCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
@@ -29049,6 +29278,7 @@ export namespace Prisma {
     riskFlag?: $Enums.RiskFlag | null
     academicRecords?: AcademicRecordUncheckedCreateNestedManyWithoutAthleteInput
     notes?: NoteUncheckedCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventUncheckedCreateNestedManyWithoutAthleteInput
     workoutInstances?: WorkoutInstanceUncheckedCreateNestedManyWithoutAthleteInput
     eventRankings?: EventRankingUncheckedCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
@@ -29095,6 +29325,7 @@ export namespace Prisma {
     team?: TeamUpdateOneRequiredWithoutAthletesNestedInput
     academicRecords?: AcademicRecordUpdateManyWithoutAthleteNestedInput
     notes?: NoteUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUpdateManyWithoutAthleteNestedInput
     workoutInstances?: WorkoutInstanceUpdateManyWithoutAthleteNestedInput
     eventRankings?: EventRankingUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
@@ -29125,6 +29356,7 @@ export namespace Prisma {
     riskFlag?: NullableEnumRiskFlagFieldUpdateOperationsInput | $Enums.RiskFlag | null
     academicRecords?: AcademicRecordUncheckedUpdateManyWithoutAthleteNestedInput
     notes?: NoteUncheckedUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUncheckedUpdateManyWithoutAthleteNestedInput
     workoutInstances?: WorkoutInstanceUncheckedUpdateManyWithoutAthleteNestedInput
     eventRankings?: EventRankingUncheckedUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
@@ -29157,6 +29389,73 @@ export namespace Prisma {
   export type TeamCreateOrConnectWithoutEventsInput = {
     where: TeamWhereUniqueInput
     create: XOR<TeamCreateWithoutEventsInput, TeamUncheckedCreateWithoutEventsInput>
+  }
+
+  export type AthleteCreateWithoutCalendarEntriesInput = {
+    id?: string
+    name: string
+    jerseyNumber?: number | null
+    height?: number | null
+    weight?: number | null
+    classYear?: string | null
+    sport?: string | null
+    events?: AthleteCreateeventsInput | string[]
+    eventRecords?: NullableJsonNullValueInput | InputJsonValue
+    gpa?: number | null
+    academicStanding?: $Enums.AcademicStanding | null
+    eligibilityYearsLeft?: number | null
+    recruitingStatus?: string | null
+    contactInfo?: string | null
+    transferProbability?: number | null
+    medicalStatus?: $Enums.MedicalStatus | null
+    complianceStatus?: $Enums.ComplianceStatus | null
+    riskFlag?: $Enums.RiskFlag | null
+    user?: UserCreateNestedOneWithoutAthletesInput
+    team: TeamCreateNestedOneWithoutAthletesInput
+    academicRecords?: AcademicRecordCreateNestedManyWithoutAthleteInput
+    healthRecords?: HealthRecordCreateNestedManyWithoutAthleteInput
+    notes?: NoteCreateNestedManyWithoutAthleteInput
+    workoutInstances?: WorkoutInstanceCreateNestedManyWithoutAthleteInput
+    eventRankings?: EventRankingCreateNestedManyWithoutAthleteInput
+    personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
+    meetEntries?: MeetEntryCreateNestedManyWithoutAthleteInput
+    journals?: AthleteJournalCreateNestedManyWithoutAthleteInput
+  }
+
+  export type AthleteUncheckedCreateWithoutCalendarEntriesInput = {
+    id?: string
+    teamId: string
+    name: string
+    jerseyNumber?: number | null
+    height?: number | null
+    weight?: number | null
+    classYear?: string | null
+    sport?: string | null
+    userId?: string | null
+    events?: AthleteCreateeventsInput | string[]
+    eventRecords?: NullableJsonNullValueInput | InputJsonValue
+    gpa?: number | null
+    academicStanding?: $Enums.AcademicStanding | null
+    eligibilityYearsLeft?: number | null
+    recruitingStatus?: string | null
+    contactInfo?: string | null
+    transferProbability?: number | null
+    medicalStatus?: $Enums.MedicalStatus | null
+    complianceStatus?: $Enums.ComplianceStatus | null
+    riskFlag?: $Enums.RiskFlag | null
+    academicRecords?: AcademicRecordUncheckedCreateNestedManyWithoutAthleteInput
+    healthRecords?: HealthRecordUncheckedCreateNestedManyWithoutAthleteInput
+    notes?: NoteUncheckedCreateNestedManyWithoutAthleteInput
+    workoutInstances?: WorkoutInstanceUncheckedCreateNestedManyWithoutAthleteInput
+    eventRankings?: EventRankingUncheckedCreateNestedManyWithoutAthleteInput
+    personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
+    meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutAthleteInput
+    journals?: AthleteJournalUncheckedCreateNestedManyWithoutAthleteInput
+  }
+
+  export type AthleteCreateOrConnectWithoutCalendarEntriesInput = {
+    where: AthleteWhereUniqueInput
+    create: XOR<AthleteCreateWithoutCalendarEntriesInput, AthleteUncheckedCreateWithoutCalendarEntriesInput>
   }
 
   export type TeamUpsertWithoutEventsInput = {
@@ -29192,6 +29491,79 @@ export namespace Prisma {
     meetEntries?: MeetEntryUncheckedUpdateManyWithoutTeamNestedInput
   }
 
+  export type AthleteUpsertWithoutCalendarEntriesInput = {
+    update: XOR<AthleteUpdateWithoutCalendarEntriesInput, AthleteUncheckedUpdateWithoutCalendarEntriesInput>
+    create: XOR<AthleteCreateWithoutCalendarEntriesInput, AthleteUncheckedCreateWithoutCalendarEntriesInput>
+    where?: AthleteWhereInput
+  }
+
+  export type AthleteUpdateToOneWithWhereWithoutCalendarEntriesInput = {
+    where?: AthleteWhereInput
+    data: XOR<AthleteUpdateWithoutCalendarEntriesInput, AthleteUncheckedUpdateWithoutCalendarEntriesInput>
+  }
+
+  export type AthleteUpdateWithoutCalendarEntriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    jerseyNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    classYear?: NullableStringFieldUpdateOperationsInput | string | null
+    sport?: NullableStringFieldUpdateOperationsInput | string | null
+    events?: AthleteUpdateeventsInput | string[]
+    eventRecords?: NullableJsonNullValueInput | InputJsonValue
+    gpa?: NullableFloatFieldUpdateOperationsInput | number | null
+    academicStanding?: NullableEnumAcademicStandingFieldUpdateOperationsInput | $Enums.AcademicStanding | null
+    eligibilityYearsLeft?: NullableFloatFieldUpdateOperationsInput | number | null
+    recruitingStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    transferProbability?: NullableFloatFieldUpdateOperationsInput | number | null
+    medicalStatus?: NullableEnumMedicalStatusFieldUpdateOperationsInput | $Enums.MedicalStatus | null
+    complianceStatus?: NullableEnumComplianceStatusFieldUpdateOperationsInput | $Enums.ComplianceStatus | null
+    riskFlag?: NullableEnumRiskFlagFieldUpdateOperationsInput | $Enums.RiskFlag | null
+    user?: UserUpdateOneWithoutAthletesNestedInput
+    team?: TeamUpdateOneRequiredWithoutAthletesNestedInput
+    academicRecords?: AcademicRecordUpdateManyWithoutAthleteNestedInput
+    healthRecords?: HealthRecordUpdateManyWithoutAthleteNestedInput
+    notes?: NoteUpdateManyWithoutAthleteNestedInput
+    workoutInstances?: WorkoutInstanceUpdateManyWithoutAthleteNestedInput
+    eventRankings?: EventRankingUpdateManyWithoutAthleteNestedInput
+    personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
+    meetEntries?: MeetEntryUpdateManyWithoutAthleteNestedInput
+    journals?: AthleteJournalUpdateManyWithoutAthleteNestedInput
+  }
+
+  export type AthleteUncheckedUpdateWithoutCalendarEntriesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    teamId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    jerseyNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    classYear?: NullableStringFieldUpdateOperationsInput | string | null
+    sport?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    events?: AthleteUpdateeventsInput | string[]
+    eventRecords?: NullableJsonNullValueInput | InputJsonValue
+    gpa?: NullableFloatFieldUpdateOperationsInput | number | null
+    academicStanding?: NullableEnumAcademicStandingFieldUpdateOperationsInput | $Enums.AcademicStanding | null
+    eligibilityYearsLeft?: NullableFloatFieldUpdateOperationsInput | number | null
+    recruitingStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    transferProbability?: NullableFloatFieldUpdateOperationsInput | number | null
+    medicalStatus?: NullableEnumMedicalStatusFieldUpdateOperationsInput | $Enums.MedicalStatus | null
+    complianceStatus?: NullableEnumComplianceStatusFieldUpdateOperationsInput | $Enums.ComplianceStatus | null
+    riskFlag?: NullableEnumRiskFlagFieldUpdateOperationsInput | $Enums.RiskFlag | null
+    academicRecords?: AcademicRecordUncheckedUpdateManyWithoutAthleteNestedInput
+    healthRecords?: HealthRecordUncheckedUpdateManyWithoutAthleteNestedInput
+    notes?: NoteUncheckedUpdateManyWithoutAthleteNestedInput
+    workoutInstances?: WorkoutInstanceUncheckedUpdateManyWithoutAthleteNestedInput
+    eventRankings?: EventRankingUncheckedUpdateManyWithoutAthleteNestedInput
+    personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
+    meetEntries?: MeetEntryUncheckedUpdateManyWithoutAthleteNestedInput
+    journals?: AthleteJournalUncheckedUpdateManyWithoutAthleteNestedInput
+  }
+
   export type AthleteCreateWithoutNotesInput = {
     id?: string
     name: string
@@ -29215,6 +29587,7 @@ export namespace Prisma {
     team: TeamCreateNestedOneWithoutAthletesInput
     academicRecords?: AcademicRecordCreateNestedManyWithoutAthleteInput
     healthRecords?: HealthRecordCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventCreateNestedManyWithoutAthleteInput
     workoutInstances?: WorkoutInstanceCreateNestedManyWithoutAthleteInput
     eventRankings?: EventRankingCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
@@ -29245,6 +29618,7 @@ export namespace Prisma {
     riskFlag?: $Enums.RiskFlag | null
     academicRecords?: AcademicRecordUncheckedCreateNestedManyWithoutAthleteInput
     healthRecords?: HealthRecordUncheckedCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventUncheckedCreateNestedManyWithoutAthleteInput
     workoutInstances?: WorkoutInstanceUncheckedCreateNestedManyWithoutAthleteInput
     eventRankings?: EventRankingUncheckedCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
@@ -29328,6 +29702,7 @@ export namespace Prisma {
     team?: TeamUpdateOneRequiredWithoutAthletesNestedInput
     academicRecords?: AcademicRecordUpdateManyWithoutAthleteNestedInput
     healthRecords?: HealthRecordUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUpdateManyWithoutAthleteNestedInput
     workoutInstances?: WorkoutInstanceUpdateManyWithoutAthleteNestedInput
     eventRankings?: EventRankingUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
@@ -29358,6 +29733,7 @@ export namespace Prisma {
     riskFlag?: NullableEnumRiskFlagFieldUpdateOperationsInput | $Enums.RiskFlag | null
     academicRecords?: AcademicRecordUncheckedUpdateManyWithoutAthleteNestedInput
     healthRecords?: HealthRecordUncheckedUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUncheckedUpdateManyWithoutAthleteNestedInput
     workoutInstances?: WorkoutInstanceUncheckedUpdateManyWithoutAthleteNestedInput
     eventRankings?: EventRankingUncheckedUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
@@ -29776,6 +30152,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordCreateNestedManyWithoutAthleteInput
     healthRecords?: HealthRecordCreateNestedManyWithoutAthleteInput
     notes?: NoteCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventCreateNestedManyWithoutAthleteInput
     eventRankings?: EventRankingCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryCreateNestedManyWithoutAthleteInput
@@ -29806,6 +30183,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUncheckedCreateNestedManyWithoutAthleteInput
     healthRecords?: HealthRecordUncheckedCreateNestedManyWithoutAthleteInput
     notes?: NoteUncheckedCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventUncheckedCreateNestedManyWithoutAthleteInput
     eventRankings?: EventRankingUncheckedCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutAthleteInput
@@ -29926,6 +30304,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUpdateManyWithoutAthleteNestedInput
     healthRecords?: HealthRecordUpdateManyWithoutAthleteNestedInput
     notes?: NoteUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUpdateManyWithoutAthleteNestedInput
     eventRankings?: EventRankingUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUpdateManyWithoutAthleteNestedInput
@@ -29956,6 +30335,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUncheckedUpdateManyWithoutAthleteNestedInput
     healthRecords?: HealthRecordUncheckedUpdateManyWithoutAthleteNestedInput
     notes?: NoteUncheckedUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUncheckedUpdateManyWithoutAthleteNestedInput
     eventRankings?: EventRankingUncheckedUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUncheckedUpdateManyWithoutAthleteNestedInput
@@ -30075,6 +30455,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordCreateNestedManyWithoutAthleteInput
     healthRecords?: HealthRecordCreateNestedManyWithoutAthleteInput
     notes?: NoteCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventCreateNestedManyWithoutAthleteInput
     workoutInstances?: WorkoutInstanceCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryCreateNestedManyWithoutAthleteInput
@@ -30105,6 +30486,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUncheckedCreateNestedManyWithoutAthleteInput
     healthRecords?: HealthRecordUncheckedCreateNestedManyWithoutAthleteInput
     notes?: NoteUncheckedCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventUncheckedCreateNestedManyWithoutAthleteInput
     workoutInstances?: WorkoutInstanceUncheckedCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutAthleteInput
@@ -30172,6 +30554,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUpdateManyWithoutAthleteNestedInput
     healthRecords?: HealthRecordUpdateManyWithoutAthleteNestedInput
     notes?: NoteUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUpdateManyWithoutAthleteNestedInput
     workoutInstances?: WorkoutInstanceUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUpdateManyWithoutAthleteNestedInput
@@ -30202,6 +30585,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUncheckedUpdateManyWithoutAthleteNestedInput
     healthRecords?: HealthRecordUncheckedUpdateManyWithoutAthleteNestedInput
     notes?: NoteUncheckedUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUncheckedUpdateManyWithoutAthleteNestedInput
     workoutInstances?: WorkoutInstanceUncheckedUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUncheckedUpdateManyWithoutAthleteNestedInput
@@ -30259,6 +30643,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordCreateNestedManyWithoutAthleteInput
     healthRecords?: HealthRecordCreateNestedManyWithoutAthleteInput
     notes?: NoteCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventCreateNestedManyWithoutAthleteInput
     workoutInstances?: WorkoutInstanceCreateNestedManyWithoutAthleteInput
     eventRankings?: EventRankingCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryCreateNestedManyWithoutAthleteInput
@@ -30289,6 +30674,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUncheckedCreateNestedManyWithoutAthleteInput
     healthRecords?: HealthRecordUncheckedCreateNestedManyWithoutAthleteInput
     notes?: NoteUncheckedCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventUncheckedCreateNestedManyWithoutAthleteInput
     workoutInstances?: WorkoutInstanceUncheckedCreateNestedManyWithoutAthleteInput
     eventRankings?: EventRankingUncheckedCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutAthleteInput
@@ -30335,6 +30721,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUpdateManyWithoutAthleteNestedInput
     healthRecords?: HealthRecordUpdateManyWithoutAthleteNestedInput
     notes?: NoteUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUpdateManyWithoutAthleteNestedInput
     workoutInstances?: WorkoutInstanceUpdateManyWithoutAthleteNestedInput
     eventRankings?: EventRankingUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUpdateManyWithoutAthleteNestedInput
@@ -30365,6 +30752,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUncheckedUpdateManyWithoutAthleteNestedInput
     healthRecords?: HealthRecordUncheckedUpdateManyWithoutAthleteNestedInput
     notes?: NoteUncheckedUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUncheckedUpdateManyWithoutAthleteNestedInput
     workoutInstances?: WorkoutInstanceUncheckedUpdateManyWithoutAthleteNestedInput
     eventRankings?: EventRankingUncheckedUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUncheckedUpdateManyWithoutAthleteNestedInput
@@ -30395,6 +30783,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordCreateNestedManyWithoutAthleteInput
     healthRecords?: HealthRecordCreateNestedManyWithoutAthleteInput
     notes?: NoteCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventCreateNestedManyWithoutAthleteInput
     workoutInstances?: WorkoutInstanceCreateNestedManyWithoutAthleteInput
     eventRankings?: EventRankingCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
@@ -30425,6 +30814,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUncheckedCreateNestedManyWithoutAthleteInput
     healthRecords?: HealthRecordUncheckedCreateNestedManyWithoutAthleteInput
     notes?: NoteUncheckedCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventUncheckedCreateNestedManyWithoutAthleteInput
     workoutInstances?: WorkoutInstanceUncheckedCreateNestedManyWithoutAthleteInput
     eventRankings?: EventRankingUncheckedCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
@@ -30535,6 +30925,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUpdateManyWithoutAthleteNestedInput
     healthRecords?: HealthRecordUpdateManyWithoutAthleteNestedInput
     notes?: NoteUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUpdateManyWithoutAthleteNestedInput
     workoutInstances?: WorkoutInstanceUpdateManyWithoutAthleteNestedInput
     eventRankings?: EventRankingUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
@@ -30565,6 +30956,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUncheckedUpdateManyWithoutAthleteNestedInput
     healthRecords?: HealthRecordUncheckedUpdateManyWithoutAthleteNestedInput
     notes?: NoteUncheckedUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUncheckedUpdateManyWithoutAthleteNestedInput
     workoutInstances?: WorkoutInstanceUncheckedUpdateManyWithoutAthleteNestedInput
     eventRankings?: EventRankingUncheckedUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
@@ -30671,6 +31063,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordCreateNestedManyWithoutAthleteInput
     healthRecords?: HealthRecordCreateNestedManyWithoutAthleteInput
     notes?: NoteCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventCreateNestedManyWithoutAthleteInput
     workoutInstances?: WorkoutInstanceCreateNestedManyWithoutAthleteInput
     eventRankings?: EventRankingCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
@@ -30701,6 +31094,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUncheckedCreateNestedManyWithoutAthleteInput
     healthRecords?: HealthRecordUncheckedCreateNestedManyWithoutAthleteInput
     notes?: NoteUncheckedCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventUncheckedCreateNestedManyWithoutAthleteInput
     workoutInstances?: WorkoutInstanceUncheckedCreateNestedManyWithoutAthleteInput
     eventRankings?: EventRankingUncheckedCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
@@ -30784,6 +31178,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUpdateManyWithoutAthleteNestedInput
     healthRecords?: HealthRecordUpdateManyWithoutAthleteNestedInput
     notes?: NoteUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUpdateManyWithoutAthleteNestedInput
     workoutInstances?: WorkoutInstanceUpdateManyWithoutAthleteNestedInput
     eventRankings?: EventRankingUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
@@ -30814,6 +31209,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUncheckedUpdateManyWithoutAthleteNestedInput
     healthRecords?: HealthRecordUncheckedUpdateManyWithoutAthleteNestedInput
     notes?: NoteUncheckedUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUncheckedUpdateManyWithoutAthleteNestedInput
     workoutInstances?: WorkoutInstanceUncheckedUpdateManyWithoutAthleteNestedInput
     eventRankings?: EventRankingUncheckedUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
@@ -31041,6 +31437,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUpdateManyWithoutAthleteNestedInput
     healthRecords?: HealthRecordUpdateManyWithoutAthleteNestedInput
     notes?: NoteUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUpdateManyWithoutAthleteNestedInput
     workoutInstances?: WorkoutInstanceUpdateManyWithoutAthleteNestedInput
     eventRankings?: EventRankingUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
@@ -31071,6 +31468,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUncheckedUpdateManyWithoutAthleteNestedInput
     healthRecords?: HealthRecordUncheckedUpdateManyWithoutAthleteNestedInput
     notes?: NoteUncheckedUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUncheckedUpdateManyWithoutAthleteNestedInput
     workoutInstances?: WorkoutInstanceUncheckedUpdateManyWithoutAthleteNestedInput
     eventRankings?: EventRankingUncheckedUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
@@ -31287,6 +31685,7 @@ export namespace Prisma {
 
   export type EventCreateManyTeamInput = {
     id?: string
+    athleteId?: string | null
     type: $Enums.EventType
     title: string
     description?: string | null
@@ -31345,6 +31744,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUpdateManyWithoutAthleteNestedInput
     healthRecords?: HealthRecordUpdateManyWithoutAthleteNestedInput
     notes?: NoteUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUpdateManyWithoutAthleteNestedInput
     workoutInstances?: WorkoutInstanceUpdateManyWithoutAthleteNestedInput
     eventRankings?: EventRankingUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
@@ -31375,6 +31775,7 @@ export namespace Prisma {
     academicRecords?: AcademicRecordUncheckedUpdateManyWithoutAthleteNestedInput
     healthRecords?: HealthRecordUncheckedUpdateManyWithoutAthleteNestedInput
     notes?: NoteUncheckedUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUncheckedUpdateManyWithoutAthleteNestedInput
     workoutInstances?: WorkoutInstanceUncheckedUpdateManyWithoutAthleteNestedInput
     eventRankings?: EventRankingUncheckedUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
@@ -31416,10 +31817,12 @@ export namespace Prisma {
     group?: EnumEventGroupFieldUpdateOperationsInput | $Enums.EventGroup
     createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    athlete?: AthleteUpdateOneWithoutCalendarEntriesNestedInput
   }
 
   export type EventUncheckedUpdateWithoutTeamInput = {
     id?: StringFieldUpdateOperationsInput | string
+    athleteId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31434,6 +31837,7 @@ export namespace Prisma {
 
   export type EventUncheckedUpdateManyWithoutTeamInput = {
     id?: StringFieldUpdateOperationsInput | string
+    athleteId?: NullableStringFieldUpdateOperationsInput | string | null
     type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31548,6 +31952,21 @@ export namespace Prisma {
     userId: string
     category: $Enums.NoteCategory
     body: string
+    createdAt?: Date | string
+  }
+
+  export type EventCreateManyAthleteInput = {
+    id?: string
+    teamId: string
+    type: $Enums.EventType
+    title: string
+    description?: string | null
+    startTime: Date | string
+    endTime: Date | string
+    location?: string | null
+    opponent?: string | null
+    group: $Enums.EventGroup
+    createdByUserId?: string | null
     createdAt?: Date | string
   }
 
@@ -31697,6 +32116,51 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     category?: EnumNoteCategoryFieldUpdateOperationsInput | $Enums.NoteCategory
     body?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventUpdateWithoutAthleteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    opponent?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: EnumEventGroupFieldUpdateOperationsInput | $Enums.EventGroup
+    createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    team?: TeamUpdateOneRequiredWithoutEventsNestedInput
+  }
+
+  export type EventUncheckedUpdateWithoutAthleteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    teamId?: StringFieldUpdateOperationsInput | string
+    type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    opponent?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: EnumEventGroupFieldUpdateOperationsInput | $Enums.EventGroup
+    createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventUncheckedUpdateManyWithoutAthleteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    teamId?: StringFieldUpdateOperationsInput | string
+    type?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    location?: NullableStringFieldUpdateOperationsInput | string | null
+    opponent?: NullableStringFieldUpdateOperationsInput | string | null
+    group?: EnumEventGroupFieldUpdateOperationsInput | $Enums.EventGroup
+    createdByUserId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

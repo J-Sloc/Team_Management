@@ -3,6 +3,16 @@ import { redirect } from "next/navigation";
 import { auth } from "@/app/lib/auth";
 import { UserRole } from "../../generated/prisma";
 
+const links = [
+  { name: "Dashboard", href: "/athlete-portal/dashboard" },
+  { name: "Calendar", href: "/athlete-portal/calendar" },
+  { name: "Workouts", href: "/athlete-portal/workouts" },
+  { name: "Academics", href: "/athlete-portal/academics" },
+  { name: "Medical", href: "/athlete-portal/medical" },
+  { name: "Journals", href: "/athlete-portal/journals" },
+  { name: "Settings", href: "/athlete-portal/settings" },
+];
+
 export default async function AthletePortalLayout({
   children,
 }: {
@@ -31,19 +41,16 @@ export default async function AthletePortalLayout({
                 Personal Dashboard
               </h1>
             </div>
-            <div className="flex gap-3 text-sm font-medium">
-              <Link
-                href="/athlete-portal/dashboard"
-                className="rounded-md bg-slate-900 px-4 py-2 text-white"
-              >
-                Dashboard
-              </Link>
-              <Link
-                href="/athlete-portal/journals"
-                className="rounded-md border border-slate-300 px-4 py-2 text-slate-700"
-              >
-                Journals
-              </Link>
+            <div className="flex flex-wrap gap-3 text-sm font-medium">
+              {links.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="rounded-md border border-slate-300 px-4 py-2 text-slate-700"
+                >
+                  {link.name}
+                </Link>
+              ))}
             </div>
           </div>
         </div>

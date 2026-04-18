@@ -205,6 +205,7 @@ Phase 3 (Days 7-10) [Can start business logic in parallel with Phase 2]
 - Seed only one team + users (multi-tenant in V2)
 - Business logic tier (eligibility, medical, dashboard) — enables future reuse in assistant
 - Overview page as single entry point (role-agnostic layout for now)
+- Future performance analytics should follow the same pattern: deterministic backend/lib calculations with persisted summaries that can be reused by charts and the assistant later
 
 **Excluded**:
 - React Query (add in Phase 4 for caching/sync)
@@ -212,6 +213,7 @@ Phase 3 (Days 7-10) [Can start business logic in parallel with Phase 2]
 - AI assistant (Phase 3 in roadmap)
 - CSV import (Phase 1.1 in roadmap)
 - Athlete detail page (tackled after overview patterns solidify)
+- LLM-generated analytics or projections as a source of truth; the assistant should explain stored analytics rather than invent them in-prompt
 
 **Assumptions**:
 - Testing done locally via curl/Postman or Insomnia (no Playwright yet)
