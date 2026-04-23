@@ -82,6 +82,7 @@
 - [ ] Athlete card view should link directly to the athlete profile page
 - [ ] Add logout button to the coach dashboard
 - [ ] Add logout button to the settings page
+- [ ] Reduce on screen clutter for a tighter, more polished UI
 
 ### 2.3 Athlete profile, notes, and coach-side detail depth
 - [ ] Add an athlete profile/detail page that aggregates notes, academics, health, workouts, rankings, journals, and calendar context
