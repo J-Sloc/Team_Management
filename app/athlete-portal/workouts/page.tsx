@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/app/lib/auth";
 import prisma from "@/lib/prisma";
-import { UserRole } from "../../../../generated/prisma";
+import { UserRole } from "@/generated/prisma";
 
 export default async function AthleteWorkoutsPage() {
   const session = await auth();
