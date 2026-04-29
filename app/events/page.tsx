@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { connection } from "next/server"
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -53,8 +52,7 @@ const blankForm = {
 };
 const emptyEvents: CalendarEvent[] = [];
 
-export default async function EventsPage() {
-  await connection(); // Ensure this is a client component
+export default function EventsPage() {
   const searchParams = useSearchParams();
   const { data: session, status } = useSession();
   const router = useRouter();

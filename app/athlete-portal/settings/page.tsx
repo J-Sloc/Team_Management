@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/app/lib/auth";
 import prisma from "@/lib/prisma";
 import LogoutButton from "@/app/components/LogoutButton";
-import { UserRole } from "@/generated/prisma";
+import { UserRole } from "../../../../generated/prisma";
 
 export default async function AthleteSettingsPage() {
   const session = await auth();

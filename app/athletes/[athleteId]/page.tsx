@@ -4,7 +4,7 @@ import { auth } from "@/app/lib/auth";
 import prisma from "@/lib/prisma";
 import { ensureAthleteAccess, type SessionUser } from "@/lib/access";
 import { requireRole } from "@/lib/rbac";
-import { EventGroup } from "@/generated/prisma";
+import { EventGroup } from "../../../../generated/prisma";
 
 function getSessionUser(session: { user?: SessionUser } | null): SessionUser {
   const user = session?.user;

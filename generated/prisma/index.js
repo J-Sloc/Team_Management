@@ -402,7 +402,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/ericslocum/Projects/Team_Management/generated/prisma",
+      "value": "/Users/jaden/team_management/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -416,7 +416,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/ericslocum/Projects/Team_Management/prisma/schema.prisma",
+    "sourceFilePath": "/Users/jaden/team_management/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
