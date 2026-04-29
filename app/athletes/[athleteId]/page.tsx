@@ -4,7 +4,8 @@ import { auth } from "@/app/lib/auth";
 import prisma from "@/lib/prisma";
 import { ensureAthleteAccess, type SessionUser } from "@/lib/access";
 import { requireRole } from "@/lib/rbac";
-import { EventGroup } from "../../../../generated/prisma";
+import { analyzeWorkoutResults, normalizeWorkoutResults } from "@/lib/workoutAnalysis";
+import { EventGroup } from "../../../generated/prisma";
 
 function getSessionUser(session: { user?: SessionUser } | null): SessionUser {
   const user = session?.user;
@@ -86,6 +87,12 @@ export default async function AthleteDetailPage({
           },
         },
       },
+      performanceSnapshot: true,
+      workoutAnalyticsSnapshot: true,
+      eventPerformanceTrends: {
+        orderBy: [{ metricType: "asc" }, { eventName: "asc" }],
+        take: 10,
+      },
     },
   });
 
@@ -128,6 +135,12 @@ export default async function AthleteDetailPage({
             </div>
             <div className="flex flex-wrap gap-3 text-sm font-medium">
               <Link
+                href={`/assistant?scope=athlete&athleteId=${encodeURIComponent(athlete.id)}&prompt=${encodeURIComponent(`Give me a concise overview of ${athlete.name}.`)}`}
+                className="rounded-md border border-slate-300 px-4 py-2 text-slate-700"
+              >
+                Open Assistant
+              </Link>
+              <Link
                 href={`/events?athleteId=${encodeURIComponent(athlete.id)}`}
                 className="rounded-md bg-slate-900 px-4 py-2 text-white"
               >
@@ -165,10 +178,45 @@ export default async function AthleteDetailPage({
           <div className="rounded-xl bg-white p-5 shadow-sm">
             <p className="text-sm text-slate-500">Risk Flag</p>
             <p className="mt-2 text-lg font-semibold text-slate-900">
-              {athlete.riskFlag ?? "None"}
+              {athlete.performanceSnapshot?.riskLevel ?? athlete.riskFlag ?? "None"}
             </p>
           </div>
         </div>
+
+        {athlete.performanceSnapshot || athlete.workoutAnalyticsSnapshot ? (
+          <div className="grid gap-4 md:grid-cols-4">
+            <div className="rounded-xl bg-white p-5 shadow-sm">
+              <p className="text-sm text-slate-500">Training Status</p>
+              <p className="mt-2 text-lg font-semibold text-slate-900">
+                {athlete.performanceSnapshot?.trainingStatus ?? "Not available"}
+              </p>
+            </div>
+            <div className="rounded-xl bg-white p-5 shadow-sm">
+              <p className="text-sm text-slate-500">Readiness</p>
+              <p className="mt-2 text-lg font-semibold text-slate-900">
+                {athlete.performanceSnapshot?.readinessScore != null
+                  ? `${athlete.performanceSnapshot.readinessScore} (${athlete.performanceSnapshot.readinessLabel ?? "n/a"})`
+                  : "Not available"}
+              </p>
+            </div>
+            <div className="rounded-xl bg-white p-5 shadow-sm">
+              <p className="text-sm text-slate-500">Workout Adherence</p>
+              <p className="mt-2 text-lg font-semibold text-slate-900">
+                {athlete.workoutAnalyticsSnapshot?.adherencePercent != null
+                  ? `${athlete.workoutAnalyticsSnapshot.adherencePercent}%`
+                  : "No plan data"}
+              </p>
+            </div>
+            <div className="rounded-xl bg-white p-5 shadow-sm">
+              <p className="text-sm text-slate-500">Analytics Freshness</p>
+              <p className="mt-2 text-lg font-semibold text-slate-900">
+                {athlete.performanceSnapshot?.refreshedAt
+                  ? new Date(athlete.performanceSnapshot.refreshedAt).toLocaleString()
+                  : "Not generated"}
+              </p>
+            </div>
+          </div>
+        ) : null}
 
         <div className="grid gap-6 lg:grid-cols-2">
           <section className="rounded-xl bg-white p-6 shadow-sm">
@@ -178,11 +226,15 @@ export default async function AthleteDetailPage({
                 <p className="text-sm text-slate-500">No upcoming calendar context yet.</p>
               ) : (
                 calendarItems.map((event) => (
-                  <div key={event.id} className="rounded-lg border border-slate-200 p-4">
+                  <Link
+                    key={event.id}
+                    href={`/events?athleteId=${encodeURIComponent(athlete.id)}&eventId=${encodeURIComponent(event.id)}`}
+                    className="block rounded-lg border border-slate-200 p-4 transition hover:border-blue-300 hover:bg-blue-50/40"
+                  >
                     <div className="flex items-center justify-between gap-3">
                       <p className="font-medium text-slate-900">{event.title}</p>
                       <span className="rounded-full bg-slate-100 px-2 py-1 text-[10px] font-medium uppercase tracking-wide text-slate-600">
-                        {event.group === EventGroup.PERSONAL ? "Personal" : "Team"}
+                        {event.group === EventGroup.PERSONAL ? "Personal" : "Team Shared"}
                       </span>
                     </div>
                     <p className="mt-1 text-sm text-slate-500">
@@ -191,7 +243,7 @@ export default async function AthleteDetailPage({
                     {event.location ? (
                       <p className="mt-1 text-sm text-slate-700">{event.location}</p>
                     ) : null}
-                  </div>
+                  </Link>
                 ))
               )}
             </div>
@@ -241,6 +293,9 @@ export default async function AthleteDetailPage({
                     <p className="text-sm text-slate-500">
                       {record.academicStanding ?? "No standing"}
                     </p>
+                    <p className="text-sm text-slate-500">
+                      Attendance: {record.attendancePercent != null ? `${record.attendancePercent}%` : "N/A"}
+                    </p>
                   </div>
                 ))
               )}
@@ -259,6 +314,12 @@ export default async function AthleteDetailPage({
                       {record.injuryType ?? "General update"}
                     </p>
                     <p className="text-sm text-slate-700">{record.status ?? "No status"}</p>
+                    <p className="text-sm text-slate-500">
+                      Rehab Sessions: {record.rehabSessions ?? 0}
+                    </p>
+                    <p className="text-sm text-slate-500">
+                      Appointment Attendance: {record.appointmentAttendance != null ? `${record.appointmentAttendance}%` : "N/A"}
+                    </p>
                     {record.notes ? (
                       <p className="mt-2 text-sm text-slate-500">{record.notes}</p>
                     ) : null}
@@ -285,6 +346,21 @@ export default async function AthleteDetailPage({
                     {workout.notes ? (
                       <p className="mt-2 text-sm text-slate-700">{workout.notes}</p>
                     ) : null}
+                    <div className="mt-3 space-y-2">
+                      {normalizeWorkoutResults(workout.results).map((metric, index) => {
+                        const analysis = analyzeWorkoutResults(workout.results)[index];
+                        return (
+                          <p key={`${workout.id}-${metric.label}-${index}`} className="text-sm text-slate-500">
+                            {metric.label ?? "Metric"}:
+                            {metric.plannedValue != null ? ` target ${metric.plannedValue}` : ""}
+                            {metric.actualValue != null ? ` • actual ${metric.actualValue}` : ""}
+                            {metric.unit ? ` ${metric.unit.toLowerCase()}` : ""}
+                            {analysis?.classification ? ` • ${analysis.classification}` : ""}
+                            {metric.note ? ` • ${metric.note}` : ""}
+                          </p>
+                        );
+                      })}
+                    </div>
                   </div>
                 ))
               )}
@@ -347,6 +423,32 @@ export default async function AthleteDetailPage({
                       {journal.author.role}
                       {journal.author.email ? ` • ${journal.author.email}` : ""}
                     </p>
+                  </div>
+                ))
+              )}
+            </div>
+          </section>
+
+          <section className="rounded-xl bg-white p-6 shadow-sm">
+            <h2 className="text-lg font-semibold text-slate-900">Performance Trends</h2>
+            <div className="mt-4 space-y-3">
+              {athlete.eventPerformanceTrends.length === 0 ? (
+                <p className="text-sm text-slate-500">No trend snapshots yet.</p>
+              ) : (
+                athlete.eventPerformanceTrends.map((trend) => (
+                  <div key={trend.id} className="rounded-lg border border-slate-200 p-4">
+                    <p className="font-medium text-slate-900">{trend.eventName}</p>
+                    <p className="text-sm text-slate-700">
+                      {trend.metricType === "PERSONAL_RECORD"
+                        ? `Latest ${trend.latestValue ?? "N/A"}`
+                        : `Latest rank #${trend.latestRank ?? "N/A"}`}
+                    </p>
+                    <p className="text-sm text-slate-500">
+                      Confidence: {trend.confidenceLabel} • Sample size: {trend.sampleSize}
+                    </p>
+                    {trend.aiSummary ? (
+                      <p className="mt-2 text-sm text-slate-500">{trend.aiSummary}</p>
+                    ) : null}
                   </div>
                 ))
               )}

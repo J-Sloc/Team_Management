@@ -10,6 +10,7 @@
     "db:push": "dotenv -e .env.local -- prisma db push",
     "db:migrate": "dotenv -e .env.local -- prisma migrate dev",
     "db:seed": "dotenv -e .env.local -- prisma db seed",
+    "analytics:rebuild": "dotenv -e .env.local -- tsx scripts/rebuildAnalytics.ts",
     "test": "vitest"
   },
   "prisma": {

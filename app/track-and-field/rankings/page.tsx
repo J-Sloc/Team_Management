@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -37,6 +38,21 @@ type Ranking = {
     name: string;
     type?: string | null;
   };
+};
+
+type ProjectionResponse = {
+  athleteId: string;
+  projections: Array<{
+    eventName: string;
+    latestValue?: number | null;
+    confidenceLabel: string;
+    projection: {
+      projectedValue?: number | null;
+      direction: string;
+      estimateLabel: string;
+      dataIsSufficient: boolean;
+    };
+  }>;
 };
 
 function toDateInputValue(value?: string | null) {
@@ -111,6 +127,15 @@ export default function RankingsPage() {
 
       return apiJson<Ranking[]>(`/api/rankings?${params.toString()}`);
     },
+  });
+
+  const projectionsQuery = useQuery({
+    queryKey: ["performanceProjections", effectiveSelectedAthleteId],
+    enabled: Boolean(effectiveSelectedAthleteId),
+    queryFn: () =>
+      apiJson<ProjectionResponse>(
+        `/api/analytics/projections?athleteId=${encodeURIComponent(effectiveSelectedAthleteId)}`,
+      ),
   });
 
   const rankings = rankingsQuery.data ?? [];
@@ -281,6 +306,38 @@ export default function RankingsPage() {
             {toApiErrorMessage(teamsQuery.error ?? athletesQuery.error ?? rankingsQuery.error)}
           </p>
         )}
+
+        {effectiveSelectedAthleteId && projectionsQuery.data?.projections.length ? (
+          <div className="mt-4 rounded-lg border border-slate-200 p-4">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="text-sm font-medium text-slate-900">Projection Preview</p>
+                <p className="text-xs text-slate-500">
+                  Trend-based estimates only. Do not treat these as guarantees.
+                </p>
+              </div>
+              <Link
+                href={`/assistant?scope=performance&athleteId=${encodeURIComponent(effectiveSelectedAthleteId)}&prompt=${encodeURIComponent("Summarize this athlete's performance trend and projection outlook.")}`}
+                className="rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-700"
+              >
+                Ask Assistant
+              </Link>
+            </div>
+            <div className="mt-3 space-y-2">
+              {projectionsQuery.data.projections.slice(0, 3).map((projection) => (
+                <div key={projection.eventName} className="rounded-lg bg-slate-50 p-3 text-sm text-slate-700">
+                  <p className="font-medium text-slate-900">{projection.eventName}</p>
+                  <p>
+                    Latest: {projection.latestValue ?? "N/A"} • Direction: {projection.projection.direction}
+                  </p>
+                  <p>
+                    Estimate: {projection.projection.projectedValue ?? "Not enough data"} • Confidence: {projection.confidenceLabel}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : null}
 
         <form onSubmit={handleSubmit} className="mt-4 space-y-4">
           <select

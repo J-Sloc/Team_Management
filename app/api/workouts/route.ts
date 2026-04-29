@@ -16,6 +16,7 @@ import {
   parseJsonBody,
   parseSearchParams,
 } from "@/lib/api";
+import { recomputeAthleteAnalytics } from "@/lib/analytics";
 import { requireRole, requireSession } from "@/lib/rbac";
 import { MeasurementUnit, Prisma, Sport, UserRole } from "../../../generated/prisma";
 
@@ -228,6 +229,8 @@ export async function POST(request: Request) {
       },
     });
 
+    await recomputeAthleteAnalytics(body.athleteId);
+
     return NextResponse.json(instance, { status: 201 });
   } catch (error) {
     return handleApiError(error);
@@ -315,6 +318,8 @@ export async function PUT(request: Request) {
       },
     });
 
+    await recomputeAthleteAnalytics(body.athleteId);
+
     return NextResponse.json(instance);
   } catch (error) {
     return handleApiError(error);
@@ -369,6 +374,7 @@ export async function DELETE(request: Request) {
 
     await ensureAthleteAccess(user, instance.athleteId);
     await prisma.workoutInstance.delete({ where: { id: query.id } });
+    await recomputeAthleteAnalytics(instance.athleteId);
 
     return NextResponse.json({ success: true });
   } catch (error) {

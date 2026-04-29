@@ -6,9 +6,20 @@ export type WorkoutRepResult = {
   plannedValue?: number | null;
   actualValue?: number | null;
   unit?: MeasurementUnit | null;
+  note?: string | null;
 };
 
 export type WorkoutResultsInput = {
+  metrics?: Array<{
+    metricName?: string;
+    label?: string;
+    plannedValue?: number | null;
+    actualValue?: number | null;
+    value?: number | null;
+    unit?: MeasurementUnit | null;
+    note?: string | null;
+    notes?: string | null;
+  }>;
   reps?: Array<
     WorkoutRepResult & {
       distance?: number;
@@ -28,7 +39,59 @@ export type WorkoutRepAnalysis = {
 };
 
 export function normalizeWorkoutResults(results: unknown): WorkoutRepResult[] {
-  if (!results || typeof results !== "object" || !("reps" in results)) {
+  if (!results || typeof results !== "object") {
+    return [];
+  }
+
+  if ("metrics" in results) {
+    const metrics = Array.isArray(results.metrics) ? results.metrics : [];
+    return metrics.map((metric, index) => {
+      if (!metric || typeof metric !== "object") {
+        return {
+          label: `Metric ${index + 1}`,
+          plannedValue: null,
+          actualValue: null,
+          unit: null,
+          note: null,
+        };
+      }
+
+      const record = metric as Record<string, unknown>;
+      const unit =
+        typeof record.unit === "string" && Object.values(MeasurementUnit).includes(record.unit as MeasurementUnit)
+          ? (record.unit as MeasurementUnit)
+          : null;
+
+      const plannedValue =
+        typeof record.plannedValue === "number"
+          ? record.plannedValue
+          : null;
+      const actualValue =
+        typeof record.actualValue === "number"
+          ? record.actualValue
+          : typeof record.value === "number"
+            ? record.value
+            : null;
+
+      return {
+        label:
+          (typeof record.metricName === "string" && record.metricName) ||
+          (typeof record.label === "string" && record.label) ||
+          `Metric ${index + 1}`,
+        plannedValue,
+        actualValue,
+        unit,
+        note:
+          typeof record.note === "string"
+            ? record.note
+            : typeof record.notes === "string"
+              ? record.notes
+              : null,
+      };
+    });
+  }
+
+  if (!("reps" in results)) {
     return [];
   }
 
@@ -52,6 +115,7 @@ export function normalizeWorkoutResults(results: unknown): WorkoutRepResult[] {
       actualValue:
         rep.actualValue ?? (rep.actualSeconds != null ? rep.actualSeconds : null),
       unit: unit ?? null,
+      note: rep.note ?? null,
     };
   });
 }

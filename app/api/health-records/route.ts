@@ -14,6 +14,7 @@ import {
   parseJsonBody,
   parseSearchParams,
 } from "@/lib/api";
+import { recomputeAthleteAnalytics } from "@/lib/analytics";
 import { requireRole, requireSession } from "@/lib/rbac";
 import {
   MedicalStatus,
@@ -122,6 +123,8 @@ export async function POST(request: Request) {
       },
     });
 
+    await recomputeAthleteAnalytics(body.athleteId);
+
     return NextResponse.json(record, { status: 201 });
   } catch (error) {
     return handleApiError(error);
@@ -165,6 +168,8 @@ export async function PUT(request: Request) {
       },
     });
 
+    await recomputeAthleteAnalytics(body.athleteId ?? existingRecord.athleteId);
+
     return NextResponse.json(updated);
   } catch (error) {
     return handleApiError(error);
@@ -194,6 +199,7 @@ export async function DELETE(request: Request) {
 
     await ensureAthleteAccess(user, existingRecord.athleteId);
     await prisma.healthRecord.delete({ where: { id: query.id } });
+    await recomputeAthleteAnalytics(existingRecord.athleteId);
 
     return NextResponse.json({ success: true });
   } catch (error) {

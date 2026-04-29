@@ -12,6 +12,8 @@ const coachNavigationItems = [
   { name: "Health", href: "/health-records" },
   { name: "Events", href: "/events" },
   { name: "Notes", href: "/notes" },
+  { name: "Assistant", href: "/assistant" },
+  { name: "Integrations", href: "/integrations" },
   { name: "Workouts", href: "/track-and-field/workouts" },
   { name: "Rankings", href: "/track-and-field/rankings" },
   { name: "Meet Entries", href: "/track-and-field/meet-entries" },
@@ -21,7 +23,13 @@ const coachNavigationItems = [
 
 const athleteNavigationItems = [
   { name: "Dashboard", href: "/athlete-portal/dashboard" },
+  { name: "Assistant", href: "/assistant" },
+  { name: "Calendar", href: "/athlete-portal/calendar" },
+  { name: "Workouts", href: "/athlete-portal/workouts" },
+  { name: "Academics", href: "/athlete-portal/academics" },
+  { name: "Medical", href: "/athlete-portal/medical" },
   { name: "Journals", href: "/athlete-portal/journals" },
+  { name: "Settings", href: "/athlete-portal/settings" },
 ];
 
 export default function Navigation() {

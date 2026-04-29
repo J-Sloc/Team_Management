@@ -5,6 +5,10 @@ async function main() {
   console.log("🌱 Seeding database...");
 
   // Clean up existing data (for local development only!)
+  await prisma.integrationRun.deleteMany({});
+  await prisma.eventPerformanceTrend.deleteMany({});
+  await prisma.workoutAnalyticsSnapshot.deleteMany({});
+  await prisma.athletePerformanceSnapshot.deleteMany({});
   await prisma.athleteJournal.deleteMany({});
   await prisma.meetEntry.deleteMany({});
   await prisma.personalRecord.deleteMany({});
@@ -22,12 +26,42 @@ async function main() {
   await prisma.user.deleteMany({});
   await prisma.team.deleteMany({});
 
+  // Create institutions
+  const testHighSchool = await prisma.institution.create({
+    data: {
+      name: "Test High School",
+      address: "123 Main St, Test City, TS 12345",
+    },
+  });
+
+  // Create seasons
+  const currentSeason = await prisma.season.create({
+    data: {
+      name: "2024-2025",
+      institutionId: testHighSchool.id,
+      startDate: new Date("2024-08-01"),
+      endDate: new Date("2025-07-31"),
+      sport: "TRACK_AND_FIELD", // Default season for track
+    },
+  });
+
+  const footballSeason = await prisma.season.create({
+    data: {
+      name: "2024 Football Season",
+      institutionId: testHighSchool.id,
+      startDate: new Date("2024-08-15"),
+      endDate: new Date("2024-11-30"),
+      sport: "FOOTBALL",
+    },
+  });
+
   // Create teams
   const trackTeam = await prisma.team.create({
     data: {
       name: "Men's Varsity Track & Field",
       sport: "TRACK_AND_FIELD",
-      institution: "Test High School",
+      institutionId: testHighSchool.id,
+      seasonId: currentSeason.id,
     },
   });
 
@@ -35,7 +69,8 @@ async function main() {
     data: {
       name: "Varsity Football",
       sport: "FOOTBALL",
-      institution: "Test High School",
+      institutionId: testHighSchool.id,
+      seasonId: footballSeason.id,
     },
   });
 
@@ -285,6 +320,10 @@ async function main() {
   const johnSmith = await prisma.athlete.findFirst({
     where: { name: "John Smith" },
   });
+  const trackAthletes = await prisma.athlete.findMany({
+    where: { teamId: trackTeam.id },
+    orderBy: { name: "asc" },
+  });
 
   // Create some academic records
   const janeDoe = await prisma.athlete.findFirst({ where: { name: "Jane Doe" } });
@@ -354,9 +393,21 @@ async function main() {
         createdByUserId: coachUser.id,
         notes: "Strong finish on the last rep",
         results: {
-          reps: [
-            { distance: 300, unit: "METERS", actualSeconds: 41.8 },
-            { distance: 300, unit: "METERS", actualSeconds: 42.4 },
+          metrics: [
+            {
+              metricName: "300m Rep 1",
+              plannedValue: 42,
+              actualValue: 41.8,
+              unit: "SECONDS",
+              note: "Fast first rep",
+            },
+            {
+              metricName: "300m Rep 2",
+              plannedValue: 42,
+              actualValue: 42.4,
+              unit: "SECONDS",
+              note: "Tightened late",
+            },
           ],
         },
       },
@@ -411,6 +462,157 @@ async function main() {
         title: "Post-workout reflection",
         body: "Felt smooth through the first rep and tightened up late on the second.",
       },
+    });
+  }
+
+  // Create additional workout instances for all track athletes
+  for (const [index, athlete] of trackAthletes.entries()) {
+    if (athlete.id === johnSmith?.id) continue; // Skip John Smith as he already has one
+
+    const athleteWorkoutTemplate = await prisma.workoutTemplate.create({
+      data: {
+        teamId: trackTeam.id,
+        createdByUserId: coachUser.id,
+        name: `${athlete.name}'s ${athlete.events[0] ?? "General"} Session`,
+        description: `Personalized training for ${athlete.events[0] ?? "track events"}`,
+        sport: "TRACK_AND_FIELD",
+        metrics: {
+          create: [
+            {
+              name: "Target Performance",
+              targetValue: 25 + index * 0.5,
+              unit: "SECONDS",
+            },
+          ],
+        },
+      },
+    });
+
+    await prisma.workoutInstance.create({
+      data: {
+        workoutTemplateId: athleteWorkoutTemplate.id,
+        athleteId: athlete.id,
+        createdByUserId: coachUser.id,
+        performedAt: new Date(Date.now() - (10 + index) * 86_400_000),
+        notes: `${athlete.name} showed ${athlete.riskFlag === "HIGH" ? "determination despite challenges" : "solid performance"} in training.`,
+        results: {
+          metrics: [
+            {
+              metricName: `${athlete.events[0] ?? "200m"} Trial`,
+              plannedValue: 25 + index * 0.5,
+              actualValue: 24.5 + index * 0.4,
+              unit: "SECONDS",
+              note: athlete.riskFlag === "HIGH" ? "Great effort given circumstances" : "Clean execution",
+            },
+          ],
+        },
+      },
+    });
+  }
+
+  const generalRankingSource = await prisma.rankingSource.create({
+    data: {
+      name: "Regional Performance Feed",
+      type: "MANUAL",
+    },
+  });
+
+  for (const [index, athlete] of trackAthletes.entries()) {
+    await prisma.academicRecord.createMany({
+      data: [
+        {
+          athleteId: athlete.id,
+          semester: "Fall 2024",
+          finalScore: 78 + index,
+          termGpa: Math.max(1.7, Math.min(3.9, (athlete.gpa ?? 2.4) - 0.2)),
+          academicStanding: athlete.academicStanding ?? "NEUTRAL",
+          complianceStatus: athlete.complianceStatus ?? "COMPLIANT",
+          attendancePercent: 82 - (index % 4) * 3,
+          tutoringHours: index % 3 === 0 ? 2 : 0,
+          advisorNotes: `Fall academic check-in for ${athlete.name}.`,
+        },
+        {
+          athleteId: athlete.id,
+          semester: "Spring 2025",
+          finalScore: 81 + index,
+          termGpa: athlete.gpa ?? 2.5,
+          academicStanding: athlete.academicStanding ?? "NEUTRAL",
+          complianceStatus: athlete.complianceStatus ?? "COMPLIANT",
+          attendancePercent: 86 - (index % 3) * 2,
+          tutoringHours: index % 2 === 0 ? 3 : 1,
+          advisorNotes: `Spring academic follow-up for ${athlete.name}.`,
+        },
+      ],
+    });
+
+    await prisma.healthRecord.create({
+      data: {
+        athleteId: athlete.id,
+        injuryType: index % 3 === 0 ? "Hamstring tightness" : "General readiness check",
+        injuryDate: new Date(Date.now() - (index + 4) * 86_400_000),
+        status:
+          athlete.medicalStatus === "NOT_CLEARED"
+            ? "NOT_CLEARED"
+            : athlete.medicalStatus === "LIMITED"
+              ? "LIMITED"
+              : "CLEARED",
+        rehabSessions: index % 3 === 0 ? 4 + index : 1 + (index % 2),
+        appointmentAttendance: 72 + (index % 4) * 6,
+        notes: `Medical follow-up entry for ${athlete.name}.`,
+      },
+    });
+
+    await prisma.note.create({
+      data: {
+        athleteId: athlete.id,
+        userId: coachUser.id,
+        category: index % 2 === 0 ? "SPORT_SPECIFIC" : "GENERAL",
+        body: `Progress note for ${athlete.name} focused on race rhythm and accountability.`,
+      },
+    });
+
+    await prisma.personalRecord.createMany({
+      data: [
+        {
+          athleteId: athlete.id,
+          eventName: athlete.events[0] ?? "200m",
+          result: 25 + index * 0.4,
+          unit: "SECONDS",
+          recordedAt: new Date(Date.now() - (20 - index) * 86_400_000),
+          notes: "Early season mark",
+        },
+        {
+          athleteId: athlete.id,
+          eventName: athlete.events[0] ?? "200m",
+          result: 24.5 + index * 0.35,
+          unit: "SECONDS",
+          recordedAt: new Date(Date.now() - (6 + index) * 86_400_000),
+          notes: "Recent benchmark",
+        },
+      ],
+    });
+
+    await prisma.eventRanking.createMany({
+      data: [
+        {
+          athleteId: athlete.id,
+          rankingSourceId: generalRankingSource.id,
+          eventName: athlete.events[0] ?? "200m",
+          rank: 18 - index,
+          region: "Region",
+          score: 25 + index * 0.4,
+          recordedAt: new Date(Date.now() - (18 - index) * 86_400_000),
+        },
+        {
+          athleteId: athlete.id,
+          rankingSourceId: generalRankingSource.id,
+          eventName: athlete.events[0] ?? "200m",
+          rank: 15 - index,
+          region: "Region",
+          score: 24.5 + index * 0.35,
+          recordedAt: new Date(Date.now() - (5 + index) * 86_400_000),
+        },
+      ],
     });
   }
 

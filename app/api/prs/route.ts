@@ -15,6 +15,7 @@ import {
   parseJsonBody,
   parseSearchParams,
 } from "@/lib/api";
+import { recomputeAthleteAnalytics } from "@/lib/analytics";
 import { requireRole, requireSession } from "@/lib/rbac";
 import {
   MeasurementUnit,
@@ -118,6 +119,8 @@ export async function POST(request: Request) {
         notes: body.notes ?? null,
       },
     });
+
+    await recomputeAthleteAnalytics(body.athleteId);
 
     return NextResponse.json(pr, { status: 201 });
   } catch (error) {

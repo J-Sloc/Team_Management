@@ -39,6 +39,22 @@ export async function getLinkedAthleteIds(userId: string) {
   return athletes.map((athlete) => athlete.id);
 }
 
+export async function getAccessibleInstitutionIds(user: SessionUser) {
+  if (user.role === UserRole.AD) {
+    const institutions = await prisma.institution.findMany({ select: { id: true } });
+    return institutions.map((inst) => inst.id);
+  }
+
+  // For coaches and athletes, get institutions through their teams
+  const teamIds = await getAccessibleTeamIds(user);
+  const teams = await prisma.team.findMany({
+    where: { id: { in: teamIds } },
+    select: { institutionId: true },
+  });
+
+  return [...new Set(teams.map((team) => team.institutionId).filter(Boolean))];
+}
+
 export async function getLinkedAthlete(userId: string) {
   return prisma.athlete.findFirst({
     where: { userId },

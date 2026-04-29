@@ -24,6 +24,16 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  */
 export type Team = $Result.DefaultSelection<Prisma.$TeamPayload>
 /**
+ * Model Institution
+ * 
+ */
+export type Institution = $Result.DefaultSelection<Prisma.$InstitutionPayload>
+/**
+ * Model Season
+ * 
+ */
+export type Season = $Result.DefaultSelection<Prisma.$SeasonPayload>
+/**
  * Model Athlete
  * 
  */
@@ -93,6 +103,26 @@ export type AthleteJournal = $Result.DefaultSelection<Prisma.$AthleteJournalPayl
  * 
  */
 export type UserSettings = $Result.DefaultSelection<Prisma.$UserSettingsPayload>
+/**
+ * Model AthletePerformanceSnapshot
+ * 
+ */
+export type AthletePerformanceSnapshot = $Result.DefaultSelection<Prisma.$AthletePerformanceSnapshotPayload>
+/**
+ * Model EventPerformanceTrend
+ * 
+ */
+export type EventPerformanceTrend = $Result.DefaultSelection<Prisma.$EventPerformanceTrendPayload>
+/**
+ * Model WorkoutAnalyticsSnapshot
+ * 
+ */
+export type WorkoutAnalyticsSnapshot = $Result.DefaultSelection<Prisma.$WorkoutAnalyticsSnapshotPayload>
+/**
+ * Model IntegrationRun
+ * 
+ */
+export type IntegrationRun = $Result.DefaultSelection<Prisma.$IntegrationRunPayload>
 
 /**
  * Enums
@@ -383,6 +413,26 @@ export class PrismaClient<
   get team(): Prisma.TeamDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.institution`: Exposes CRUD operations for the **Institution** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Institutions
+    * const institutions = await prisma.institution.findMany()
+    * ```
+    */
+  get institution(): Prisma.InstitutionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.season`: Exposes CRUD operations for the **Season** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Seasons
+    * const seasons = await prisma.season.findMany()
+    * ```
+    */
+  get season(): Prisma.SeasonDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.athlete`: Exposes CRUD operations for the **Athlete** model.
     * Example usage:
     * ```ts
@@ -521,6 +571,46 @@ export class PrismaClient<
     * ```
     */
   get userSettings(): Prisma.UserSettingsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.athletePerformanceSnapshot`: Exposes CRUD operations for the **AthletePerformanceSnapshot** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AthletePerformanceSnapshots
+    * const athletePerformanceSnapshots = await prisma.athletePerformanceSnapshot.findMany()
+    * ```
+    */
+  get athletePerformanceSnapshot(): Prisma.AthletePerformanceSnapshotDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.eventPerformanceTrend`: Exposes CRUD operations for the **EventPerformanceTrend** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more EventPerformanceTrends
+    * const eventPerformanceTrends = await prisma.eventPerformanceTrend.findMany()
+    * ```
+    */
+  get eventPerformanceTrend(): Prisma.EventPerformanceTrendDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.workoutAnalyticsSnapshot`: Exposes CRUD operations for the **WorkoutAnalyticsSnapshot** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WorkoutAnalyticsSnapshots
+    * const workoutAnalyticsSnapshots = await prisma.workoutAnalyticsSnapshot.findMany()
+    * ```
+    */
+  get workoutAnalyticsSnapshot(): Prisma.WorkoutAnalyticsSnapshotDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.integrationRun`: Exposes CRUD operations for the **IntegrationRun** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more IntegrationRuns
+    * const integrationRuns = await prisma.integrationRun.findMany()
+    * ```
+    */
+  get integrationRun(): Prisma.IntegrationRunDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -963,6 +1053,8 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     Team: 'Team',
+    Institution: 'Institution',
+    Season: 'Season',
     Athlete: 'Athlete',
     AcademicRecord: 'AcademicRecord',
     HealthRecord: 'HealthRecord',
@@ -976,7 +1068,11 @@ export namespace Prisma {
     PersonalRecord: 'PersonalRecord',
     MeetEntry: 'MeetEntry',
     AthleteJournal: 'AthleteJournal',
-    UserSettings: 'UserSettings'
+    UserSettings: 'UserSettings',
+    AthletePerformanceSnapshot: 'AthletePerformanceSnapshot',
+    EventPerformanceTrend: 'EventPerformanceTrend',
+    WorkoutAnalyticsSnapshot: 'WorkoutAnalyticsSnapshot',
+    IntegrationRun: 'IntegrationRun'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -992,7 +1088,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "team" | "athlete" | "academicRecord" | "healthRecord" | "event" | "note" | "workoutTemplate" | "workoutMetric" | "workoutInstance" | "rankingSource" | "eventRanking" | "personalRecord" | "meetEntry" | "athleteJournal" | "userSettings"
+      modelProps: "user" | "team" | "institution" | "season" | "athlete" | "academicRecord" | "healthRecord" | "event" | "note" | "workoutTemplate" | "workoutMetric" | "workoutInstance" | "rankingSource" | "eventRanking" | "personalRecord" | "meetEntry" | "athleteJournal" | "userSettings" | "athletePerformanceSnapshot" | "eventPerformanceTrend" | "workoutAnalyticsSnapshot" | "integrationRun"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1141,6 +1237,154 @@ export namespace Prisma {
           count: {
             args: Prisma.TeamCountArgs<ExtArgs>
             result: $Utils.Optional<TeamCountAggregateOutputType> | number
+          }
+        }
+      }
+      Institution: {
+        payload: Prisma.$InstitutionPayload<ExtArgs>
+        fields: Prisma.InstitutionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.InstitutionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InstitutionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.InstitutionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InstitutionPayload>
+          }
+          findFirst: {
+            args: Prisma.InstitutionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InstitutionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.InstitutionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InstitutionPayload>
+          }
+          findMany: {
+            args: Prisma.InstitutionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InstitutionPayload>[]
+          }
+          create: {
+            args: Prisma.InstitutionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InstitutionPayload>
+          }
+          createMany: {
+            args: Prisma.InstitutionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.InstitutionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InstitutionPayload>[]
+          }
+          delete: {
+            args: Prisma.InstitutionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InstitutionPayload>
+          }
+          update: {
+            args: Prisma.InstitutionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InstitutionPayload>
+          }
+          deleteMany: {
+            args: Prisma.InstitutionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.InstitutionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.InstitutionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InstitutionPayload>[]
+          }
+          upsert: {
+            args: Prisma.InstitutionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InstitutionPayload>
+          }
+          aggregate: {
+            args: Prisma.InstitutionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateInstitution>
+          }
+          groupBy: {
+            args: Prisma.InstitutionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<InstitutionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.InstitutionCountArgs<ExtArgs>
+            result: $Utils.Optional<InstitutionCountAggregateOutputType> | number
+          }
+        }
+      }
+      Season: {
+        payload: Prisma.$SeasonPayload<ExtArgs>
+        fields: Prisma.SeasonFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SeasonFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeasonPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SeasonFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeasonPayload>
+          }
+          findFirst: {
+            args: Prisma.SeasonFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeasonPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SeasonFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeasonPayload>
+          }
+          findMany: {
+            args: Prisma.SeasonFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeasonPayload>[]
+          }
+          create: {
+            args: Prisma.SeasonCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeasonPayload>
+          }
+          createMany: {
+            args: Prisma.SeasonCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SeasonCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeasonPayload>[]
+          }
+          delete: {
+            args: Prisma.SeasonDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeasonPayload>
+          }
+          update: {
+            args: Prisma.SeasonUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeasonPayload>
+          }
+          deleteMany: {
+            args: Prisma.SeasonDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SeasonUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SeasonUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeasonPayload>[]
+          }
+          upsert: {
+            args: Prisma.SeasonUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SeasonPayload>
+          }
+          aggregate: {
+            args: Prisma.SeasonAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSeason>
+          }
+          groupBy: {
+            args: Prisma.SeasonGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SeasonGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SeasonCountArgs<ExtArgs>
+            result: $Utils.Optional<SeasonCountAggregateOutputType> | number
           }
         }
       }
@@ -2180,6 +2424,302 @@ export namespace Prisma {
           }
         }
       }
+      AthletePerformanceSnapshot: {
+        payload: Prisma.$AthletePerformanceSnapshotPayload<ExtArgs>
+        fields: Prisma.AthletePerformanceSnapshotFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AthletePerformanceSnapshotFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AthletePerformanceSnapshotPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AthletePerformanceSnapshotFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AthletePerformanceSnapshotPayload>
+          }
+          findFirst: {
+            args: Prisma.AthletePerformanceSnapshotFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AthletePerformanceSnapshotPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AthletePerformanceSnapshotFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AthletePerformanceSnapshotPayload>
+          }
+          findMany: {
+            args: Prisma.AthletePerformanceSnapshotFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AthletePerformanceSnapshotPayload>[]
+          }
+          create: {
+            args: Prisma.AthletePerformanceSnapshotCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AthletePerformanceSnapshotPayload>
+          }
+          createMany: {
+            args: Prisma.AthletePerformanceSnapshotCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AthletePerformanceSnapshotCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AthletePerformanceSnapshotPayload>[]
+          }
+          delete: {
+            args: Prisma.AthletePerformanceSnapshotDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AthletePerformanceSnapshotPayload>
+          }
+          update: {
+            args: Prisma.AthletePerformanceSnapshotUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AthletePerformanceSnapshotPayload>
+          }
+          deleteMany: {
+            args: Prisma.AthletePerformanceSnapshotDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AthletePerformanceSnapshotUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AthletePerformanceSnapshotUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AthletePerformanceSnapshotPayload>[]
+          }
+          upsert: {
+            args: Prisma.AthletePerformanceSnapshotUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AthletePerformanceSnapshotPayload>
+          }
+          aggregate: {
+            args: Prisma.AthletePerformanceSnapshotAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAthletePerformanceSnapshot>
+          }
+          groupBy: {
+            args: Prisma.AthletePerformanceSnapshotGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AthletePerformanceSnapshotGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AthletePerformanceSnapshotCountArgs<ExtArgs>
+            result: $Utils.Optional<AthletePerformanceSnapshotCountAggregateOutputType> | number
+          }
+        }
+      }
+      EventPerformanceTrend: {
+        payload: Prisma.$EventPerformanceTrendPayload<ExtArgs>
+        fields: Prisma.EventPerformanceTrendFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.EventPerformanceTrendFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPerformanceTrendPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.EventPerformanceTrendFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPerformanceTrendPayload>
+          }
+          findFirst: {
+            args: Prisma.EventPerformanceTrendFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPerformanceTrendPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.EventPerformanceTrendFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPerformanceTrendPayload>
+          }
+          findMany: {
+            args: Prisma.EventPerformanceTrendFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPerformanceTrendPayload>[]
+          }
+          create: {
+            args: Prisma.EventPerformanceTrendCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPerformanceTrendPayload>
+          }
+          createMany: {
+            args: Prisma.EventPerformanceTrendCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.EventPerformanceTrendCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPerformanceTrendPayload>[]
+          }
+          delete: {
+            args: Prisma.EventPerformanceTrendDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPerformanceTrendPayload>
+          }
+          update: {
+            args: Prisma.EventPerformanceTrendUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPerformanceTrendPayload>
+          }
+          deleteMany: {
+            args: Prisma.EventPerformanceTrendDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.EventPerformanceTrendUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.EventPerformanceTrendUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPerformanceTrendPayload>[]
+          }
+          upsert: {
+            args: Prisma.EventPerformanceTrendUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPerformanceTrendPayload>
+          }
+          aggregate: {
+            args: Prisma.EventPerformanceTrendAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateEventPerformanceTrend>
+          }
+          groupBy: {
+            args: Prisma.EventPerformanceTrendGroupByArgs<ExtArgs>
+            result: $Utils.Optional<EventPerformanceTrendGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.EventPerformanceTrendCountArgs<ExtArgs>
+            result: $Utils.Optional<EventPerformanceTrendCountAggregateOutputType> | number
+          }
+        }
+      }
+      WorkoutAnalyticsSnapshot: {
+        payload: Prisma.$WorkoutAnalyticsSnapshotPayload<ExtArgs>
+        fields: Prisma.WorkoutAnalyticsSnapshotFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.WorkoutAnalyticsSnapshotFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkoutAnalyticsSnapshotPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.WorkoutAnalyticsSnapshotFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkoutAnalyticsSnapshotPayload>
+          }
+          findFirst: {
+            args: Prisma.WorkoutAnalyticsSnapshotFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkoutAnalyticsSnapshotPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.WorkoutAnalyticsSnapshotFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkoutAnalyticsSnapshotPayload>
+          }
+          findMany: {
+            args: Prisma.WorkoutAnalyticsSnapshotFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkoutAnalyticsSnapshotPayload>[]
+          }
+          create: {
+            args: Prisma.WorkoutAnalyticsSnapshotCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkoutAnalyticsSnapshotPayload>
+          }
+          createMany: {
+            args: Prisma.WorkoutAnalyticsSnapshotCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.WorkoutAnalyticsSnapshotCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkoutAnalyticsSnapshotPayload>[]
+          }
+          delete: {
+            args: Prisma.WorkoutAnalyticsSnapshotDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkoutAnalyticsSnapshotPayload>
+          }
+          update: {
+            args: Prisma.WorkoutAnalyticsSnapshotUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkoutAnalyticsSnapshotPayload>
+          }
+          deleteMany: {
+            args: Prisma.WorkoutAnalyticsSnapshotDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.WorkoutAnalyticsSnapshotUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.WorkoutAnalyticsSnapshotUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkoutAnalyticsSnapshotPayload>[]
+          }
+          upsert: {
+            args: Prisma.WorkoutAnalyticsSnapshotUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WorkoutAnalyticsSnapshotPayload>
+          }
+          aggregate: {
+            args: Prisma.WorkoutAnalyticsSnapshotAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateWorkoutAnalyticsSnapshot>
+          }
+          groupBy: {
+            args: Prisma.WorkoutAnalyticsSnapshotGroupByArgs<ExtArgs>
+            result: $Utils.Optional<WorkoutAnalyticsSnapshotGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.WorkoutAnalyticsSnapshotCountArgs<ExtArgs>
+            result: $Utils.Optional<WorkoutAnalyticsSnapshotCountAggregateOutputType> | number
+          }
+        }
+      }
+      IntegrationRun: {
+        payload: Prisma.$IntegrationRunPayload<ExtArgs>
+        fields: Prisma.IntegrationRunFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.IntegrationRunFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationRunPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.IntegrationRunFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationRunPayload>
+          }
+          findFirst: {
+            args: Prisma.IntegrationRunFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationRunPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.IntegrationRunFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationRunPayload>
+          }
+          findMany: {
+            args: Prisma.IntegrationRunFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationRunPayload>[]
+          }
+          create: {
+            args: Prisma.IntegrationRunCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationRunPayload>
+          }
+          createMany: {
+            args: Prisma.IntegrationRunCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.IntegrationRunCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationRunPayload>[]
+          }
+          delete: {
+            args: Prisma.IntegrationRunDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationRunPayload>
+          }
+          update: {
+            args: Prisma.IntegrationRunUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationRunPayload>
+          }
+          deleteMany: {
+            args: Prisma.IntegrationRunDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.IntegrationRunUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.IntegrationRunUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationRunPayload>[]
+          }
+          upsert: {
+            args: Prisma.IntegrationRunUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IntegrationRunPayload>
+          }
+          aggregate: {
+            args: Prisma.IntegrationRunAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateIntegrationRun>
+          }
+          groupBy: {
+            args: Prisma.IntegrationRunGroupByArgs<ExtArgs>
+            result: $Utils.Optional<IntegrationRunGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.IntegrationRunCountArgs<ExtArgs>
+            result: $Utils.Optional<IntegrationRunCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2266,6 +2806,8 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     team?: TeamOmit
+    institution?: InstitutionOmit
+    season?: SeasonOmit
     athlete?: AthleteOmit
     academicRecord?: AcademicRecordOmit
     healthRecord?: HealthRecordOmit
@@ -2280,6 +2822,10 @@ export namespace Prisma {
     meetEntry?: MeetEntryOmit
     athleteJournal?: AthleteJournalOmit
     userSettings?: UserSettingsOmit
+    athletePerformanceSnapshot?: AthletePerformanceSnapshotOmit
+    eventPerformanceTrend?: EventPerformanceTrendOmit
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotOmit
+    integrationRun?: IntegrationRunOmit
   }
 
   /* Types for Logging */
@@ -2380,6 +2926,7 @@ export namespace Prisma {
     createdMeetEntries: number
     journals: number
     notes: number
+    integrationRuns: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2389,6 +2936,7 @@ export namespace Prisma {
     createdMeetEntries?: boolean | UserCountOutputTypeCountCreatedMeetEntriesArgs
     journals?: boolean | UserCountOutputTypeCountJournalsArgs
     notes?: boolean | UserCountOutputTypeCountNotesArgs
+    integrationRuns?: boolean | UserCountOutputTypeCountIntegrationRunsArgs
   }
 
   // Custom InputTypes
@@ -2444,6 +2992,13 @@ export namespace Prisma {
     where?: NoteWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountIntegrationRunsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IntegrationRunWhereInput
+  }
+
 
   /**
    * Count Type TeamCountOutputType
@@ -2454,6 +3009,9 @@ export namespace Prisma {
     events: number
     workoutTemplates: number
     meetEntries: number
+    performanceSnapshots: number
+    eventPerformanceTrends: number
+    workoutAnalyticsSnapshots: number
   }
 
   export type TeamCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2461,6 +3019,9 @@ export namespace Prisma {
     events?: boolean | TeamCountOutputTypeCountEventsArgs
     workoutTemplates?: boolean | TeamCountOutputTypeCountWorkoutTemplatesArgs
     meetEntries?: boolean | TeamCountOutputTypeCountMeetEntriesArgs
+    performanceSnapshots?: boolean | TeamCountOutputTypeCountPerformanceSnapshotsArgs
+    eventPerformanceTrends?: boolean | TeamCountOutputTypeCountEventPerformanceTrendsArgs
+    workoutAnalyticsSnapshots?: boolean | TeamCountOutputTypeCountWorkoutAnalyticsSnapshotsArgs
   }
 
   // Custom InputTypes
@@ -2502,6 +3063,98 @@ export namespace Prisma {
     where?: MeetEntryWhereInput
   }
 
+  /**
+   * TeamCountOutputType without action
+   */
+  export type TeamCountOutputTypeCountPerformanceSnapshotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AthletePerformanceSnapshotWhereInput
+  }
+
+  /**
+   * TeamCountOutputType without action
+   */
+  export type TeamCountOutputTypeCountEventPerformanceTrendsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventPerformanceTrendWhereInput
+  }
+
+  /**
+   * TeamCountOutputType without action
+   */
+  export type TeamCountOutputTypeCountWorkoutAnalyticsSnapshotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WorkoutAnalyticsSnapshotWhereInput
+  }
+
+
+  /**
+   * Count Type InstitutionCountOutputType
+   */
+
+  export type InstitutionCountOutputType = {
+    teams: number
+    seasons: number
+  }
+
+  export type InstitutionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    teams?: boolean | InstitutionCountOutputTypeCountTeamsArgs
+    seasons?: boolean | InstitutionCountOutputTypeCountSeasonsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * InstitutionCountOutputType without action
+   */
+  export type InstitutionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InstitutionCountOutputType
+     */
+    select?: InstitutionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * InstitutionCountOutputType without action
+   */
+  export type InstitutionCountOutputTypeCountTeamsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TeamWhereInput
+  }
+
+  /**
+   * InstitutionCountOutputType without action
+   */
+  export type InstitutionCountOutputTypeCountSeasonsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SeasonWhereInput
+  }
+
+
+  /**
+   * Count Type SeasonCountOutputType
+   */
+
+  export type SeasonCountOutputType = {
+    teams: number
+  }
+
+  export type SeasonCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    teams?: boolean | SeasonCountOutputTypeCountTeamsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SeasonCountOutputType without action
+   */
+  export type SeasonCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SeasonCountOutputType
+     */
+    select?: SeasonCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SeasonCountOutputType without action
+   */
+  export type SeasonCountOutputTypeCountTeamsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TeamWhereInput
+  }
+
 
   /**
    * Count Type AthleteCountOutputType
@@ -2517,6 +3170,7 @@ export namespace Prisma {
     personalRecords: number
     meetEntries: number
     journals: number
+    eventPerformanceTrends: number
   }
 
   export type AthleteCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2529,6 +3183,7 @@ export namespace Prisma {
     personalRecords?: boolean | AthleteCountOutputTypeCountPersonalRecordsArgs
     meetEntries?: boolean | AthleteCountOutputTypeCountMeetEntriesArgs
     journals?: boolean | AthleteCountOutputTypeCountJournalsArgs
+    eventPerformanceTrends?: boolean | AthleteCountOutputTypeCountEventPerformanceTrendsArgs
   }
 
   // Custom InputTypes
@@ -2603,6 +3258,13 @@ export namespace Prisma {
    */
   export type AthleteCountOutputTypeCountJournalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AthleteJournalWhereInput
+  }
+
+  /**
+   * AthleteCountOutputType without action
+   */
+  export type AthleteCountOutputTypeCountEventPerformanceTrendsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventPerformanceTrendWhereInput
   }
 
 
@@ -2864,6 +3526,7 @@ export namespace Prisma {
     journals?: boolean | User$journalsArgs<ExtArgs>
     notes?: boolean | User$notesArgs<ExtArgs>
     userSettings?: boolean | User$userSettingsArgs<ExtArgs>
+    integrationRuns?: boolean | User$integrationRunsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2906,6 +3569,7 @@ export namespace Prisma {
     journals?: boolean | User$journalsArgs<ExtArgs>
     notes?: boolean | User$notesArgs<ExtArgs>
     userSettings?: boolean | User$userSettingsArgs<ExtArgs>
+    integrationRuns?: boolean | User$integrationRunsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2921,6 +3585,7 @@ export namespace Prisma {
       journals: Prisma.$AthleteJournalPayload<ExtArgs>[]
       notes: Prisma.$NotePayload<ExtArgs>[]
       userSettings: Prisma.$UserSettingsPayload<ExtArgs> | null
+      integrationRuns: Prisma.$IntegrationRunPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3331,6 +3996,7 @@ export namespace Prisma {
     journals<T extends User$journalsArgs<ExtArgs> = {}>(args?: Subset<T, User$journalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AthleteJournalPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     notes<T extends User$notesArgs<ExtArgs> = {}>(args?: Subset<T, User$notesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotePayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     userSettings<T extends User$userSettingsArgs<ExtArgs> = {}>(args?: Subset<T, User$userSettingsArgs<ExtArgs>>): Prisma__UserSettingsClient<$Result.GetResult<Prisma.$UserSettingsPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    integrationRuns<T extends User$integrationRunsArgs<ExtArgs> = {}>(args?: Subset<T, User$integrationRunsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IntegrationRunPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3918,6 +4584,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.integrationRuns
+   */
+  export type User$integrationRunsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationRun
+     */
+    select?: IntegrationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationRun
+     */
+    omit?: IntegrationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationRunInclude<ExtArgs> | null
+    where?: IntegrationRunWhereInput
+    orderBy?: IntegrationRunOrderByWithRelationInput | IntegrationRunOrderByWithRelationInput[]
+    cursor?: IntegrationRunWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: IntegrationRunScalarFieldEnum | IntegrationRunScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3950,7 +4640,8 @@ export namespace Prisma {
     id: string | null
     name: string | null
     sport: $Enums.Sport | null
-    institution: string | null
+    institutionId: string | null
+    seasonId: string | null
     createdAt: Date | null
   }
 
@@ -3958,7 +4649,8 @@ export namespace Prisma {
     id: string | null
     name: string | null
     sport: $Enums.Sport | null
-    institution: string | null
+    institutionId: string | null
+    seasonId: string | null
     createdAt: Date | null
   }
 
@@ -3966,7 +4658,8 @@ export namespace Prisma {
     id: number
     name: number
     sport: number
-    institution: number
+    institutionId: number
+    seasonId: number
     createdAt: number
     _all: number
   }
@@ -3976,7 +4669,8 @@ export namespace Prisma {
     id?: true
     name?: true
     sport?: true
-    institution?: true
+    institutionId?: true
+    seasonId?: true
     createdAt?: true
   }
 
@@ -3984,7 +4678,8 @@ export namespace Prisma {
     id?: true
     name?: true
     sport?: true
-    institution?: true
+    institutionId?: true
+    seasonId?: true
     createdAt?: true
   }
 
@@ -3992,7 +4687,8 @@ export namespace Prisma {
     id?: true
     name?: true
     sport?: true
-    institution?: true
+    institutionId?: true
+    seasonId?: true
     createdAt?: true
     _all?: true
   }
@@ -4073,7 +4769,8 @@ export namespace Prisma {
     id: string
     name: string
     sport: $Enums.Sport
-    institution: string | null
+    institutionId: string | null
+    seasonId: string | null
     createdAt: Date
     _count: TeamCountAggregateOutputType | null
     _min: TeamMinAggregateOutputType | null
@@ -4098,12 +4795,18 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     sport?: boolean
-    institution?: boolean
+    institutionId?: boolean
+    seasonId?: boolean
     createdAt?: boolean
+    institution?: boolean | Team$institutionArgs<ExtArgs>
+    season?: boolean | Team$seasonArgs<ExtArgs>
     athletes?: boolean | Team$athletesArgs<ExtArgs>
     events?: boolean | Team$eventsArgs<ExtArgs>
     workoutTemplates?: boolean | Team$workoutTemplatesArgs<ExtArgs>
     meetEntries?: boolean | Team$meetEntriesArgs<ExtArgs>
+    performanceSnapshots?: boolean | Team$performanceSnapshotsArgs<ExtArgs>
+    eventPerformanceTrends?: boolean | Team$eventPerformanceTrendsArgs<ExtArgs>
+    workoutAnalyticsSnapshots?: boolean | Team$workoutAnalyticsSnapshotsArgs<ExtArgs>
     _count?: boolean | TeamCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["team"]>
 
@@ -4111,50 +4814,74 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     sport?: boolean
-    institution?: boolean
+    institutionId?: boolean
+    seasonId?: boolean
     createdAt?: boolean
+    institution?: boolean | Team$institutionArgs<ExtArgs>
+    season?: boolean | Team$seasonArgs<ExtArgs>
   }, ExtArgs["result"]["team"]>
 
   export type TeamSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
     sport?: boolean
-    institution?: boolean
+    institutionId?: boolean
+    seasonId?: boolean
     createdAt?: boolean
+    institution?: boolean | Team$institutionArgs<ExtArgs>
+    season?: boolean | Team$seasonArgs<ExtArgs>
   }, ExtArgs["result"]["team"]>
 
   export type TeamSelectScalar = {
     id?: boolean
     name?: boolean
     sport?: boolean
-    institution?: boolean
+    institutionId?: boolean
+    seasonId?: boolean
     createdAt?: boolean
   }
 
-  export type TeamOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "sport" | "institution" | "createdAt", ExtArgs["result"]["team"]>
+  export type TeamOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "sport" | "institutionId" | "seasonId" | "createdAt", ExtArgs["result"]["team"]>
   export type TeamInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    institution?: boolean | Team$institutionArgs<ExtArgs>
+    season?: boolean | Team$seasonArgs<ExtArgs>
     athletes?: boolean | Team$athletesArgs<ExtArgs>
     events?: boolean | Team$eventsArgs<ExtArgs>
     workoutTemplates?: boolean | Team$workoutTemplatesArgs<ExtArgs>
     meetEntries?: boolean | Team$meetEntriesArgs<ExtArgs>
+    performanceSnapshots?: boolean | Team$performanceSnapshotsArgs<ExtArgs>
+    eventPerformanceTrends?: boolean | Team$eventPerformanceTrendsArgs<ExtArgs>
+    workoutAnalyticsSnapshots?: boolean | Team$workoutAnalyticsSnapshotsArgs<ExtArgs>
     _count?: boolean | TeamCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type TeamIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type TeamIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type TeamIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    institution?: boolean | Team$institutionArgs<ExtArgs>
+    season?: boolean | Team$seasonArgs<ExtArgs>
+  }
+  export type TeamIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    institution?: boolean | Team$institutionArgs<ExtArgs>
+    season?: boolean | Team$seasonArgs<ExtArgs>
+  }
 
   export type $TeamPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Team"
     objects: {
+      institution: Prisma.$InstitutionPayload<ExtArgs> | null
+      season: Prisma.$SeasonPayload<ExtArgs> | null
       athletes: Prisma.$AthletePayload<ExtArgs>[]
       events: Prisma.$EventPayload<ExtArgs>[]
       workoutTemplates: Prisma.$WorkoutTemplatePayload<ExtArgs>[]
       meetEntries: Prisma.$MeetEntryPayload<ExtArgs>[]
+      performanceSnapshots: Prisma.$AthletePerformanceSnapshotPayload<ExtArgs>[]
+      eventPerformanceTrends: Prisma.$EventPerformanceTrendPayload<ExtArgs>[]
+      workoutAnalyticsSnapshots: Prisma.$WorkoutAnalyticsSnapshotPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
       sport: $Enums.Sport
-      institution: string | null
+      institutionId: string | null
+      seasonId: string | null
       createdAt: Date
     }, ExtArgs["result"]["team"]>
     composites: {}
@@ -4550,10 +5277,15 @@ export namespace Prisma {
    */
   export interface Prisma__TeamClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    institution<T extends Team$institutionArgs<ExtArgs> = {}>(args?: Subset<T, Team$institutionArgs<ExtArgs>>): Prisma__InstitutionClient<$Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    season<T extends Team$seasonArgs<ExtArgs> = {}>(args?: Subset<T, Team$seasonArgs<ExtArgs>>): Prisma__SeasonClient<$Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     athletes<T extends Team$athletesArgs<ExtArgs> = {}>(args?: Subset<T, Team$athletesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AthletePayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     events<T extends Team$eventsArgs<ExtArgs> = {}>(args?: Subset<T, Team$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     workoutTemplates<T extends Team$workoutTemplatesArgs<ExtArgs> = {}>(args?: Subset<T, Team$workoutTemplatesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkoutTemplatePayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     meetEntries<T extends Team$meetEntriesArgs<ExtArgs> = {}>(args?: Subset<T, Team$meetEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MeetEntryPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    performanceSnapshots<T extends Team$performanceSnapshotsArgs<ExtArgs> = {}>(args?: Subset<T, Team$performanceSnapshotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AthletePerformanceSnapshotPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    eventPerformanceTrends<T extends Team$eventPerformanceTrendsArgs<ExtArgs> = {}>(args?: Subset<T, Team$eventPerformanceTrendsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPerformanceTrendPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    workoutAnalyticsSnapshots<T extends Team$workoutAnalyticsSnapshotsArgs<ExtArgs> = {}>(args?: Subset<T, Team$workoutAnalyticsSnapshotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkoutAnalyticsSnapshotPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4586,7 +5318,8 @@ export namespace Prisma {
     readonly id: FieldRef<"Team", 'String'>
     readonly name: FieldRef<"Team", 'String'>
     readonly sport: FieldRef<"Team", 'Sport'>
-    readonly institution: FieldRef<"Team", 'String'>
+    readonly institutionId: FieldRef<"Team", 'String'>
+    readonly seasonId: FieldRef<"Team", 'String'>
     readonly createdAt: FieldRef<"Team", 'DateTime'>
   }
     
@@ -4837,6 +5570,10 @@ export namespace Prisma {
      */
     data: TeamCreateManyInput | TeamCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TeamIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -4907,6 +5644,10 @@ export namespace Prisma {
      * Limit how many Teams to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TeamIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -4973,6 +5714,44 @@ export namespace Prisma {
      * Limit how many Teams to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Team.institution
+   */
+  export type Team$institutionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Institution
+     */
+    select?: InstitutionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Institution
+     */
+    omit?: InstitutionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InstitutionInclude<ExtArgs> | null
+    where?: InstitutionWhereInput
+  }
+
+  /**
+   * Team.season
+   */
+  export type Team$seasonArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Season
+     */
+    select?: SeasonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Season
+     */
+    omit?: SeasonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeasonInclude<ExtArgs> | null
+    where?: SeasonWhereInput
   }
 
   /**
@@ -5072,6 +5851,78 @@ export namespace Prisma {
   }
 
   /**
+   * Team.performanceSnapshots
+   */
+  export type Team$performanceSnapshotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AthletePerformanceSnapshot
+     */
+    select?: AthletePerformanceSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AthletePerformanceSnapshot
+     */
+    omit?: AthletePerformanceSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AthletePerformanceSnapshotInclude<ExtArgs> | null
+    where?: AthletePerformanceSnapshotWhereInput
+    orderBy?: AthletePerformanceSnapshotOrderByWithRelationInput | AthletePerformanceSnapshotOrderByWithRelationInput[]
+    cursor?: AthletePerformanceSnapshotWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AthletePerformanceSnapshotScalarFieldEnum | AthletePerformanceSnapshotScalarFieldEnum[]
+  }
+
+  /**
+   * Team.eventPerformanceTrends
+   */
+  export type Team$eventPerformanceTrendsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventPerformanceTrend
+     */
+    select?: EventPerformanceTrendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventPerformanceTrend
+     */
+    omit?: EventPerformanceTrendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventPerformanceTrendInclude<ExtArgs> | null
+    where?: EventPerformanceTrendWhereInput
+    orderBy?: EventPerformanceTrendOrderByWithRelationInput | EventPerformanceTrendOrderByWithRelationInput[]
+    cursor?: EventPerformanceTrendWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EventPerformanceTrendScalarFieldEnum | EventPerformanceTrendScalarFieldEnum[]
+  }
+
+  /**
+   * Team.workoutAnalyticsSnapshots
+   */
+  export type Team$workoutAnalyticsSnapshotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkoutAnalyticsSnapshot
+     */
+    select?: WorkoutAnalyticsSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkoutAnalyticsSnapshot
+     */
+    omit?: WorkoutAnalyticsSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkoutAnalyticsSnapshotInclude<ExtArgs> | null
+    where?: WorkoutAnalyticsSnapshotWhereInput
+    orderBy?: WorkoutAnalyticsSnapshotOrderByWithRelationInput | WorkoutAnalyticsSnapshotOrderByWithRelationInput[]
+    cursor?: WorkoutAnalyticsSnapshotWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: WorkoutAnalyticsSnapshotScalarFieldEnum | WorkoutAnalyticsSnapshotScalarFieldEnum[]
+  }
+
+  /**
    * Team without action
    */
   export type TeamDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5087,6 +5938,2244 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: TeamInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Institution
+   */
+
+  export type AggregateInstitution = {
+    _count: InstitutionCountAggregateOutputType | null
+    _min: InstitutionMinAggregateOutputType | null
+    _max: InstitutionMaxAggregateOutputType | null
+  }
+
+  export type InstitutionMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    type: string | null
+    address: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type InstitutionMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    type: string | null
+    address: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type InstitutionCountAggregateOutputType = {
+    id: number
+    name: number
+    type: number
+    address: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type InstitutionMinAggregateInputType = {
+    id?: true
+    name?: true
+    type?: true
+    address?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type InstitutionMaxAggregateInputType = {
+    id?: true
+    name?: true
+    type?: true
+    address?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type InstitutionCountAggregateInputType = {
+    id?: true
+    name?: true
+    type?: true
+    address?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type InstitutionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Institution to aggregate.
+     */
+    where?: InstitutionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Institutions to fetch.
+     */
+    orderBy?: InstitutionOrderByWithRelationInput | InstitutionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: InstitutionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Institutions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Institutions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Institutions
+    **/
+    _count?: true | InstitutionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: InstitutionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: InstitutionMaxAggregateInputType
+  }
+
+  export type GetInstitutionAggregateType<T extends InstitutionAggregateArgs> = {
+        [P in keyof T & keyof AggregateInstitution]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateInstitution[P]>
+      : GetScalarType<T[P], AggregateInstitution[P]>
+  }
+
+
+
+
+  export type InstitutionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InstitutionWhereInput
+    orderBy?: InstitutionOrderByWithAggregationInput | InstitutionOrderByWithAggregationInput[]
+    by: InstitutionScalarFieldEnum[] | InstitutionScalarFieldEnum
+    having?: InstitutionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: InstitutionCountAggregateInputType | true
+    _min?: InstitutionMinAggregateInputType
+    _max?: InstitutionMaxAggregateInputType
+  }
+
+  export type InstitutionGroupByOutputType = {
+    id: string
+    name: string
+    type: string | null
+    address: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: InstitutionCountAggregateOutputType | null
+    _min: InstitutionMinAggregateOutputType | null
+    _max: InstitutionMaxAggregateOutputType | null
+  }
+
+  type GetInstitutionGroupByPayload<T extends InstitutionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<InstitutionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof InstitutionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], InstitutionGroupByOutputType[P]>
+            : GetScalarType<T[P], InstitutionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type InstitutionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    type?: boolean
+    address?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    teams?: boolean | Institution$teamsArgs<ExtArgs>
+    seasons?: boolean | Institution$seasonsArgs<ExtArgs>
+    _count?: boolean | InstitutionCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["institution"]>
+
+  export type InstitutionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    type?: boolean
+    address?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["institution"]>
+
+  export type InstitutionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    type?: boolean
+    address?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["institution"]>
+
+  export type InstitutionSelectScalar = {
+    id?: boolean
+    name?: boolean
+    type?: boolean
+    address?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type InstitutionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "type" | "address" | "createdAt" | "updatedAt", ExtArgs["result"]["institution"]>
+  export type InstitutionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    teams?: boolean | Institution$teamsArgs<ExtArgs>
+    seasons?: boolean | Institution$seasonsArgs<ExtArgs>
+    _count?: boolean | InstitutionCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type InstitutionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type InstitutionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $InstitutionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Institution"
+    objects: {
+      teams: Prisma.$TeamPayload<ExtArgs>[]
+      seasons: Prisma.$SeasonPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      type: string | null
+      address: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["institution"]>
+    composites: {}
+  }
+
+  type InstitutionGetPayload<S extends boolean | null | undefined | InstitutionDefaultArgs> = $Result.GetResult<Prisma.$InstitutionPayload, S>
+
+  type InstitutionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<InstitutionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: InstitutionCountAggregateInputType | true
+    }
+
+  export interface InstitutionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Institution'], meta: { name: 'Institution' } }
+    /**
+     * Find zero or one Institution that matches the filter.
+     * @param {InstitutionFindUniqueArgs} args - Arguments to find a Institution
+     * @example
+     * // Get one Institution
+     * const institution = await prisma.institution.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends InstitutionFindUniqueArgs>(args: SelectSubset<T, InstitutionFindUniqueArgs<ExtArgs>>): Prisma__InstitutionClient<$Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one Institution that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {InstitutionFindUniqueOrThrowArgs} args - Arguments to find a Institution
+     * @example
+     * // Get one Institution
+     * const institution = await prisma.institution.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends InstitutionFindUniqueOrThrowArgs>(args: SelectSubset<T, InstitutionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__InstitutionClient<$Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first Institution that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InstitutionFindFirstArgs} args - Arguments to find a Institution
+     * @example
+     * // Get one Institution
+     * const institution = await prisma.institution.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends InstitutionFindFirstArgs>(args?: SelectSubset<T, InstitutionFindFirstArgs<ExtArgs>>): Prisma__InstitutionClient<$Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first Institution that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InstitutionFindFirstOrThrowArgs} args - Arguments to find a Institution
+     * @example
+     * // Get one Institution
+     * const institution = await prisma.institution.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends InstitutionFindFirstOrThrowArgs>(args?: SelectSubset<T, InstitutionFindFirstOrThrowArgs<ExtArgs>>): Prisma__InstitutionClient<$Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more Institutions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InstitutionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Institutions
+     * const institutions = await prisma.institution.findMany()
+     * 
+     * // Get first 10 Institutions
+     * const institutions = await prisma.institution.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const institutionWithIdOnly = await prisma.institution.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends InstitutionFindManyArgs>(args?: SelectSubset<T, InstitutionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a Institution.
+     * @param {InstitutionCreateArgs} args - Arguments to create a Institution.
+     * @example
+     * // Create one Institution
+     * const Institution = await prisma.institution.create({
+     *   data: {
+     *     // ... data to create a Institution
+     *   }
+     * })
+     * 
+     */
+    create<T extends InstitutionCreateArgs>(args: SelectSubset<T, InstitutionCreateArgs<ExtArgs>>): Prisma__InstitutionClient<$Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many Institutions.
+     * @param {InstitutionCreateManyArgs} args - Arguments to create many Institutions.
+     * @example
+     * // Create many Institutions
+     * const institution = await prisma.institution.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends InstitutionCreateManyArgs>(args?: SelectSubset<T, InstitutionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Institutions and returns the data saved in the database.
+     * @param {InstitutionCreateManyAndReturnArgs} args - Arguments to create many Institutions.
+     * @example
+     * // Create many Institutions
+     * const institution = await prisma.institution.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Institutions and only return the `id`
+     * const institutionWithIdOnly = await prisma.institution.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends InstitutionCreateManyAndReturnArgs>(args?: SelectSubset<T, InstitutionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a Institution.
+     * @param {InstitutionDeleteArgs} args - Arguments to delete one Institution.
+     * @example
+     * // Delete one Institution
+     * const Institution = await prisma.institution.delete({
+     *   where: {
+     *     // ... filter to delete one Institution
+     *   }
+     * })
+     * 
+     */
+    delete<T extends InstitutionDeleteArgs>(args: SelectSubset<T, InstitutionDeleteArgs<ExtArgs>>): Prisma__InstitutionClient<$Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one Institution.
+     * @param {InstitutionUpdateArgs} args - Arguments to update one Institution.
+     * @example
+     * // Update one Institution
+     * const institution = await prisma.institution.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends InstitutionUpdateArgs>(args: SelectSubset<T, InstitutionUpdateArgs<ExtArgs>>): Prisma__InstitutionClient<$Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more Institutions.
+     * @param {InstitutionDeleteManyArgs} args - Arguments to filter Institutions to delete.
+     * @example
+     * // Delete a few Institutions
+     * const { count } = await prisma.institution.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends InstitutionDeleteManyArgs>(args?: SelectSubset<T, InstitutionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Institutions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InstitutionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Institutions
+     * const institution = await prisma.institution.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends InstitutionUpdateManyArgs>(args: SelectSubset<T, InstitutionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Institutions and returns the data updated in the database.
+     * @param {InstitutionUpdateManyAndReturnArgs} args - Arguments to update many Institutions.
+     * @example
+     * // Update many Institutions
+     * const institution = await prisma.institution.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Institutions and only return the `id`
+     * const institutionWithIdOnly = await prisma.institution.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends InstitutionUpdateManyAndReturnArgs>(args: SelectSubset<T, InstitutionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one Institution.
+     * @param {InstitutionUpsertArgs} args - Arguments to update or create a Institution.
+     * @example
+     * // Update or create a Institution
+     * const institution = await prisma.institution.upsert({
+     *   create: {
+     *     // ... data to create a Institution
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Institution we want to update
+     *   }
+     * })
+     */
+    upsert<T extends InstitutionUpsertArgs>(args: SelectSubset<T, InstitutionUpsertArgs<ExtArgs>>): Prisma__InstitutionClient<$Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of Institutions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InstitutionCountArgs} args - Arguments to filter Institutions to count.
+     * @example
+     * // Count the number of Institutions
+     * const count = await prisma.institution.count({
+     *   where: {
+     *     // ... the filter for the Institutions we want to count
+     *   }
+     * })
+    **/
+    count<T extends InstitutionCountArgs>(
+      args?: Subset<T, InstitutionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], InstitutionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Institution.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InstitutionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends InstitutionAggregateArgs>(args: Subset<T, InstitutionAggregateArgs>): Prisma.PrismaPromise<GetInstitutionAggregateType<T>>
+
+    /**
+     * Group by Institution.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InstitutionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends InstitutionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: InstitutionGroupByArgs['orderBy'] }
+        : { orderBy?: InstitutionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, InstitutionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInstitutionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Institution model
+   */
+  readonly fields: InstitutionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Institution.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__InstitutionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    teams<T extends Institution$teamsArgs<ExtArgs> = {}>(args?: Subset<T, Institution$teamsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    seasons<T extends Institution$seasonsArgs<ExtArgs> = {}>(args?: Subset<T, Institution$seasonsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Institution model
+   */ 
+  interface InstitutionFieldRefs {
+    readonly id: FieldRef<"Institution", 'String'>
+    readonly name: FieldRef<"Institution", 'String'>
+    readonly type: FieldRef<"Institution", 'String'>
+    readonly address: FieldRef<"Institution", 'String'>
+    readonly createdAt: FieldRef<"Institution", 'DateTime'>
+    readonly updatedAt: FieldRef<"Institution", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Institution findUnique
+   */
+  export type InstitutionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Institution
+     */
+    select?: InstitutionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Institution
+     */
+    omit?: InstitutionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InstitutionInclude<ExtArgs> | null
+    /**
+     * Filter, which Institution to fetch.
+     */
+    where: InstitutionWhereUniqueInput
+  }
+
+  /**
+   * Institution findUniqueOrThrow
+   */
+  export type InstitutionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Institution
+     */
+    select?: InstitutionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Institution
+     */
+    omit?: InstitutionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InstitutionInclude<ExtArgs> | null
+    /**
+     * Filter, which Institution to fetch.
+     */
+    where: InstitutionWhereUniqueInput
+  }
+
+  /**
+   * Institution findFirst
+   */
+  export type InstitutionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Institution
+     */
+    select?: InstitutionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Institution
+     */
+    omit?: InstitutionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InstitutionInclude<ExtArgs> | null
+    /**
+     * Filter, which Institution to fetch.
+     */
+    where?: InstitutionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Institutions to fetch.
+     */
+    orderBy?: InstitutionOrderByWithRelationInput | InstitutionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Institutions.
+     */
+    cursor?: InstitutionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Institutions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Institutions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Institutions.
+     */
+    distinct?: InstitutionScalarFieldEnum | InstitutionScalarFieldEnum[]
+  }
+
+  /**
+   * Institution findFirstOrThrow
+   */
+  export type InstitutionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Institution
+     */
+    select?: InstitutionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Institution
+     */
+    omit?: InstitutionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InstitutionInclude<ExtArgs> | null
+    /**
+     * Filter, which Institution to fetch.
+     */
+    where?: InstitutionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Institutions to fetch.
+     */
+    orderBy?: InstitutionOrderByWithRelationInput | InstitutionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Institutions.
+     */
+    cursor?: InstitutionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Institutions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Institutions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Institutions.
+     */
+    distinct?: InstitutionScalarFieldEnum | InstitutionScalarFieldEnum[]
+  }
+
+  /**
+   * Institution findMany
+   */
+  export type InstitutionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Institution
+     */
+    select?: InstitutionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Institution
+     */
+    omit?: InstitutionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InstitutionInclude<ExtArgs> | null
+    /**
+     * Filter, which Institutions to fetch.
+     */
+    where?: InstitutionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Institutions to fetch.
+     */
+    orderBy?: InstitutionOrderByWithRelationInput | InstitutionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Institutions.
+     */
+    cursor?: InstitutionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Institutions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Institutions.
+     */
+    skip?: number
+    distinct?: InstitutionScalarFieldEnum | InstitutionScalarFieldEnum[]
+  }
+
+  /**
+   * Institution create
+   */
+  export type InstitutionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Institution
+     */
+    select?: InstitutionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Institution
+     */
+    omit?: InstitutionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InstitutionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Institution.
+     */
+    data: XOR<InstitutionCreateInput, InstitutionUncheckedCreateInput>
+  }
+
+  /**
+   * Institution createMany
+   */
+  export type InstitutionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Institutions.
+     */
+    data: InstitutionCreateManyInput | InstitutionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Institution createManyAndReturn
+   */
+  export type InstitutionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Institution
+     */
+    select?: InstitutionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Institution
+     */
+    omit?: InstitutionOmit<ExtArgs> | null
+    /**
+     * The data used to create many Institutions.
+     */
+    data: InstitutionCreateManyInput | InstitutionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Institution update
+   */
+  export type InstitutionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Institution
+     */
+    select?: InstitutionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Institution
+     */
+    omit?: InstitutionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InstitutionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Institution.
+     */
+    data: XOR<InstitutionUpdateInput, InstitutionUncheckedUpdateInput>
+    /**
+     * Choose, which Institution to update.
+     */
+    where: InstitutionWhereUniqueInput
+  }
+
+  /**
+   * Institution updateMany
+   */
+  export type InstitutionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Institutions.
+     */
+    data: XOR<InstitutionUpdateManyMutationInput, InstitutionUncheckedUpdateManyInput>
+    /**
+     * Filter which Institutions to update
+     */
+    where?: InstitutionWhereInput
+    /**
+     * Limit how many Institutions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Institution updateManyAndReturn
+   */
+  export type InstitutionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Institution
+     */
+    select?: InstitutionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Institution
+     */
+    omit?: InstitutionOmit<ExtArgs> | null
+    /**
+     * The data used to update Institutions.
+     */
+    data: XOR<InstitutionUpdateManyMutationInput, InstitutionUncheckedUpdateManyInput>
+    /**
+     * Filter which Institutions to update
+     */
+    where?: InstitutionWhereInput
+    /**
+     * Limit how many Institutions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Institution upsert
+   */
+  export type InstitutionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Institution
+     */
+    select?: InstitutionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Institution
+     */
+    omit?: InstitutionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InstitutionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Institution to update in case it exists.
+     */
+    where: InstitutionWhereUniqueInput
+    /**
+     * In case the Institution found by the `where` argument doesn't exist, create a new Institution with this data.
+     */
+    create: XOR<InstitutionCreateInput, InstitutionUncheckedCreateInput>
+    /**
+     * In case the Institution was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<InstitutionUpdateInput, InstitutionUncheckedUpdateInput>
+  }
+
+  /**
+   * Institution delete
+   */
+  export type InstitutionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Institution
+     */
+    select?: InstitutionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Institution
+     */
+    omit?: InstitutionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InstitutionInclude<ExtArgs> | null
+    /**
+     * Filter which Institution to delete.
+     */
+    where: InstitutionWhereUniqueInput
+  }
+
+  /**
+   * Institution deleteMany
+   */
+  export type InstitutionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Institutions to delete
+     */
+    where?: InstitutionWhereInput
+    /**
+     * Limit how many Institutions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Institution.teams
+   */
+  export type Institution$teamsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Team
+     */
+    select?: TeamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Team
+     */
+    omit?: TeamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TeamInclude<ExtArgs> | null
+    where?: TeamWhereInput
+    orderBy?: TeamOrderByWithRelationInput | TeamOrderByWithRelationInput[]
+    cursor?: TeamWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TeamScalarFieldEnum | TeamScalarFieldEnum[]
+  }
+
+  /**
+   * Institution.seasons
+   */
+  export type Institution$seasonsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Season
+     */
+    select?: SeasonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Season
+     */
+    omit?: SeasonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeasonInclude<ExtArgs> | null
+    where?: SeasonWhereInput
+    orderBy?: SeasonOrderByWithRelationInput | SeasonOrderByWithRelationInput[]
+    cursor?: SeasonWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SeasonScalarFieldEnum | SeasonScalarFieldEnum[]
+  }
+
+  /**
+   * Institution without action
+   */
+  export type InstitutionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Institution
+     */
+    select?: InstitutionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Institution
+     */
+    omit?: InstitutionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InstitutionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Season
+   */
+
+  export type AggregateSeason = {
+    _count: SeasonCountAggregateOutputType | null
+    _min: SeasonMinAggregateOutputType | null
+    _max: SeasonMaxAggregateOutputType | null
+  }
+
+  export type SeasonMinAggregateOutputType = {
+    id: string | null
+    institutionId: string | null
+    name: string | null
+    startDate: Date | null
+    endDate: Date | null
+    sport: $Enums.Sport | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SeasonMaxAggregateOutputType = {
+    id: string | null
+    institutionId: string | null
+    name: string | null
+    startDate: Date | null
+    endDate: Date | null
+    sport: $Enums.Sport | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SeasonCountAggregateOutputType = {
+    id: number
+    institutionId: number
+    name: number
+    startDate: number
+    endDate: number
+    sport: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SeasonMinAggregateInputType = {
+    id?: true
+    institutionId?: true
+    name?: true
+    startDate?: true
+    endDate?: true
+    sport?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SeasonMaxAggregateInputType = {
+    id?: true
+    institutionId?: true
+    name?: true
+    startDate?: true
+    endDate?: true
+    sport?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SeasonCountAggregateInputType = {
+    id?: true
+    institutionId?: true
+    name?: true
+    startDate?: true
+    endDate?: true
+    sport?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SeasonAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Season to aggregate.
+     */
+    where?: SeasonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Seasons to fetch.
+     */
+    orderBy?: SeasonOrderByWithRelationInput | SeasonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SeasonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Seasons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Seasons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Seasons
+    **/
+    _count?: true | SeasonCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SeasonMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SeasonMaxAggregateInputType
+  }
+
+  export type GetSeasonAggregateType<T extends SeasonAggregateArgs> = {
+        [P in keyof T & keyof AggregateSeason]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSeason[P]>
+      : GetScalarType<T[P], AggregateSeason[P]>
+  }
+
+
+
+
+  export type SeasonGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SeasonWhereInput
+    orderBy?: SeasonOrderByWithAggregationInput | SeasonOrderByWithAggregationInput[]
+    by: SeasonScalarFieldEnum[] | SeasonScalarFieldEnum
+    having?: SeasonScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SeasonCountAggregateInputType | true
+    _min?: SeasonMinAggregateInputType
+    _max?: SeasonMaxAggregateInputType
+  }
+
+  export type SeasonGroupByOutputType = {
+    id: string
+    institutionId: string
+    name: string
+    startDate: Date
+    endDate: Date
+    sport: $Enums.Sport
+    createdAt: Date
+    updatedAt: Date
+    _count: SeasonCountAggregateOutputType | null
+    _min: SeasonMinAggregateOutputType | null
+    _max: SeasonMaxAggregateOutputType | null
+  }
+
+  type GetSeasonGroupByPayload<T extends SeasonGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SeasonGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SeasonGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SeasonGroupByOutputType[P]>
+            : GetScalarType<T[P], SeasonGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SeasonSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    institutionId?: boolean
+    name?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    sport?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    institution?: boolean | InstitutionDefaultArgs<ExtArgs>
+    teams?: boolean | Season$teamsArgs<ExtArgs>
+    _count?: boolean | SeasonCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["season"]>
+
+  export type SeasonSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    institutionId?: boolean
+    name?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    sport?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    institution?: boolean | InstitutionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["season"]>
+
+  export type SeasonSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    institutionId?: boolean
+    name?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    sport?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    institution?: boolean | InstitutionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["season"]>
+
+  export type SeasonSelectScalar = {
+    id?: boolean
+    institutionId?: boolean
+    name?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    sport?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SeasonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "institutionId" | "name" | "startDate" | "endDate" | "sport" | "createdAt" | "updatedAt", ExtArgs["result"]["season"]>
+  export type SeasonInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    institution?: boolean | InstitutionDefaultArgs<ExtArgs>
+    teams?: boolean | Season$teamsArgs<ExtArgs>
+    _count?: boolean | SeasonCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type SeasonIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    institution?: boolean | InstitutionDefaultArgs<ExtArgs>
+  }
+  export type SeasonIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    institution?: boolean | InstitutionDefaultArgs<ExtArgs>
+  }
+
+  export type $SeasonPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Season"
+    objects: {
+      institution: Prisma.$InstitutionPayload<ExtArgs>
+      teams: Prisma.$TeamPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      institutionId: string
+      name: string
+      startDate: Date
+      endDate: Date
+      sport: $Enums.Sport
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["season"]>
+    composites: {}
+  }
+
+  type SeasonGetPayload<S extends boolean | null | undefined | SeasonDefaultArgs> = $Result.GetResult<Prisma.$SeasonPayload, S>
+
+  type SeasonCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SeasonFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SeasonCountAggregateInputType | true
+    }
+
+  export interface SeasonDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Season'], meta: { name: 'Season' } }
+    /**
+     * Find zero or one Season that matches the filter.
+     * @param {SeasonFindUniqueArgs} args - Arguments to find a Season
+     * @example
+     * // Get one Season
+     * const season = await prisma.season.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SeasonFindUniqueArgs>(args: SelectSubset<T, SeasonFindUniqueArgs<ExtArgs>>): Prisma__SeasonClient<$Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one Season that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SeasonFindUniqueOrThrowArgs} args - Arguments to find a Season
+     * @example
+     * // Get one Season
+     * const season = await prisma.season.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SeasonFindUniqueOrThrowArgs>(args: SelectSubset<T, SeasonFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SeasonClient<$Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first Season that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SeasonFindFirstArgs} args - Arguments to find a Season
+     * @example
+     * // Get one Season
+     * const season = await prisma.season.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SeasonFindFirstArgs>(args?: SelectSubset<T, SeasonFindFirstArgs<ExtArgs>>): Prisma__SeasonClient<$Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first Season that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SeasonFindFirstOrThrowArgs} args - Arguments to find a Season
+     * @example
+     * // Get one Season
+     * const season = await prisma.season.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SeasonFindFirstOrThrowArgs>(args?: SelectSubset<T, SeasonFindFirstOrThrowArgs<ExtArgs>>): Prisma__SeasonClient<$Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more Seasons that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SeasonFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Seasons
+     * const seasons = await prisma.season.findMany()
+     * 
+     * // Get first 10 Seasons
+     * const seasons = await prisma.season.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const seasonWithIdOnly = await prisma.season.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SeasonFindManyArgs>(args?: SelectSubset<T, SeasonFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a Season.
+     * @param {SeasonCreateArgs} args - Arguments to create a Season.
+     * @example
+     * // Create one Season
+     * const Season = await prisma.season.create({
+     *   data: {
+     *     // ... data to create a Season
+     *   }
+     * })
+     * 
+     */
+    create<T extends SeasonCreateArgs>(args: SelectSubset<T, SeasonCreateArgs<ExtArgs>>): Prisma__SeasonClient<$Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many Seasons.
+     * @param {SeasonCreateManyArgs} args - Arguments to create many Seasons.
+     * @example
+     * // Create many Seasons
+     * const season = await prisma.season.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SeasonCreateManyArgs>(args?: SelectSubset<T, SeasonCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Seasons and returns the data saved in the database.
+     * @param {SeasonCreateManyAndReturnArgs} args - Arguments to create many Seasons.
+     * @example
+     * // Create many Seasons
+     * const season = await prisma.season.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Seasons and only return the `id`
+     * const seasonWithIdOnly = await prisma.season.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SeasonCreateManyAndReturnArgs>(args?: SelectSubset<T, SeasonCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a Season.
+     * @param {SeasonDeleteArgs} args - Arguments to delete one Season.
+     * @example
+     * // Delete one Season
+     * const Season = await prisma.season.delete({
+     *   where: {
+     *     // ... filter to delete one Season
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SeasonDeleteArgs>(args: SelectSubset<T, SeasonDeleteArgs<ExtArgs>>): Prisma__SeasonClient<$Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one Season.
+     * @param {SeasonUpdateArgs} args - Arguments to update one Season.
+     * @example
+     * // Update one Season
+     * const season = await prisma.season.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SeasonUpdateArgs>(args: SelectSubset<T, SeasonUpdateArgs<ExtArgs>>): Prisma__SeasonClient<$Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more Seasons.
+     * @param {SeasonDeleteManyArgs} args - Arguments to filter Seasons to delete.
+     * @example
+     * // Delete a few Seasons
+     * const { count } = await prisma.season.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SeasonDeleteManyArgs>(args?: SelectSubset<T, SeasonDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Seasons.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SeasonUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Seasons
+     * const season = await prisma.season.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SeasonUpdateManyArgs>(args: SelectSubset<T, SeasonUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Seasons and returns the data updated in the database.
+     * @param {SeasonUpdateManyAndReturnArgs} args - Arguments to update many Seasons.
+     * @example
+     * // Update many Seasons
+     * const season = await prisma.season.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Seasons and only return the `id`
+     * const seasonWithIdOnly = await prisma.season.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SeasonUpdateManyAndReturnArgs>(args: SelectSubset<T, SeasonUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one Season.
+     * @param {SeasonUpsertArgs} args - Arguments to update or create a Season.
+     * @example
+     * // Update or create a Season
+     * const season = await prisma.season.upsert({
+     *   create: {
+     *     // ... data to create a Season
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Season we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SeasonUpsertArgs>(args: SelectSubset<T, SeasonUpsertArgs<ExtArgs>>): Prisma__SeasonClient<$Result.GetResult<Prisma.$SeasonPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of Seasons.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SeasonCountArgs} args - Arguments to filter Seasons to count.
+     * @example
+     * // Count the number of Seasons
+     * const count = await prisma.season.count({
+     *   where: {
+     *     // ... the filter for the Seasons we want to count
+     *   }
+     * })
+    **/
+    count<T extends SeasonCountArgs>(
+      args?: Subset<T, SeasonCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SeasonCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Season.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SeasonAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SeasonAggregateArgs>(args: Subset<T, SeasonAggregateArgs>): Prisma.PrismaPromise<GetSeasonAggregateType<T>>
+
+    /**
+     * Group by Season.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SeasonGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SeasonGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SeasonGroupByArgs['orderBy'] }
+        : { orderBy?: SeasonGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SeasonGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSeasonGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Season model
+   */
+  readonly fields: SeasonFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Season.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SeasonClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    institution<T extends InstitutionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, InstitutionDefaultArgs<ExtArgs>>): Prisma__InstitutionClient<$Result.GetResult<Prisma.$InstitutionPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    teams<T extends Season$teamsArgs<ExtArgs> = {}>(args?: Subset<T, Season$teamsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Season model
+   */ 
+  interface SeasonFieldRefs {
+    readonly id: FieldRef<"Season", 'String'>
+    readonly institutionId: FieldRef<"Season", 'String'>
+    readonly name: FieldRef<"Season", 'String'>
+    readonly startDate: FieldRef<"Season", 'DateTime'>
+    readonly endDate: FieldRef<"Season", 'DateTime'>
+    readonly sport: FieldRef<"Season", 'Sport'>
+    readonly createdAt: FieldRef<"Season", 'DateTime'>
+    readonly updatedAt: FieldRef<"Season", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Season findUnique
+   */
+  export type SeasonFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Season
+     */
+    select?: SeasonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Season
+     */
+    omit?: SeasonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeasonInclude<ExtArgs> | null
+    /**
+     * Filter, which Season to fetch.
+     */
+    where: SeasonWhereUniqueInput
+  }
+
+  /**
+   * Season findUniqueOrThrow
+   */
+  export type SeasonFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Season
+     */
+    select?: SeasonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Season
+     */
+    omit?: SeasonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeasonInclude<ExtArgs> | null
+    /**
+     * Filter, which Season to fetch.
+     */
+    where: SeasonWhereUniqueInput
+  }
+
+  /**
+   * Season findFirst
+   */
+  export type SeasonFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Season
+     */
+    select?: SeasonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Season
+     */
+    omit?: SeasonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeasonInclude<ExtArgs> | null
+    /**
+     * Filter, which Season to fetch.
+     */
+    where?: SeasonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Seasons to fetch.
+     */
+    orderBy?: SeasonOrderByWithRelationInput | SeasonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Seasons.
+     */
+    cursor?: SeasonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Seasons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Seasons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Seasons.
+     */
+    distinct?: SeasonScalarFieldEnum | SeasonScalarFieldEnum[]
+  }
+
+  /**
+   * Season findFirstOrThrow
+   */
+  export type SeasonFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Season
+     */
+    select?: SeasonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Season
+     */
+    omit?: SeasonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeasonInclude<ExtArgs> | null
+    /**
+     * Filter, which Season to fetch.
+     */
+    where?: SeasonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Seasons to fetch.
+     */
+    orderBy?: SeasonOrderByWithRelationInput | SeasonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Seasons.
+     */
+    cursor?: SeasonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Seasons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Seasons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Seasons.
+     */
+    distinct?: SeasonScalarFieldEnum | SeasonScalarFieldEnum[]
+  }
+
+  /**
+   * Season findMany
+   */
+  export type SeasonFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Season
+     */
+    select?: SeasonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Season
+     */
+    omit?: SeasonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeasonInclude<ExtArgs> | null
+    /**
+     * Filter, which Seasons to fetch.
+     */
+    where?: SeasonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Seasons to fetch.
+     */
+    orderBy?: SeasonOrderByWithRelationInput | SeasonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Seasons.
+     */
+    cursor?: SeasonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Seasons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Seasons.
+     */
+    skip?: number
+    distinct?: SeasonScalarFieldEnum | SeasonScalarFieldEnum[]
+  }
+
+  /**
+   * Season create
+   */
+  export type SeasonCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Season
+     */
+    select?: SeasonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Season
+     */
+    omit?: SeasonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeasonInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Season.
+     */
+    data: XOR<SeasonCreateInput, SeasonUncheckedCreateInput>
+  }
+
+  /**
+   * Season createMany
+   */
+  export type SeasonCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Seasons.
+     */
+    data: SeasonCreateManyInput | SeasonCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Season createManyAndReturn
+   */
+  export type SeasonCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Season
+     */
+    select?: SeasonSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Season
+     */
+    omit?: SeasonOmit<ExtArgs> | null
+    /**
+     * The data used to create many Seasons.
+     */
+    data: SeasonCreateManyInput | SeasonCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeasonIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Season update
+   */
+  export type SeasonUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Season
+     */
+    select?: SeasonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Season
+     */
+    omit?: SeasonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeasonInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Season.
+     */
+    data: XOR<SeasonUpdateInput, SeasonUncheckedUpdateInput>
+    /**
+     * Choose, which Season to update.
+     */
+    where: SeasonWhereUniqueInput
+  }
+
+  /**
+   * Season updateMany
+   */
+  export type SeasonUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Seasons.
+     */
+    data: XOR<SeasonUpdateManyMutationInput, SeasonUncheckedUpdateManyInput>
+    /**
+     * Filter which Seasons to update
+     */
+    where?: SeasonWhereInput
+    /**
+     * Limit how many Seasons to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Season updateManyAndReturn
+   */
+  export type SeasonUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Season
+     */
+    select?: SeasonSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Season
+     */
+    omit?: SeasonOmit<ExtArgs> | null
+    /**
+     * The data used to update Seasons.
+     */
+    data: XOR<SeasonUpdateManyMutationInput, SeasonUncheckedUpdateManyInput>
+    /**
+     * Filter which Seasons to update
+     */
+    where?: SeasonWhereInput
+    /**
+     * Limit how many Seasons to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeasonIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Season upsert
+   */
+  export type SeasonUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Season
+     */
+    select?: SeasonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Season
+     */
+    omit?: SeasonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeasonInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Season to update in case it exists.
+     */
+    where: SeasonWhereUniqueInput
+    /**
+     * In case the Season found by the `where` argument doesn't exist, create a new Season with this data.
+     */
+    create: XOR<SeasonCreateInput, SeasonUncheckedCreateInput>
+    /**
+     * In case the Season was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SeasonUpdateInput, SeasonUncheckedUpdateInput>
+  }
+
+  /**
+   * Season delete
+   */
+  export type SeasonDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Season
+     */
+    select?: SeasonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Season
+     */
+    omit?: SeasonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeasonInclude<ExtArgs> | null
+    /**
+     * Filter which Season to delete.
+     */
+    where: SeasonWhereUniqueInput
+  }
+
+  /**
+   * Season deleteMany
+   */
+  export type SeasonDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Seasons to delete
+     */
+    where?: SeasonWhereInput
+    /**
+     * Limit how many Seasons to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Season.teams
+   */
+  export type Season$teamsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Team
+     */
+    select?: TeamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Team
+     */
+    omit?: TeamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TeamInclude<ExtArgs> | null
+    where?: TeamWhereInput
+    orderBy?: TeamOrderByWithRelationInput | TeamOrderByWithRelationInput[]
+    cursor?: TeamWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TeamScalarFieldEnum | TeamScalarFieldEnum[]
+  }
+
+  /**
+   * Season without action
+   */
+  export type SeasonDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Season
+     */
+    select?: SeasonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Season
+     */
+    omit?: SeasonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SeasonInclude<ExtArgs> | null
   }
 
 
@@ -5431,6 +8520,9 @@ export namespace Prisma {
     personalRecords?: boolean | Athlete$personalRecordsArgs<ExtArgs>
     meetEntries?: boolean | Athlete$meetEntriesArgs<ExtArgs>
     journals?: boolean | Athlete$journalsArgs<ExtArgs>
+    performanceSnapshot?: boolean | Athlete$performanceSnapshotArgs<ExtArgs>
+    eventPerformanceTrends?: boolean | Athlete$eventPerformanceTrendsArgs<ExtArgs>
+    workoutAnalyticsSnapshot?: boolean | Athlete$workoutAnalyticsSnapshotArgs<ExtArgs>
     _count?: boolean | AthleteCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["athlete"]>
 
@@ -5520,6 +8612,9 @@ export namespace Prisma {
     personalRecords?: boolean | Athlete$personalRecordsArgs<ExtArgs>
     meetEntries?: boolean | Athlete$meetEntriesArgs<ExtArgs>
     journals?: boolean | Athlete$journalsArgs<ExtArgs>
+    performanceSnapshot?: boolean | Athlete$performanceSnapshotArgs<ExtArgs>
+    eventPerformanceTrends?: boolean | Athlete$eventPerformanceTrendsArgs<ExtArgs>
+    workoutAnalyticsSnapshot?: boolean | Athlete$workoutAnalyticsSnapshotArgs<ExtArgs>
     _count?: boolean | AthleteCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type AthleteIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5545,6 +8640,9 @@ export namespace Prisma {
       personalRecords: Prisma.$PersonalRecordPayload<ExtArgs>[]
       meetEntries: Prisma.$MeetEntryPayload<ExtArgs>[]
       journals: Prisma.$AthleteJournalPayload<ExtArgs>[]
+      performanceSnapshot: Prisma.$AthletePerformanceSnapshotPayload<ExtArgs> | null
+      eventPerformanceTrends: Prisma.$EventPerformanceTrendPayload<ExtArgs>[]
+      workoutAnalyticsSnapshot: Prisma.$WorkoutAnalyticsSnapshotPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5972,6 +9070,9 @@ export namespace Prisma {
     personalRecords<T extends Athlete$personalRecordsArgs<ExtArgs> = {}>(args?: Subset<T, Athlete$personalRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonalRecordPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     meetEntries<T extends Athlete$meetEntriesArgs<ExtArgs> = {}>(args?: Subset<T, Athlete$meetEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MeetEntryPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     journals<T extends Athlete$journalsArgs<ExtArgs> = {}>(args?: Subset<T, Athlete$journalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AthleteJournalPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    performanceSnapshot<T extends Athlete$performanceSnapshotArgs<ExtArgs> = {}>(args?: Subset<T, Athlete$performanceSnapshotArgs<ExtArgs>>): Prisma__AthletePerformanceSnapshotClient<$Result.GetResult<Prisma.$AthletePerformanceSnapshotPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    eventPerformanceTrends<T extends Athlete$eventPerformanceTrendsArgs<ExtArgs> = {}>(args?: Subset<T, Athlete$eventPerformanceTrendsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPerformanceTrendPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    workoutAnalyticsSnapshot<T extends Athlete$workoutAnalyticsSnapshotArgs<ExtArgs> = {}>(args?: Subset<T, Athlete$workoutAnalyticsSnapshotArgs<ExtArgs>>): Prisma__WorkoutAnalyticsSnapshotClient<$Result.GetResult<Prisma.$WorkoutAnalyticsSnapshotPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6649,6 +9750,68 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AthleteJournalScalarFieldEnum | AthleteJournalScalarFieldEnum[]
+  }
+
+  /**
+   * Athlete.performanceSnapshot
+   */
+  export type Athlete$performanceSnapshotArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AthletePerformanceSnapshot
+     */
+    select?: AthletePerformanceSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AthletePerformanceSnapshot
+     */
+    omit?: AthletePerformanceSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AthletePerformanceSnapshotInclude<ExtArgs> | null
+    where?: AthletePerformanceSnapshotWhereInput
+  }
+
+  /**
+   * Athlete.eventPerformanceTrends
+   */
+  export type Athlete$eventPerformanceTrendsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventPerformanceTrend
+     */
+    select?: EventPerformanceTrendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventPerformanceTrend
+     */
+    omit?: EventPerformanceTrendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventPerformanceTrendInclude<ExtArgs> | null
+    where?: EventPerformanceTrendWhereInput
+    orderBy?: EventPerformanceTrendOrderByWithRelationInput | EventPerformanceTrendOrderByWithRelationInput[]
+    cursor?: EventPerformanceTrendWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EventPerformanceTrendScalarFieldEnum | EventPerformanceTrendScalarFieldEnum[]
+  }
+
+  /**
+   * Athlete.workoutAnalyticsSnapshot
+   */
+  export type Athlete$workoutAnalyticsSnapshotArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkoutAnalyticsSnapshot
+     */
+    select?: WorkoutAnalyticsSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkoutAnalyticsSnapshot
+     */
+    omit?: WorkoutAnalyticsSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkoutAnalyticsSnapshotInclude<ExtArgs> | null
+    where?: WorkoutAnalyticsSnapshotWhereInput
   }
 
   /**
@@ -21428,6 +24591,4907 @@ export namespace Prisma {
 
 
   /**
+   * Model AthletePerformanceSnapshot
+   */
+
+  export type AggregateAthletePerformanceSnapshot = {
+    _count: AthletePerformanceSnapshotCountAggregateOutputType | null
+    _avg: AthletePerformanceSnapshotAvgAggregateOutputType | null
+    _sum: AthletePerformanceSnapshotSumAggregateOutputType | null
+    _min: AthletePerformanceSnapshotMinAggregateOutputType | null
+    _max: AthletePerformanceSnapshotMaxAggregateOutputType | null
+  }
+
+  export type AthletePerformanceSnapshotAvgAggregateOutputType = {
+    readinessScore: number | null
+  }
+
+  export type AthletePerformanceSnapshotSumAggregateOutputType = {
+    readinessScore: number | null
+  }
+
+  export type AthletePerformanceSnapshotMinAggregateOutputType = {
+    id: string | null
+    athleteId: string | null
+    teamId: string | null
+    trainingStatus: string | null
+    readinessScore: number | null
+    readinessLabel: string | null
+    riskLevel: $Enums.RiskFlag | null
+    lastWorkoutAt: Date | null
+    aiSummary: string | null
+    refreshedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AthletePerformanceSnapshotMaxAggregateOutputType = {
+    id: string | null
+    athleteId: string | null
+    teamId: string | null
+    trainingStatus: string | null
+    readinessScore: number | null
+    readinessLabel: string | null
+    riskLevel: $Enums.RiskFlag | null
+    lastWorkoutAt: Date | null
+    aiSummary: string | null
+    refreshedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AthletePerformanceSnapshotCountAggregateOutputType = {
+    id: number
+    athleteId: number
+    teamId: number
+    trainingStatus: number
+    readinessScore: number
+    readinessLabel: number
+    riskLevel: number
+    lastWorkoutAt: number
+    summaryJson: number
+    aiSummary: number
+    refreshedAt: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AthletePerformanceSnapshotAvgAggregateInputType = {
+    readinessScore?: true
+  }
+
+  export type AthletePerformanceSnapshotSumAggregateInputType = {
+    readinessScore?: true
+  }
+
+  export type AthletePerformanceSnapshotMinAggregateInputType = {
+    id?: true
+    athleteId?: true
+    teamId?: true
+    trainingStatus?: true
+    readinessScore?: true
+    readinessLabel?: true
+    riskLevel?: true
+    lastWorkoutAt?: true
+    aiSummary?: true
+    refreshedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AthletePerformanceSnapshotMaxAggregateInputType = {
+    id?: true
+    athleteId?: true
+    teamId?: true
+    trainingStatus?: true
+    readinessScore?: true
+    readinessLabel?: true
+    riskLevel?: true
+    lastWorkoutAt?: true
+    aiSummary?: true
+    refreshedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AthletePerformanceSnapshotCountAggregateInputType = {
+    id?: true
+    athleteId?: true
+    teamId?: true
+    trainingStatus?: true
+    readinessScore?: true
+    readinessLabel?: true
+    riskLevel?: true
+    lastWorkoutAt?: true
+    summaryJson?: true
+    aiSummary?: true
+    refreshedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AthletePerformanceSnapshotAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AthletePerformanceSnapshot to aggregate.
+     */
+    where?: AthletePerformanceSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AthletePerformanceSnapshots to fetch.
+     */
+    orderBy?: AthletePerformanceSnapshotOrderByWithRelationInput | AthletePerformanceSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AthletePerformanceSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AthletePerformanceSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AthletePerformanceSnapshots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AthletePerformanceSnapshots
+    **/
+    _count?: true | AthletePerformanceSnapshotCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AthletePerformanceSnapshotAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AthletePerformanceSnapshotSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AthletePerformanceSnapshotMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AthletePerformanceSnapshotMaxAggregateInputType
+  }
+
+  export type GetAthletePerformanceSnapshotAggregateType<T extends AthletePerformanceSnapshotAggregateArgs> = {
+        [P in keyof T & keyof AggregateAthletePerformanceSnapshot]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAthletePerformanceSnapshot[P]>
+      : GetScalarType<T[P], AggregateAthletePerformanceSnapshot[P]>
+  }
+
+
+
+
+  export type AthletePerformanceSnapshotGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AthletePerformanceSnapshotWhereInput
+    orderBy?: AthletePerformanceSnapshotOrderByWithAggregationInput | AthletePerformanceSnapshotOrderByWithAggregationInput[]
+    by: AthletePerformanceSnapshotScalarFieldEnum[] | AthletePerformanceSnapshotScalarFieldEnum
+    having?: AthletePerformanceSnapshotScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AthletePerformanceSnapshotCountAggregateInputType | true
+    _avg?: AthletePerformanceSnapshotAvgAggregateInputType
+    _sum?: AthletePerformanceSnapshotSumAggregateInputType
+    _min?: AthletePerformanceSnapshotMinAggregateInputType
+    _max?: AthletePerformanceSnapshotMaxAggregateInputType
+  }
+
+  export type AthletePerformanceSnapshotGroupByOutputType = {
+    id: string
+    athleteId: string
+    teamId: string
+    trainingStatus: string
+    readinessScore: number | null
+    readinessLabel: string | null
+    riskLevel: $Enums.RiskFlag | null
+    lastWorkoutAt: Date | null
+    summaryJson: JsonValue | null
+    aiSummary: string | null
+    refreshedAt: Date
+    createdAt: Date
+    updatedAt: Date
+    _count: AthletePerformanceSnapshotCountAggregateOutputType | null
+    _avg: AthletePerformanceSnapshotAvgAggregateOutputType | null
+    _sum: AthletePerformanceSnapshotSumAggregateOutputType | null
+    _min: AthletePerformanceSnapshotMinAggregateOutputType | null
+    _max: AthletePerformanceSnapshotMaxAggregateOutputType | null
+  }
+
+  type GetAthletePerformanceSnapshotGroupByPayload<T extends AthletePerformanceSnapshotGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AthletePerformanceSnapshotGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AthletePerformanceSnapshotGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AthletePerformanceSnapshotGroupByOutputType[P]>
+            : GetScalarType<T[P], AthletePerformanceSnapshotGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AthletePerformanceSnapshotSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    athleteId?: boolean
+    teamId?: boolean
+    trainingStatus?: boolean
+    readinessScore?: boolean
+    readinessLabel?: boolean
+    riskLevel?: boolean
+    lastWorkoutAt?: boolean
+    summaryJson?: boolean
+    aiSummary?: boolean
+    refreshedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    athlete?: boolean | AthleteDefaultArgs<ExtArgs>
+    team?: boolean | TeamDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["athletePerformanceSnapshot"]>
+
+  export type AthletePerformanceSnapshotSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    athleteId?: boolean
+    teamId?: boolean
+    trainingStatus?: boolean
+    readinessScore?: boolean
+    readinessLabel?: boolean
+    riskLevel?: boolean
+    lastWorkoutAt?: boolean
+    summaryJson?: boolean
+    aiSummary?: boolean
+    refreshedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    athlete?: boolean | AthleteDefaultArgs<ExtArgs>
+    team?: boolean | TeamDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["athletePerformanceSnapshot"]>
+
+  export type AthletePerformanceSnapshotSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    athleteId?: boolean
+    teamId?: boolean
+    trainingStatus?: boolean
+    readinessScore?: boolean
+    readinessLabel?: boolean
+    riskLevel?: boolean
+    lastWorkoutAt?: boolean
+    summaryJson?: boolean
+    aiSummary?: boolean
+    refreshedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    athlete?: boolean | AthleteDefaultArgs<ExtArgs>
+    team?: boolean | TeamDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["athletePerformanceSnapshot"]>
+
+  export type AthletePerformanceSnapshotSelectScalar = {
+    id?: boolean
+    athleteId?: boolean
+    teamId?: boolean
+    trainingStatus?: boolean
+    readinessScore?: boolean
+    readinessLabel?: boolean
+    riskLevel?: boolean
+    lastWorkoutAt?: boolean
+    summaryJson?: boolean
+    aiSummary?: boolean
+    refreshedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type AthletePerformanceSnapshotOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "athleteId" | "teamId" | "trainingStatus" | "readinessScore" | "readinessLabel" | "riskLevel" | "lastWorkoutAt" | "summaryJson" | "aiSummary" | "refreshedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["athletePerformanceSnapshot"]>
+  export type AthletePerformanceSnapshotInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    athlete?: boolean | AthleteDefaultArgs<ExtArgs>
+    team?: boolean | TeamDefaultArgs<ExtArgs>
+  }
+  export type AthletePerformanceSnapshotIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    athlete?: boolean | AthleteDefaultArgs<ExtArgs>
+    team?: boolean | TeamDefaultArgs<ExtArgs>
+  }
+  export type AthletePerformanceSnapshotIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    athlete?: boolean | AthleteDefaultArgs<ExtArgs>
+    team?: boolean | TeamDefaultArgs<ExtArgs>
+  }
+
+  export type $AthletePerformanceSnapshotPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AthletePerformanceSnapshot"
+    objects: {
+      athlete: Prisma.$AthletePayload<ExtArgs>
+      team: Prisma.$TeamPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      athleteId: string
+      teamId: string
+      trainingStatus: string
+      readinessScore: number | null
+      readinessLabel: string | null
+      riskLevel: $Enums.RiskFlag | null
+      lastWorkoutAt: Date | null
+      summaryJson: Prisma.JsonValue | null
+      aiSummary: string | null
+      refreshedAt: Date
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["athletePerformanceSnapshot"]>
+    composites: {}
+  }
+
+  type AthletePerformanceSnapshotGetPayload<S extends boolean | null | undefined | AthletePerformanceSnapshotDefaultArgs> = $Result.GetResult<Prisma.$AthletePerformanceSnapshotPayload, S>
+
+  type AthletePerformanceSnapshotCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AthletePerformanceSnapshotFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AthletePerformanceSnapshotCountAggregateInputType | true
+    }
+
+  export interface AthletePerformanceSnapshotDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AthletePerformanceSnapshot'], meta: { name: 'AthletePerformanceSnapshot' } }
+    /**
+     * Find zero or one AthletePerformanceSnapshot that matches the filter.
+     * @param {AthletePerformanceSnapshotFindUniqueArgs} args - Arguments to find a AthletePerformanceSnapshot
+     * @example
+     * // Get one AthletePerformanceSnapshot
+     * const athletePerformanceSnapshot = await prisma.athletePerformanceSnapshot.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AthletePerformanceSnapshotFindUniqueArgs>(args: SelectSubset<T, AthletePerformanceSnapshotFindUniqueArgs<ExtArgs>>): Prisma__AthletePerformanceSnapshotClient<$Result.GetResult<Prisma.$AthletePerformanceSnapshotPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one AthletePerformanceSnapshot that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AthletePerformanceSnapshotFindUniqueOrThrowArgs} args - Arguments to find a AthletePerformanceSnapshot
+     * @example
+     * // Get one AthletePerformanceSnapshot
+     * const athletePerformanceSnapshot = await prisma.athletePerformanceSnapshot.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AthletePerformanceSnapshotFindUniqueOrThrowArgs>(args: SelectSubset<T, AthletePerformanceSnapshotFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AthletePerformanceSnapshotClient<$Result.GetResult<Prisma.$AthletePerformanceSnapshotPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first AthletePerformanceSnapshot that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AthletePerformanceSnapshotFindFirstArgs} args - Arguments to find a AthletePerformanceSnapshot
+     * @example
+     * // Get one AthletePerformanceSnapshot
+     * const athletePerformanceSnapshot = await prisma.athletePerformanceSnapshot.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AthletePerformanceSnapshotFindFirstArgs>(args?: SelectSubset<T, AthletePerformanceSnapshotFindFirstArgs<ExtArgs>>): Prisma__AthletePerformanceSnapshotClient<$Result.GetResult<Prisma.$AthletePerformanceSnapshotPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first AthletePerformanceSnapshot that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AthletePerformanceSnapshotFindFirstOrThrowArgs} args - Arguments to find a AthletePerformanceSnapshot
+     * @example
+     * // Get one AthletePerformanceSnapshot
+     * const athletePerformanceSnapshot = await prisma.athletePerformanceSnapshot.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AthletePerformanceSnapshotFindFirstOrThrowArgs>(args?: SelectSubset<T, AthletePerformanceSnapshotFindFirstOrThrowArgs<ExtArgs>>): Prisma__AthletePerformanceSnapshotClient<$Result.GetResult<Prisma.$AthletePerformanceSnapshotPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more AthletePerformanceSnapshots that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AthletePerformanceSnapshotFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AthletePerformanceSnapshots
+     * const athletePerformanceSnapshots = await prisma.athletePerformanceSnapshot.findMany()
+     * 
+     * // Get first 10 AthletePerformanceSnapshots
+     * const athletePerformanceSnapshots = await prisma.athletePerformanceSnapshot.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const athletePerformanceSnapshotWithIdOnly = await prisma.athletePerformanceSnapshot.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AthletePerformanceSnapshotFindManyArgs>(args?: SelectSubset<T, AthletePerformanceSnapshotFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AthletePerformanceSnapshotPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a AthletePerformanceSnapshot.
+     * @param {AthletePerformanceSnapshotCreateArgs} args - Arguments to create a AthletePerformanceSnapshot.
+     * @example
+     * // Create one AthletePerformanceSnapshot
+     * const AthletePerformanceSnapshot = await prisma.athletePerformanceSnapshot.create({
+     *   data: {
+     *     // ... data to create a AthletePerformanceSnapshot
+     *   }
+     * })
+     * 
+     */
+    create<T extends AthletePerformanceSnapshotCreateArgs>(args: SelectSubset<T, AthletePerformanceSnapshotCreateArgs<ExtArgs>>): Prisma__AthletePerformanceSnapshotClient<$Result.GetResult<Prisma.$AthletePerformanceSnapshotPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many AthletePerformanceSnapshots.
+     * @param {AthletePerformanceSnapshotCreateManyArgs} args - Arguments to create many AthletePerformanceSnapshots.
+     * @example
+     * // Create many AthletePerformanceSnapshots
+     * const athletePerformanceSnapshot = await prisma.athletePerformanceSnapshot.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AthletePerformanceSnapshotCreateManyArgs>(args?: SelectSubset<T, AthletePerformanceSnapshotCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AthletePerformanceSnapshots and returns the data saved in the database.
+     * @param {AthletePerformanceSnapshotCreateManyAndReturnArgs} args - Arguments to create many AthletePerformanceSnapshots.
+     * @example
+     * // Create many AthletePerformanceSnapshots
+     * const athletePerformanceSnapshot = await prisma.athletePerformanceSnapshot.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AthletePerformanceSnapshots and only return the `id`
+     * const athletePerformanceSnapshotWithIdOnly = await prisma.athletePerformanceSnapshot.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AthletePerformanceSnapshotCreateManyAndReturnArgs>(args?: SelectSubset<T, AthletePerformanceSnapshotCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AthletePerformanceSnapshotPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a AthletePerformanceSnapshot.
+     * @param {AthletePerformanceSnapshotDeleteArgs} args - Arguments to delete one AthletePerformanceSnapshot.
+     * @example
+     * // Delete one AthletePerformanceSnapshot
+     * const AthletePerformanceSnapshot = await prisma.athletePerformanceSnapshot.delete({
+     *   where: {
+     *     // ... filter to delete one AthletePerformanceSnapshot
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AthletePerformanceSnapshotDeleteArgs>(args: SelectSubset<T, AthletePerformanceSnapshotDeleteArgs<ExtArgs>>): Prisma__AthletePerformanceSnapshotClient<$Result.GetResult<Prisma.$AthletePerformanceSnapshotPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one AthletePerformanceSnapshot.
+     * @param {AthletePerformanceSnapshotUpdateArgs} args - Arguments to update one AthletePerformanceSnapshot.
+     * @example
+     * // Update one AthletePerformanceSnapshot
+     * const athletePerformanceSnapshot = await prisma.athletePerformanceSnapshot.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AthletePerformanceSnapshotUpdateArgs>(args: SelectSubset<T, AthletePerformanceSnapshotUpdateArgs<ExtArgs>>): Prisma__AthletePerformanceSnapshotClient<$Result.GetResult<Prisma.$AthletePerformanceSnapshotPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more AthletePerformanceSnapshots.
+     * @param {AthletePerformanceSnapshotDeleteManyArgs} args - Arguments to filter AthletePerformanceSnapshots to delete.
+     * @example
+     * // Delete a few AthletePerformanceSnapshots
+     * const { count } = await prisma.athletePerformanceSnapshot.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AthletePerformanceSnapshotDeleteManyArgs>(args?: SelectSubset<T, AthletePerformanceSnapshotDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AthletePerformanceSnapshots.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AthletePerformanceSnapshotUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AthletePerformanceSnapshots
+     * const athletePerformanceSnapshot = await prisma.athletePerformanceSnapshot.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AthletePerformanceSnapshotUpdateManyArgs>(args: SelectSubset<T, AthletePerformanceSnapshotUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AthletePerformanceSnapshots and returns the data updated in the database.
+     * @param {AthletePerformanceSnapshotUpdateManyAndReturnArgs} args - Arguments to update many AthletePerformanceSnapshots.
+     * @example
+     * // Update many AthletePerformanceSnapshots
+     * const athletePerformanceSnapshot = await prisma.athletePerformanceSnapshot.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AthletePerformanceSnapshots and only return the `id`
+     * const athletePerformanceSnapshotWithIdOnly = await prisma.athletePerformanceSnapshot.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AthletePerformanceSnapshotUpdateManyAndReturnArgs>(args: SelectSubset<T, AthletePerformanceSnapshotUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AthletePerformanceSnapshotPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one AthletePerformanceSnapshot.
+     * @param {AthletePerformanceSnapshotUpsertArgs} args - Arguments to update or create a AthletePerformanceSnapshot.
+     * @example
+     * // Update or create a AthletePerformanceSnapshot
+     * const athletePerformanceSnapshot = await prisma.athletePerformanceSnapshot.upsert({
+     *   create: {
+     *     // ... data to create a AthletePerformanceSnapshot
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AthletePerformanceSnapshot we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AthletePerformanceSnapshotUpsertArgs>(args: SelectSubset<T, AthletePerformanceSnapshotUpsertArgs<ExtArgs>>): Prisma__AthletePerformanceSnapshotClient<$Result.GetResult<Prisma.$AthletePerformanceSnapshotPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of AthletePerformanceSnapshots.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AthletePerformanceSnapshotCountArgs} args - Arguments to filter AthletePerformanceSnapshots to count.
+     * @example
+     * // Count the number of AthletePerformanceSnapshots
+     * const count = await prisma.athletePerformanceSnapshot.count({
+     *   where: {
+     *     // ... the filter for the AthletePerformanceSnapshots we want to count
+     *   }
+     * })
+    **/
+    count<T extends AthletePerformanceSnapshotCountArgs>(
+      args?: Subset<T, AthletePerformanceSnapshotCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AthletePerformanceSnapshotCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AthletePerformanceSnapshot.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AthletePerformanceSnapshotAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AthletePerformanceSnapshotAggregateArgs>(args: Subset<T, AthletePerformanceSnapshotAggregateArgs>): Prisma.PrismaPromise<GetAthletePerformanceSnapshotAggregateType<T>>
+
+    /**
+     * Group by AthletePerformanceSnapshot.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AthletePerformanceSnapshotGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AthletePerformanceSnapshotGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AthletePerformanceSnapshotGroupByArgs['orderBy'] }
+        : { orderBy?: AthletePerformanceSnapshotGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AthletePerformanceSnapshotGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAthletePerformanceSnapshotGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AthletePerformanceSnapshot model
+   */
+  readonly fields: AthletePerformanceSnapshotFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AthletePerformanceSnapshot.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AthletePerformanceSnapshotClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    athlete<T extends AthleteDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AthleteDefaultArgs<ExtArgs>>): Prisma__AthleteClient<$Result.GetResult<Prisma.$AthletePayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    team<T extends TeamDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TeamDefaultArgs<ExtArgs>>): Prisma__TeamClient<$Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AthletePerformanceSnapshot model
+   */ 
+  interface AthletePerformanceSnapshotFieldRefs {
+    readonly id: FieldRef<"AthletePerformanceSnapshot", 'String'>
+    readonly athleteId: FieldRef<"AthletePerformanceSnapshot", 'String'>
+    readonly teamId: FieldRef<"AthletePerformanceSnapshot", 'String'>
+    readonly trainingStatus: FieldRef<"AthletePerformanceSnapshot", 'String'>
+    readonly readinessScore: FieldRef<"AthletePerformanceSnapshot", 'Float'>
+    readonly readinessLabel: FieldRef<"AthletePerformanceSnapshot", 'String'>
+    readonly riskLevel: FieldRef<"AthletePerformanceSnapshot", 'RiskFlag'>
+    readonly lastWorkoutAt: FieldRef<"AthletePerformanceSnapshot", 'DateTime'>
+    readonly summaryJson: FieldRef<"AthletePerformanceSnapshot", 'Json'>
+    readonly aiSummary: FieldRef<"AthletePerformanceSnapshot", 'String'>
+    readonly refreshedAt: FieldRef<"AthletePerformanceSnapshot", 'DateTime'>
+    readonly createdAt: FieldRef<"AthletePerformanceSnapshot", 'DateTime'>
+    readonly updatedAt: FieldRef<"AthletePerformanceSnapshot", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AthletePerformanceSnapshot findUnique
+   */
+  export type AthletePerformanceSnapshotFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AthletePerformanceSnapshot
+     */
+    select?: AthletePerformanceSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AthletePerformanceSnapshot
+     */
+    omit?: AthletePerformanceSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AthletePerformanceSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which AthletePerformanceSnapshot to fetch.
+     */
+    where: AthletePerformanceSnapshotWhereUniqueInput
+  }
+
+  /**
+   * AthletePerformanceSnapshot findUniqueOrThrow
+   */
+  export type AthletePerformanceSnapshotFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AthletePerformanceSnapshot
+     */
+    select?: AthletePerformanceSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AthletePerformanceSnapshot
+     */
+    omit?: AthletePerformanceSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AthletePerformanceSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which AthletePerformanceSnapshot to fetch.
+     */
+    where: AthletePerformanceSnapshotWhereUniqueInput
+  }
+
+  /**
+   * AthletePerformanceSnapshot findFirst
+   */
+  export type AthletePerformanceSnapshotFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AthletePerformanceSnapshot
+     */
+    select?: AthletePerformanceSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AthletePerformanceSnapshot
+     */
+    omit?: AthletePerformanceSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AthletePerformanceSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which AthletePerformanceSnapshot to fetch.
+     */
+    where?: AthletePerformanceSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AthletePerformanceSnapshots to fetch.
+     */
+    orderBy?: AthletePerformanceSnapshotOrderByWithRelationInput | AthletePerformanceSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AthletePerformanceSnapshots.
+     */
+    cursor?: AthletePerformanceSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AthletePerformanceSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AthletePerformanceSnapshots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AthletePerformanceSnapshots.
+     */
+    distinct?: AthletePerformanceSnapshotScalarFieldEnum | AthletePerformanceSnapshotScalarFieldEnum[]
+  }
+
+  /**
+   * AthletePerformanceSnapshot findFirstOrThrow
+   */
+  export type AthletePerformanceSnapshotFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AthletePerformanceSnapshot
+     */
+    select?: AthletePerformanceSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AthletePerformanceSnapshot
+     */
+    omit?: AthletePerformanceSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AthletePerformanceSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which AthletePerformanceSnapshot to fetch.
+     */
+    where?: AthletePerformanceSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AthletePerformanceSnapshots to fetch.
+     */
+    orderBy?: AthletePerformanceSnapshotOrderByWithRelationInput | AthletePerformanceSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AthletePerformanceSnapshots.
+     */
+    cursor?: AthletePerformanceSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AthletePerformanceSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AthletePerformanceSnapshots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AthletePerformanceSnapshots.
+     */
+    distinct?: AthletePerformanceSnapshotScalarFieldEnum | AthletePerformanceSnapshotScalarFieldEnum[]
+  }
+
+  /**
+   * AthletePerformanceSnapshot findMany
+   */
+  export type AthletePerformanceSnapshotFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AthletePerformanceSnapshot
+     */
+    select?: AthletePerformanceSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AthletePerformanceSnapshot
+     */
+    omit?: AthletePerformanceSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AthletePerformanceSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which AthletePerformanceSnapshots to fetch.
+     */
+    where?: AthletePerformanceSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AthletePerformanceSnapshots to fetch.
+     */
+    orderBy?: AthletePerformanceSnapshotOrderByWithRelationInput | AthletePerformanceSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AthletePerformanceSnapshots.
+     */
+    cursor?: AthletePerformanceSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AthletePerformanceSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AthletePerformanceSnapshots.
+     */
+    skip?: number
+    distinct?: AthletePerformanceSnapshotScalarFieldEnum | AthletePerformanceSnapshotScalarFieldEnum[]
+  }
+
+  /**
+   * AthletePerformanceSnapshot create
+   */
+  export type AthletePerformanceSnapshotCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AthletePerformanceSnapshot
+     */
+    select?: AthletePerformanceSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AthletePerformanceSnapshot
+     */
+    omit?: AthletePerformanceSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AthletePerformanceSnapshotInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AthletePerformanceSnapshot.
+     */
+    data: XOR<AthletePerformanceSnapshotCreateInput, AthletePerformanceSnapshotUncheckedCreateInput>
+  }
+
+  /**
+   * AthletePerformanceSnapshot createMany
+   */
+  export type AthletePerformanceSnapshotCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AthletePerformanceSnapshots.
+     */
+    data: AthletePerformanceSnapshotCreateManyInput | AthletePerformanceSnapshotCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AthletePerformanceSnapshot createManyAndReturn
+   */
+  export type AthletePerformanceSnapshotCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AthletePerformanceSnapshot
+     */
+    select?: AthletePerformanceSnapshotSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AthletePerformanceSnapshot
+     */
+    omit?: AthletePerformanceSnapshotOmit<ExtArgs> | null
+    /**
+     * The data used to create many AthletePerformanceSnapshots.
+     */
+    data: AthletePerformanceSnapshotCreateManyInput | AthletePerformanceSnapshotCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AthletePerformanceSnapshotIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AthletePerformanceSnapshot update
+   */
+  export type AthletePerformanceSnapshotUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AthletePerformanceSnapshot
+     */
+    select?: AthletePerformanceSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AthletePerformanceSnapshot
+     */
+    omit?: AthletePerformanceSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AthletePerformanceSnapshotInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AthletePerformanceSnapshot.
+     */
+    data: XOR<AthletePerformanceSnapshotUpdateInput, AthletePerformanceSnapshotUncheckedUpdateInput>
+    /**
+     * Choose, which AthletePerformanceSnapshot to update.
+     */
+    where: AthletePerformanceSnapshotWhereUniqueInput
+  }
+
+  /**
+   * AthletePerformanceSnapshot updateMany
+   */
+  export type AthletePerformanceSnapshotUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AthletePerformanceSnapshots.
+     */
+    data: XOR<AthletePerformanceSnapshotUpdateManyMutationInput, AthletePerformanceSnapshotUncheckedUpdateManyInput>
+    /**
+     * Filter which AthletePerformanceSnapshots to update
+     */
+    where?: AthletePerformanceSnapshotWhereInput
+    /**
+     * Limit how many AthletePerformanceSnapshots to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AthletePerformanceSnapshot updateManyAndReturn
+   */
+  export type AthletePerformanceSnapshotUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AthletePerformanceSnapshot
+     */
+    select?: AthletePerformanceSnapshotSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AthletePerformanceSnapshot
+     */
+    omit?: AthletePerformanceSnapshotOmit<ExtArgs> | null
+    /**
+     * The data used to update AthletePerformanceSnapshots.
+     */
+    data: XOR<AthletePerformanceSnapshotUpdateManyMutationInput, AthletePerformanceSnapshotUncheckedUpdateManyInput>
+    /**
+     * Filter which AthletePerformanceSnapshots to update
+     */
+    where?: AthletePerformanceSnapshotWhereInput
+    /**
+     * Limit how many AthletePerformanceSnapshots to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AthletePerformanceSnapshotIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AthletePerformanceSnapshot upsert
+   */
+  export type AthletePerformanceSnapshotUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AthletePerformanceSnapshot
+     */
+    select?: AthletePerformanceSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AthletePerformanceSnapshot
+     */
+    omit?: AthletePerformanceSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AthletePerformanceSnapshotInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AthletePerformanceSnapshot to update in case it exists.
+     */
+    where: AthletePerformanceSnapshotWhereUniqueInput
+    /**
+     * In case the AthletePerformanceSnapshot found by the `where` argument doesn't exist, create a new AthletePerformanceSnapshot with this data.
+     */
+    create: XOR<AthletePerformanceSnapshotCreateInput, AthletePerformanceSnapshotUncheckedCreateInput>
+    /**
+     * In case the AthletePerformanceSnapshot was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AthletePerformanceSnapshotUpdateInput, AthletePerformanceSnapshotUncheckedUpdateInput>
+  }
+
+  /**
+   * AthletePerformanceSnapshot delete
+   */
+  export type AthletePerformanceSnapshotDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AthletePerformanceSnapshot
+     */
+    select?: AthletePerformanceSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AthletePerformanceSnapshot
+     */
+    omit?: AthletePerformanceSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AthletePerformanceSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter which AthletePerformanceSnapshot to delete.
+     */
+    where: AthletePerformanceSnapshotWhereUniqueInput
+  }
+
+  /**
+   * AthletePerformanceSnapshot deleteMany
+   */
+  export type AthletePerformanceSnapshotDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AthletePerformanceSnapshots to delete
+     */
+    where?: AthletePerformanceSnapshotWhereInput
+    /**
+     * Limit how many AthletePerformanceSnapshots to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AthletePerformanceSnapshot without action
+   */
+  export type AthletePerformanceSnapshotDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AthletePerformanceSnapshot
+     */
+    select?: AthletePerformanceSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AthletePerformanceSnapshot
+     */
+    omit?: AthletePerformanceSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AthletePerformanceSnapshotInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model EventPerformanceTrend
+   */
+
+  export type AggregateEventPerformanceTrend = {
+    _count: EventPerformanceTrendCountAggregateOutputType | null
+    _avg: EventPerformanceTrendAvgAggregateOutputType | null
+    _sum: EventPerformanceTrendSumAggregateOutputType | null
+    _min: EventPerformanceTrendMinAggregateOutputType | null
+    _max: EventPerformanceTrendMaxAggregateOutputType | null
+  }
+
+  export type EventPerformanceTrendAvgAggregateOutputType = {
+    baseline: number | null
+    recentAverage: number | null
+    latestValue: number | null
+    latestRank: number | null
+    recentDelta: number | null
+    slope: number | null
+    sampleSize: number | null
+  }
+
+  export type EventPerformanceTrendSumAggregateOutputType = {
+    baseline: number | null
+    recentAverage: number | null
+    latestValue: number | null
+    latestRank: number | null
+    recentDelta: number | null
+    slope: number | null
+    sampleSize: number | null
+  }
+
+  export type EventPerformanceTrendMinAggregateOutputType = {
+    id: string | null
+    athleteId: string | null
+    teamId: string | null
+    eventName: string | null
+    metricType: string | null
+    baseline: number | null
+    recentAverage: number | null
+    latestValue: number | null
+    latestRank: number | null
+    recentDelta: number | null
+    slope: number | null
+    confidenceLabel: string | null
+    sampleSize: number | null
+    aiSummary: string | null
+    refreshedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type EventPerformanceTrendMaxAggregateOutputType = {
+    id: string | null
+    athleteId: string | null
+    teamId: string | null
+    eventName: string | null
+    metricType: string | null
+    baseline: number | null
+    recentAverage: number | null
+    latestValue: number | null
+    latestRank: number | null
+    recentDelta: number | null
+    slope: number | null
+    confidenceLabel: string | null
+    sampleSize: number | null
+    aiSummary: string | null
+    refreshedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type EventPerformanceTrendCountAggregateOutputType = {
+    id: number
+    athleteId: number
+    teamId: number
+    eventName: number
+    metricType: number
+    baseline: number
+    recentAverage: number
+    latestValue: number
+    latestRank: number
+    recentDelta: number
+    slope: number
+    confidenceLabel: number
+    sampleSize: number
+    summaryJson: number
+    aiSummary: number
+    refreshedAt: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type EventPerformanceTrendAvgAggregateInputType = {
+    baseline?: true
+    recentAverage?: true
+    latestValue?: true
+    latestRank?: true
+    recentDelta?: true
+    slope?: true
+    sampleSize?: true
+  }
+
+  export type EventPerformanceTrendSumAggregateInputType = {
+    baseline?: true
+    recentAverage?: true
+    latestValue?: true
+    latestRank?: true
+    recentDelta?: true
+    slope?: true
+    sampleSize?: true
+  }
+
+  export type EventPerformanceTrendMinAggregateInputType = {
+    id?: true
+    athleteId?: true
+    teamId?: true
+    eventName?: true
+    metricType?: true
+    baseline?: true
+    recentAverage?: true
+    latestValue?: true
+    latestRank?: true
+    recentDelta?: true
+    slope?: true
+    confidenceLabel?: true
+    sampleSize?: true
+    aiSummary?: true
+    refreshedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type EventPerformanceTrendMaxAggregateInputType = {
+    id?: true
+    athleteId?: true
+    teamId?: true
+    eventName?: true
+    metricType?: true
+    baseline?: true
+    recentAverage?: true
+    latestValue?: true
+    latestRank?: true
+    recentDelta?: true
+    slope?: true
+    confidenceLabel?: true
+    sampleSize?: true
+    aiSummary?: true
+    refreshedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type EventPerformanceTrendCountAggregateInputType = {
+    id?: true
+    athleteId?: true
+    teamId?: true
+    eventName?: true
+    metricType?: true
+    baseline?: true
+    recentAverage?: true
+    latestValue?: true
+    latestRank?: true
+    recentDelta?: true
+    slope?: true
+    confidenceLabel?: true
+    sampleSize?: true
+    summaryJson?: true
+    aiSummary?: true
+    refreshedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type EventPerformanceTrendAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which EventPerformanceTrend to aggregate.
+     */
+    where?: EventPerformanceTrendWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EventPerformanceTrends to fetch.
+     */
+    orderBy?: EventPerformanceTrendOrderByWithRelationInput | EventPerformanceTrendOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: EventPerformanceTrendWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EventPerformanceTrends from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EventPerformanceTrends.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned EventPerformanceTrends
+    **/
+    _count?: true | EventPerformanceTrendCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: EventPerformanceTrendAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: EventPerformanceTrendSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: EventPerformanceTrendMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: EventPerformanceTrendMaxAggregateInputType
+  }
+
+  export type GetEventPerformanceTrendAggregateType<T extends EventPerformanceTrendAggregateArgs> = {
+        [P in keyof T & keyof AggregateEventPerformanceTrend]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateEventPerformanceTrend[P]>
+      : GetScalarType<T[P], AggregateEventPerformanceTrend[P]>
+  }
+
+
+
+
+  export type EventPerformanceTrendGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventPerformanceTrendWhereInput
+    orderBy?: EventPerformanceTrendOrderByWithAggregationInput | EventPerformanceTrendOrderByWithAggregationInput[]
+    by: EventPerformanceTrendScalarFieldEnum[] | EventPerformanceTrendScalarFieldEnum
+    having?: EventPerformanceTrendScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: EventPerformanceTrendCountAggregateInputType | true
+    _avg?: EventPerformanceTrendAvgAggregateInputType
+    _sum?: EventPerformanceTrendSumAggregateInputType
+    _min?: EventPerformanceTrendMinAggregateInputType
+    _max?: EventPerformanceTrendMaxAggregateInputType
+  }
+
+  export type EventPerformanceTrendGroupByOutputType = {
+    id: string
+    athleteId: string
+    teamId: string
+    eventName: string
+    metricType: string
+    baseline: number | null
+    recentAverage: number | null
+    latestValue: number | null
+    latestRank: number | null
+    recentDelta: number | null
+    slope: number | null
+    confidenceLabel: string
+    sampleSize: number
+    summaryJson: JsonValue | null
+    aiSummary: string | null
+    refreshedAt: Date
+    createdAt: Date
+    updatedAt: Date
+    _count: EventPerformanceTrendCountAggregateOutputType | null
+    _avg: EventPerformanceTrendAvgAggregateOutputType | null
+    _sum: EventPerformanceTrendSumAggregateOutputType | null
+    _min: EventPerformanceTrendMinAggregateOutputType | null
+    _max: EventPerformanceTrendMaxAggregateOutputType | null
+  }
+
+  type GetEventPerformanceTrendGroupByPayload<T extends EventPerformanceTrendGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<EventPerformanceTrendGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof EventPerformanceTrendGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], EventPerformanceTrendGroupByOutputType[P]>
+            : GetScalarType<T[P], EventPerformanceTrendGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type EventPerformanceTrendSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    athleteId?: boolean
+    teamId?: boolean
+    eventName?: boolean
+    metricType?: boolean
+    baseline?: boolean
+    recentAverage?: boolean
+    latestValue?: boolean
+    latestRank?: boolean
+    recentDelta?: boolean
+    slope?: boolean
+    confidenceLabel?: boolean
+    sampleSize?: boolean
+    summaryJson?: boolean
+    aiSummary?: boolean
+    refreshedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    athlete?: boolean | AthleteDefaultArgs<ExtArgs>
+    team?: boolean | TeamDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["eventPerformanceTrend"]>
+
+  export type EventPerformanceTrendSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    athleteId?: boolean
+    teamId?: boolean
+    eventName?: boolean
+    metricType?: boolean
+    baseline?: boolean
+    recentAverage?: boolean
+    latestValue?: boolean
+    latestRank?: boolean
+    recentDelta?: boolean
+    slope?: boolean
+    confidenceLabel?: boolean
+    sampleSize?: boolean
+    summaryJson?: boolean
+    aiSummary?: boolean
+    refreshedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    athlete?: boolean | AthleteDefaultArgs<ExtArgs>
+    team?: boolean | TeamDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["eventPerformanceTrend"]>
+
+  export type EventPerformanceTrendSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    athleteId?: boolean
+    teamId?: boolean
+    eventName?: boolean
+    metricType?: boolean
+    baseline?: boolean
+    recentAverage?: boolean
+    latestValue?: boolean
+    latestRank?: boolean
+    recentDelta?: boolean
+    slope?: boolean
+    confidenceLabel?: boolean
+    sampleSize?: boolean
+    summaryJson?: boolean
+    aiSummary?: boolean
+    refreshedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    athlete?: boolean | AthleteDefaultArgs<ExtArgs>
+    team?: boolean | TeamDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["eventPerformanceTrend"]>
+
+  export type EventPerformanceTrendSelectScalar = {
+    id?: boolean
+    athleteId?: boolean
+    teamId?: boolean
+    eventName?: boolean
+    metricType?: boolean
+    baseline?: boolean
+    recentAverage?: boolean
+    latestValue?: boolean
+    latestRank?: boolean
+    recentDelta?: boolean
+    slope?: boolean
+    confidenceLabel?: boolean
+    sampleSize?: boolean
+    summaryJson?: boolean
+    aiSummary?: boolean
+    refreshedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type EventPerformanceTrendOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "athleteId" | "teamId" | "eventName" | "metricType" | "baseline" | "recentAverage" | "latestValue" | "latestRank" | "recentDelta" | "slope" | "confidenceLabel" | "sampleSize" | "summaryJson" | "aiSummary" | "refreshedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["eventPerformanceTrend"]>
+  export type EventPerformanceTrendInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    athlete?: boolean | AthleteDefaultArgs<ExtArgs>
+    team?: boolean | TeamDefaultArgs<ExtArgs>
+  }
+  export type EventPerformanceTrendIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    athlete?: boolean | AthleteDefaultArgs<ExtArgs>
+    team?: boolean | TeamDefaultArgs<ExtArgs>
+  }
+  export type EventPerformanceTrendIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    athlete?: boolean | AthleteDefaultArgs<ExtArgs>
+    team?: boolean | TeamDefaultArgs<ExtArgs>
+  }
+
+  export type $EventPerformanceTrendPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "EventPerformanceTrend"
+    objects: {
+      athlete: Prisma.$AthletePayload<ExtArgs>
+      team: Prisma.$TeamPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      athleteId: string
+      teamId: string
+      eventName: string
+      metricType: string
+      baseline: number | null
+      recentAverage: number | null
+      latestValue: number | null
+      latestRank: number | null
+      recentDelta: number | null
+      slope: number | null
+      confidenceLabel: string
+      sampleSize: number
+      summaryJson: Prisma.JsonValue | null
+      aiSummary: string | null
+      refreshedAt: Date
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["eventPerformanceTrend"]>
+    composites: {}
+  }
+
+  type EventPerformanceTrendGetPayload<S extends boolean | null | undefined | EventPerformanceTrendDefaultArgs> = $Result.GetResult<Prisma.$EventPerformanceTrendPayload, S>
+
+  type EventPerformanceTrendCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<EventPerformanceTrendFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: EventPerformanceTrendCountAggregateInputType | true
+    }
+
+  export interface EventPerformanceTrendDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['EventPerformanceTrend'], meta: { name: 'EventPerformanceTrend' } }
+    /**
+     * Find zero or one EventPerformanceTrend that matches the filter.
+     * @param {EventPerformanceTrendFindUniqueArgs} args - Arguments to find a EventPerformanceTrend
+     * @example
+     * // Get one EventPerformanceTrend
+     * const eventPerformanceTrend = await prisma.eventPerformanceTrend.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends EventPerformanceTrendFindUniqueArgs>(args: SelectSubset<T, EventPerformanceTrendFindUniqueArgs<ExtArgs>>): Prisma__EventPerformanceTrendClient<$Result.GetResult<Prisma.$EventPerformanceTrendPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one EventPerformanceTrend that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {EventPerformanceTrendFindUniqueOrThrowArgs} args - Arguments to find a EventPerformanceTrend
+     * @example
+     * // Get one EventPerformanceTrend
+     * const eventPerformanceTrend = await prisma.eventPerformanceTrend.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends EventPerformanceTrendFindUniqueOrThrowArgs>(args: SelectSubset<T, EventPerformanceTrendFindUniqueOrThrowArgs<ExtArgs>>): Prisma__EventPerformanceTrendClient<$Result.GetResult<Prisma.$EventPerformanceTrendPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first EventPerformanceTrend that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventPerformanceTrendFindFirstArgs} args - Arguments to find a EventPerformanceTrend
+     * @example
+     * // Get one EventPerformanceTrend
+     * const eventPerformanceTrend = await prisma.eventPerformanceTrend.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends EventPerformanceTrendFindFirstArgs>(args?: SelectSubset<T, EventPerformanceTrendFindFirstArgs<ExtArgs>>): Prisma__EventPerformanceTrendClient<$Result.GetResult<Prisma.$EventPerformanceTrendPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first EventPerformanceTrend that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventPerformanceTrendFindFirstOrThrowArgs} args - Arguments to find a EventPerformanceTrend
+     * @example
+     * // Get one EventPerformanceTrend
+     * const eventPerformanceTrend = await prisma.eventPerformanceTrend.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends EventPerformanceTrendFindFirstOrThrowArgs>(args?: SelectSubset<T, EventPerformanceTrendFindFirstOrThrowArgs<ExtArgs>>): Prisma__EventPerformanceTrendClient<$Result.GetResult<Prisma.$EventPerformanceTrendPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more EventPerformanceTrends that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventPerformanceTrendFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all EventPerformanceTrends
+     * const eventPerformanceTrends = await prisma.eventPerformanceTrend.findMany()
+     * 
+     * // Get first 10 EventPerformanceTrends
+     * const eventPerformanceTrends = await prisma.eventPerformanceTrend.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const eventPerformanceTrendWithIdOnly = await prisma.eventPerformanceTrend.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends EventPerformanceTrendFindManyArgs>(args?: SelectSubset<T, EventPerformanceTrendFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPerformanceTrendPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a EventPerformanceTrend.
+     * @param {EventPerformanceTrendCreateArgs} args - Arguments to create a EventPerformanceTrend.
+     * @example
+     * // Create one EventPerformanceTrend
+     * const EventPerformanceTrend = await prisma.eventPerformanceTrend.create({
+     *   data: {
+     *     // ... data to create a EventPerformanceTrend
+     *   }
+     * })
+     * 
+     */
+    create<T extends EventPerformanceTrendCreateArgs>(args: SelectSubset<T, EventPerformanceTrendCreateArgs<ExtArgs>>): Prisma__EventPerformanceTrendClient<$Result.GetResult<Prisma.$EventPerformanceTrendPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many EventPerformanceTrends.
+     * @param {EventPerformanceTrendCreateManyArgs} args - Arguments to create many EventPerformanceTrends.
+     * @example
+     * // Create many EventPerformanceTrends
+     * const eventPerformanceTrend = await prisma.eventPerformanceTrend.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends EventPerformanceTrendCreateManyArgs>(args?: SelectSubset<T, EventPerformanceTrendCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many EventPerformanceTrends and returns the data saved in the database.
+     * @param {EventPerformanceTrendCreateManyAndReturnArgs} args - Arguments to create many EventPerformanceTrends.
+     * @example
+     * // Create many EventPerformanceTrends
+     * const eventPerformanceTrend = await prisma.eventPerformanceTrend.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many EventPerformanceTrends and only return the `id`
+     * const eventPerformanceTrendWithIdOnly = await prisma.eventPerformanceTrend.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends EventPerformanceTrendCreateManyAndReturnArgs>(args?: SelectSubset<T, EventPerformanceTrendCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPerformanceTrendPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a EventPerformanceTrend.
+     * @param {EventPerformanceTrendDeleteArgs} args - Arguments to delete one EventPerformanceTrend.
+     * @example
+     * // Delete one EventPerformanceTrend
+     * const EventPerformanceTrend = await prisma.eventPerformanceTrend.delete({
+     *   where: {
+     *     // ... filter to delete one EventPerformanceTrend
+     *   }
+     * })
+     * 
+     */
+    delete<T extends EventPerformanceTrendDeleteArgs>(args: SelectSubset<T, EventPerformanceTrendDeleteArgs<ExtArgs>>): Prisma__EventPerformanceTrendClient<$Result.GetResult<Prisma.$EventPerformanceTrendPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one EventPerformanceTrend.
+     * @param {EventPerformanceTrendUpdateArgs} args - Arguments to update one EventPerformanceTrend.
+     * @example
+     * // Update one EventPerformanceTrend
+     * const eventPerformanceTrend = await prisma.eventPerformanceTrend.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends EventPerformanceTrendUpdateArgs>(args: SelectSubset<T, EventPerformanceTrendUpdateArgs<ExtArgs>>): Prisma__EventPerformanceTrendClient<$Result.GetResult<Prisma.$EventPerformanceTrendPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more EventPerformanceTrends.
+     * @param {EventPerformanceTrendDeleteManyArgs} args - Arguments to filter EventPerformanceTrends to delete.
+     * @example
+     * // Delete a few EventPerformanceTrends
+     * const { count } = await prisma.eventPerformanceTrend.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends EventPerformanceTrendDeleteManyArgs>(args?: SelectSubset<T, EventPerformanceTrendDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more EventPerformanceTrends.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventPerformanceTrendUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many EventPerformanceTrends
+     * const eventPerformanceTrend = await prisma.eventPerformanceTrend.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends EventPerformanceTrendUpdateManyArgs>(args: SelectSubset<T, EventPerformanceTrendUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more EventPerformanceTrends and returns the data updated in the database.
+     * @param {EventPerformanceTrendUpdateManyAndReturnArgs} args - Arguments to update many EventPerformanceTrends.
+     * @example
+     * // Update many EventPerformanceTrends
+     * const eventPerformanceTrend = await prisma.eventPerformanceTrend.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more EventPerformanceTrends and only return the `id`
+     * const eventPerformanceTrendWithIdOnly = await prisma.eventPerformanceTrend.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends EventPerformanceTrendUpdateManyAndReturnArgs>(args: SelectSubset<T, EventPerformanceTrendUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPerformanceTrendPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one EventPerformanceTrend.
+     * @param {EventPerformanceTrendUpsertArgs} args - Arguments to update or create a EventPerformanceTrend.
+     * @example
+     * // Update or create a EventPerformanceTrend
+     * const eventPerformanceTrend = await prisma.eventPerformanceTrend.upsert({
+     *   create: {
+     *     // ... data to create a EventPerformanceTrend
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the EventPerformanceTrend we want to update
+     *   }
+     * })
+     */
+    upsert<T extends EventPerformanceTrendUpsertArgs>(args: SelectSubset<T, EventPerformanceTrendUpsertArgs<ExtArgs>>): Prisma__EventPerformanceTrendClient<$Result.GetResult<Prisma.$EventPerformanceTrendPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of EventPerformanceTrends.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventPerformanceTrendCountArgs} args - Arguments to filter EventPerformanceTrends to count.
+     * @example
+     * // Count the number of EventPerformanceTrends
+     * const count = await prisma.eventPerformanceTrend.count({
+     *   where: {
+     *     // ... the filter for the EventPerformanceTrends we want to count
+     *   }
+     * })
+    **/
+    count<T extends EventPerformanceTrendCountArgs>(
+      args?: Subset<T, EventPerformanceTrendCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], EventPerformanceTrendCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a EventPerformanceTrend.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventPerformanceTrendAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends EventPerformanceTrendAggregateArgs>(args: Subset<T, EventPerformanceTrendAggregateArgs>): Prisma.PrismaPromise<GetEventPerformanceTrendAggregateType<T>>
+
+    /**
+     * Group by EventPerformanceTrend.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventPerformanceTrendGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends EventPerformanceTrendGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: EventPerformanceTrendGroupByArgs['orderBy'] }
+        : { orderBy?: EventPerformanceTrendGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, EventPerformanceTrendGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetEventPerformanceTrendGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the EventPerformanceTrend model
+   */
+  readonly fields: EventPerformanceTrendFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for EventPerformanceTrend.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__EventPerformanceTrendClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    athlete<T extends AthleteDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AthleteDefaultArgs<ExtArgs>>): Prisma__AthleteClient<$Result.GetResult<Prisma.$AthletePayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    team<T extends TeamDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TeamDefaultArgs<ExtArgs>>): Prisma__TeamClient<$Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the EventPerformanceTrend model
+   */ 
+  interface EventPerformanceTrendFieldRefs {
+    readonly id: FieldRef<"EventPerformanceTrend", 'String'>
+    readonly athleteId: FieldRef<"EventPerformanceTrend", 'String'>
+    readonly teamId: FieldRef<"EventPerformanceTrend", 'String'>
+    readonly eventName: FieldRef<"EventPerformanceTrend", 'String'>
+    readonly metricType: FieldRef<"EventPerformanceTrend", 'String'>
+    readonly baseline: FieldRef<"EventPerformanceTrend", 'Float'>
+    readonly recentAverage: FieldRef<"EventPerformanceTrend", 'Float'>
+    readonly latestValue: FieldRef<"EventPerformanceTrend", 'Float'>
+    readonly latestRank: FieldRef<"EventPerformanceTrend", 'Int'>
+    readonly recentDelta: FieldRef<"EventPerformanceTrend", 'Float'>
+    readonly slope: FieldRef<"EventPerformanceTrend", 'Float'>
+    readonly confidenceLabel: FieldRef<"EventPerformanceTrend", 'String'>
+    readonly sampleSize: FieldRef<"EventPerformanceTrend", 'Int'>
+    readonly summaryJson: FieldRef<"EventPerformanceTrend", 'Json'>
+    readonly aiSummary: FieldRef<"EventPerformanceTrend", 'String'>
+    readonly refreshedAt: FieldRef<"EventPerformanceTrend", 'DateTime'>
+    readonly createdAt: FieldRef<"EventPerformanceTrend", 'DateTime'>
+    readonly updatedAt: FieldRef<"EventPerformanceTrend", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * EventPerformanceTrend findUnique
+   */
+  export type EventPerformanceTrendFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventPerformanceTrend
+     */
+    select?: EventPerformanceTrendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventPerformanceTrend
+     */
+    omit?: EventPerformanceTrendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventPerformanceTrendInclude<ExtArgs> | null
+    /**
+     * Filter, which EventPerformanceTrend to fetch.
+     */
+    where: EventPerformanceTrendWhereUniqueInput
+  }
+
+  /**
+   * EventPerformanceTrend findUniqueOrThrow
+   */
+  export type EventPerformanceTrendFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventPerformanceTrend
+     */
+    select?: EventPerformanceTrendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventPerformanceTrend
+     */
+    omit?: EventPerformanceTrendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventPerformanceTrendInclude<ExtArgs> | null
+    /**
+     * Filter, which EventPerformanceTrend to fetch.
+     */
+    where: EventPerformanceTrendWhereUniqueInput
+  }
+
+  /**
+   * EventPerformanceTrend findFirst
+   */
+  export type EventPerformanceTrendFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventPerformanceTrend
+     */
+    select?: EventPerformanceTrendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventPerformanceTrend
+     */
+    omit?: EventPerformanceTrendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventPerformanceTrendInclude<ExtArgs> | null
+    /**
+     * Filter, which EventPerformanceTrend to fetch.
+     */
+    where?: EventPerformanceTrendWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EventPerformanceTrends to fetch.
+     */
+    orderBy?: EventPerformanceTrendOrderByWithRelationInput | EventPerformanceTrendOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for EventPerformanceTrends.
+     */
+    cursor?: EventPerformanceTrendWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EventPerformanceTrends from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EventPerformanceTrends.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of EventPerformanceTrends.
+     */
+    distinct?: EventPerformanceTrendScalarFieldEnum | EventPerformanceTrendScalarFieldEnum[]
+  }
+
+  /**
+   * EventPerformanceTrend findFirstOrThrow
+   */
+  export type EventPerformanceTrendFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventPerformanceTrend
+     */
+    select?: EventPerformanceTrendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventPerformanceTrend
+     */
+    omit?: EventPerformanceTrendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventPerformanceTrendInclude<ExtArgs> | null
+    /**
+     * Filter, which EventPerformanceTrend to fetch.
+     */
+    where?: EventPerformanceTrendWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EventPerformanceTrends to fetch.
+     */
+    orderBy?: EventPerformanceTrendOrderByWithRelationInput | EventPerformanceTrendOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for EventPerformanceTrends.
+     */
+    cursor?: EventPerformanceTrendWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EventPerformanceTrends from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EventPerformanceTrends.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of EventPerformanceTrends.
+     */
+    distinct?: EventPerformanceTrendScalarFieldEnum | EventPerformanceTrendScalarFieldEnum[]
+  }
+
+  /**
+   * EventPerformanceTrend findMany
+   */
+  export type EventPerformanceTrendFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventPerformanceTrend
+     */
+    select?: EventPerformanceTrendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventPerformanceTrend
+     */
+    omit?: EventPerformanceTrendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventPerformanceTrendInclude<ExtArgs> | null
+    /**
+     * Filter, which EventPerformanceTrends to fetch.
+     */
+    where?: EventPerformanceTrendWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EventPerformanceTrends to fetch.
+     */
+    orderBy?: EventPerformanceTrendOrderByWithRelationInput | EventPerformanceTrendOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing EventPerformanceTrends.
+     */
+    cursor?: EventPerformanceTrendWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EventPerformanceTrends from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EventPerformanceTrends.
+     */
+    skip?: number
+    distinct?: EventPerformanceTrendScalarFieldEnum | EventPerformanceTrendScalarFieldEnum[]
+  }
+
+  /**
+   * EventPerformanceTrend create
+   */
+  export type EventPerformanceTrendCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventPerformanceTrend
+     */
+    select?: EventPerformanceTrendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventPerformanceTrend
+     */
+    omit?: EventPerformanceTrendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventPerformanceTrendInclude<ExtArgs> | null
+    /**
+     * The data needed to create a EventPerformanceTrend.
+     */
+    data: XOR<EventPerformanceTrendCreateInput, EventPerformanceTrendUncheckedCreateInput>
+  }
+
+  /**
+   * EventPerformanceTrend createMany
+   */
+  export type EventPerformanceTrendCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many EventPerformanceTrends.
+     */
+    data: EventPerformanceTrendCreateManyInput | EventPerformanceTrendCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * EventPerformanceTrend createManyAndReturn
+   */
+  export type EventPerformanceTrendCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventPerformanceTrend
+     */
+    select?: EventPerformanceTrendSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventPerformanceTrend
+     */
+    omit?: EventPerformanceTrendOmit<ExtArgs> | null
+    /**
+     * The data used to create many EventPerformanceTrends.
+     */
+    data: EventPerformanceTrendCreateManyInput | EventPerformanceTrendCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventPerformanceTrendIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * EventPerformanceTrend update
+   */
+  export type EventPerformanceTrendUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventPerformanceTrend
+     */
+    select?: EventPerformanceTrendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventPerformanceTrend
+     */
+    omit?: EventPerformanceTrendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventPerformanceTrendInclude<ExtArgs> | null
+    /**
+     * The data needed to update a EventPerformanceTrend.
+     */
+    data: XOR<EventPerformanceTrendUpdateInput, EventPerformanceTrendUncheckedUpdateInput>
+    /**
+     * Choose, which EventPerformanceTrend to update.
+     */
+    where: EventPerformanceTrendWhereUniqueInput
+  }
+
+  /**
+   * EventPerformanceTrend updateMany
+   */
+  export type EventPerformanceTrendUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update EventPerformanceTrends.
+     */
+    data: XOR<EventPerformanceTrendUpdateManyMutationInput, EventPerformanceTrendUncheckedUpdateManyInput>
+    /**
+     * Filter which EventPerformanceTrends to update
+     */
+    where?: EventPerformanceTrendWhereInput
+    /**
+     * Limit how many EventPerformanceTrends to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * EventPerformanceTrend updateManyAndReturn
+   */
+  export type EventPerformanceTrendUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventPerformanceTrend
+     */
+    select?: EventPerformanceTrendSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventPerformanceTrend
+     */
+    omit?: EventPerformanceTrendOmit<ExtArgs> | null
+    /**
+     * The data used to update EventPerformanceTrends.
+     */
+    data: XOR<EventPerformanceTrendUpdateManyMutationInput, EventPerformanceTrendUncheckedUpdateManyInput>
+    /**
+     * Filter which EventPerformanceTrends to update
+     */
+    where?: EventPerformanceTrendWhereInput
+    /**
+     * Limit how many EventPerformanceTrends to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventPerformanceTrendIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * EventPerformanceTrend upsert
+   */
+  export type EventPerformanceTrendUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventPerformanceTrend
+     */
+    select?: EventPerformanceTrendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventPerformanceTrend
+     */
+    omit?: EventPerformanceTrendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventPerformanceTrendInclude<ExtArgs> | null
+    /**
+     * The filter to search for the EventPerformanceTrend to update in case it exists.
+     */
+    where: EventPerformanceTrendWhereUniqueInput
+    /**
+     * In case the EventPerformanceTrend found by the `where` argument doesn't exist, create a new EventPerformanceTrend with this data.
+     */
+    create: XOR<EventPerformanceTrendCreateInput, EventPerformanceTrendUncheckedCreateInput>
+    /**
+     * In case the EventPerformanceTrend was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<EventPerformanceTrendUpdateInput, EventPerformanceTrendUncheckedUpdateInput>
+  }
+
+  /**
+   * EventPerformanceTrend delete
+   */
+  export type EventPerformanceTrendDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventPerformanceTrend
+     */
+    select?: EventPerformanceTrendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventPerformanceTrend
+     */
+    omit?: EventPerformanceTrendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventPerformanceTrendInclude<ExtArgs> | null
+    /**
+     * Filter which EventPerformanceTrend to delete.
+     */
+    where: EventPerformanceTrendWhereUniqueInput
+  }
+
+  /**
+   * EventPerformanceTrend deleteMany
+   */
+  export type EventPerformanceTrendDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which EventPerformanceTrends to delete
+     */
+    where?: EventPerformanceTrendWhereInput
+    /**
+     * Limit how many EventPerformanceTrends to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * EventPerformanceTrend without action
+   */
+  export type EventPerformanceTrendDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventPerformanceTrend
+     */
+    select?: EventPerformanceTrendSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventPerformanceTrend
+     */
+    omit?: EventPerformanceTrendOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventPerformanceTrendInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model WorkoutAnalyticsSnapshot
+   */
+
+  export type AggregateWorkoutAnalyticsSnapshot = {
+    _count: WorkoutAnalyticsSnapshotCountAggregateOutputType | null
+    _avg: WorkoutAnalyticsSnapshotAvgAggregateOutputType | null
+    _sum: WorkoutAnalyticsSnapshotSumAggregateOutputType | null
+    _min: WorkoutAnalyticsSnapshotMinAggregateOutputType | null
+    _max: WorkoutAnalyticsSnapshotMaxAggregateOutputType | null
+  }
+
+  export type WorkoutAnalyticsSnapshotAvgAggregateOutputType = {
+    plannedMetricCount: number | null
+    aboveTargetCount: number | null
+    onTargetCount: number | null
+    belowTargetCount: number | null
+    adherencePercent: number | null
+  }
+
+  export type WorkoutAnalyticsSnapshotSumAggregateOutputType = {
+    plannedMetricCount: number | null
+    aboveTargetCount: number | null
+    onTargetCount: number | null
+    belowTargetCount: number | null
+    adherencePercent: number | null
+  }
+
+  export type WorkoutAnalyticsSnapshotMinAggregateOutputType = {
+    id: string | null
+    athleteId: string | null
+    teamId: string | null
+    plannedMetricCount: number | null
+    aboveTargetCount: number | null
+    onTargetCount: number | null
+    belowTargetCount: number | null
+    adherencePercent: number | null
+    aiSummary: string | null
+    refreshedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WorkoutAnalyticsSnapshotMaxAggregateOutputType = {
+    id: string | null
+    athleteId: string | null
+    teamId: string | null
+    plannedMetricCount: number | null
+    aboveTargetCount: number | null
+    onTargetCount: number | null
+    belowTargetCount: number | null
+    adherencePercent: number | null
+    aiSummary: string | null
+    refreshedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WorkoutAnalyticsSnapshotCountAggregateOutputType = {
+    id: number
+    athleteId: number
+    teamId: number
+    plannedMetricCount: number
+    aboveTargetCount: number
+    onTargetCount: number
+    belowTargetCount: number
+    adherencePercent: number
+    rolling7: number
+    rolling14: number
+    rolling30: number
+    recentProgression: number
+    summaryJson: number
+    aiSummary: number
+    refreshedAt: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WorkoutAnalyticsSnapshotAvgAggregateInputType = {
+    plannedMetricCount?: true
+    aboveTargetCount?: true
+    onTargetCount?: true
+    belowTargetCount?: true
+    adherencePercent?: true
+  }
+
+  export type WorkoutAnalyticsSnapshotSumAggregateInputType = {
+    plannedMetricCount?: true
+    aboveTargetCount?: true
+    onTargetCount?: true
+    belowTargetCount?: true
+    adherencePercent?: true
+  }
+
+  export type WorkoutAnalyticsSnapshotMinAggregateInputType = {
+    id?: true
+    athleteId?: true
+    teamId?: true
+    plannedMetricCount?: true
+    aboveTargetCount?: true
+    onTargetCount?: true
+    belowTargetCount?: true
+    adherencePercent?: true
+    aiSummary?: true
+    refreshedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WorkoutAnalyticsSnapshotMaxAggregateInputType = {
+    id?: true
+    athleteId?: true
+    teamId?: true
+    plannedMetricCount?: true
+    aboveTargetCount?: true
+    onTargetCount?: true
+    belowTargetCount?: true
+    adherencePercent?: true
+    aiSummary?: true
+    refreshedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WorkoutAnalyticsSnapshotCountAggregateInputType = {
+    id?: true
+    athleteId?: true
+    teamId?: true
+    plannedMetricCount?: true
+    aboveTargetCount?: true
+    onTargetCount?: true
+    belowTargetCount?: true
+    adherencePercent?: true
+    rolling7?: true
+    rolling14?: true
+    rolling30?: true
+    recentProgression?: true
+    summaryJson?: true
+    aiSummary?: true
+    refreshedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WorkoutAnalyticsSnapshotAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WorkoutAnalyticsSnapshot to aggregate.
+     */
+    where?: WorkoutAnalyticsSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WorkoutAnalyticsSnapshots to fetch.
+     */
+    orderBy?: WorkoutAnalyticsSnapshotOrderByWithRelationInput | WorkoutAnalyticsSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WorkoutAnalyticsSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WorkoutAnalyticsSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WorkoutAnalyticsSnapshots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WorkoutAnalyticsSnapshots
+    **/
+    _count?: true | WorkoutAnalyticsSnapshotCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WorkoutAnalyticsSnapshotAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WorkoutAnalyticsSnapshotSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WorkoutAnalyticsSnapshotMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WorkoutAnalyticsSnapshotMaxAggregateInputType
+  }
+
+  export type GetWorkoutAnalyticsSnapshotAggregateType<T extends WorkoutAnalyticsSnapshotAggregateArgs> = {
+        [P in keyof T & keyof AggregateWorkoutAnalyticsSnapshot]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWorkoutAnalyticsSnapshot[P]>
+      : GetScalarType<T[P], AggregateWorkoutAnalyticsSnapshot[P]>
+  }
+
+
+
+
+  export type WorkoutAnalyticsSnapshotGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WorkoutAnalyticsSnapshotWhereInput
+    orderBy?: WorkoutAnalyticsSnapshotOrderByWithAggregationInput | WorkoutAnalyticsSnapshotOrderByWithAggregationInput[]
+    by: WorkoutAnalyticsSnapshotScalarFieldEnum[] | WorkoutAnalyticsSnapshotScalarFieldEnum
+    having?: WorkoutAnalyticsSnapshotScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WorkoutAnalyticsSnapshotCountAggregateInputType | true
+    _avg?: WorkoutAnalyticsSnapshotAvgAggregateInputType
+    _sum?: WorkoutAnalyticsSnapshotSumAggregateInputType
+    _min?: WorkoutAnalyticsSnapshotMinAggregateInputType
+    _max?: WorkoutAnalyticsSnapshotMaxAggregateInputType
+  }
+
+  export type WorkoutAnalyticsSnapshotGroupByOutputType = {
+    id: string
+    athleteId: string
+    teamId: string
+    plannedMetricCount: number
+    aboveTargetCount: number
+    onTargetCount: number
+    belowTargetCount: number
+    adherencePercent: number | null
+    rolling7: JsonValue | null
+    rolling14: JsonValue | null
+    rolling30: JsonValue | null
+    recentProgression: JsonValue | null
+    summaryJson: JsonValue | null
+    aiSummary: string | null
+    refreshedAt: Date
+    createdAt: Date
+    updatedAt: Date
+    _count: WorkoutAnalyticsSnapshotCountAggregateOutputType | null
+    _avg: WorkoutAnalyticsSnapshotAvgAggregateOutputType | null
+    _sum: WorkoutAnalyticsSnapshotSumAggregateOutputType | null
+    _min: WorkoutAnalyticsSnapshotMinAggregateOutputType | null
+    _max: WorkoutAnalyticsSnapshotMaxAggregateOutputType | null
+  }
+
+  type GetWorkoutAnalyticsSnapshotGroupByPayload<T extends WorkoutAnalyticsSnapshotGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<WorkoutAnalyticsSnapshotGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WorkoutAnalyticsSnapshotGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WorkoutAnalyticsSnapshotGroupByOutputType[P]>
+            : GetScalarType<T[P], WorkoutAnalyticsSnapshotGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WorkoutAnalyticsSnapshotSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    athleteId?: boolean
+    teamId?: boolean
+    plannedMetricCount?: boolean
+    aboveTargetCount?: boolean
+    onTargetCount?: boolean
+    belowTargetCount?: boolean
+    adherencePercent?: boolean
+    rolling7?: boolean
+    rolling14?: boolean
+    rolling30?: boolean
+    recentProgression?: boolean
+    summaryJson?: boolean
+    aiSummary?: boolean
+    refreshedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    athlete?: boolean | AthleteDefaultArgs<ExtArgs>
+    team?: boolean | TeamDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["workoutAnalyticsSnapshot"]>
+
+  export type WorkoutAnalyticsSnapshotSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    athleteId?: boolean
+    teamId?: boolean
+    plannedMetricCount?: boolean
+    aboveTargetCount?: boolean
+    onTargetCount?: boolean
+    belowTargetCount?: boolean
+    adherencePercent?: boolean
+    rolling7?: boolean
+    rolling14?: boolean
+    rolling30?: boolean
+    recentProgression?: boolean
+    summaryJson?: boolean
+    aiSummary?: boolean
+    refreshedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    athlete?: boolean | AthleteDefaultArgs<ExtArgs>
+    team?: boolean | TeamDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["workoutAnalyticsSnapshot"]>
+
+  export type WorkoutAnalyticsSnapshotSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    athleteId?: boolean
+    teamId?: boolean
+    plannedMetricCount?: boolean
+    aboveTargetCount?: boolean
+    onTargetCount?: boolean
+    belowTargetCount?: boolean
+    adherencePercent?: boolean
+    rolling7?: boolean
+    rolling14?: boolean
+    rolling30?: boolean
+    recentProgression?: boolean
+    summaryJson?: boolean
+    aiSummary?: boolean
+    refreshedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    athlete?: boolean | AthleteDefaultArgs<ExtArgs>
+    team?: boolean | TeamDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["workoutAnalyticsSnapshot"]>
+
+  export type WorkoutAnalyticsSnapshotSelectScalar = {
+    id?: boolean
+    athleteId?: boolean
+    teamId?: boolean
+    plannedMetricCount?: boolean
+    aboveTargetCount?: boolean
+    onTargetCount?: boolean
+    belowTargetCount?: boolean
+    adherencePercent?: boolean
+    rolling7?: boolean
+    rolling14?: boolean
+    rolling30?: boolean
+    recentProgression?: boolean
+    summaryJson?: boolean
+    aiSummary?: boolean
+    refreshedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type WorkoutAnalyticsSnapshotOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "athleteId" | "teamId" | "plannedMetricCount" | "aboveTargetCount" | "onTargetCount" | "belowTargetCount" | "adherencePercent" | "rolling7" | "rolling14" | "rolling30" | "recentProgression" | "summaryJson" | "aiSummary" | "refreshedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["workoutAnalyticsSnapshot"]>
+  export type WorkoutAnalyticsSnapshotInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    athlete?: boolean | AthleteDefaultArgs<ExtArgs>
+    team?: boolean | TeamDefaultArgs<ExtArgs>
+  }
+  export type WorkoutAnalyticsSnapshotIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    athlete?: boolean | AthleteDefaultArgs<ExtArgs>
+    team?: boolean | TeamDefaultArgs<ExtArgs>
+  }
+  export type WorkoutAnalyticsSnapshotIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    athlete?: boolean | AthleteDefaultArgs<ExtArgs>
+    team?: boolean | TeamDefaultArgs<ExtArgs>
+  }
+
+  export type $WorkoutAnalyticsSnapshotPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "WorkoutAnalyticsSnapshot"
+    objects: {
+      athlete: Prisma.$AthletePayload<ExtArgs>
+      team: Prisma.$TeamPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      athleteId: string
+      teamId: string
+      plannedMetricCount: number
+      aboveTargetCount: number
+      onTargetCount: number
+      belowTargetCount: number
+      adherencePercent: number | null
+      rolling7: Prisma.JsonValue | null
+      rolling14: Prisma.JsonValue | null
+      rolling30: Prisma.JsonValue | null
+      recentProgression: Prisma.JsonValue | null
+      summaryJson: Prisma.JsonValue | null
+      aiSummary: string | null
+      refreshedAt: Date
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["workoutAnalyticsSnapshot"]>
+    composites: {}
+  }
+
+  type WorkoutAnalyticsSnapshotGetPayload<S extends boolean | null | undefined | WorkoutAnalyticsSnapshotDefaultArgs> = $Result.GetResult<Prisma.$WorkoutAnalyticsSnapshotPayload, S>
+
+  type WorkoutAnalyticsSnapshotCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<WorkoutAnalyticsSnapshotFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: WorkoutAnalyticsSnapshotCountAggregateInputType | true
+    }
+
+  export interface WorkoutAnalyticsSnapshotDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['WorkoutAnalyticsSnapshot'], meta: { name: 'WorkoutAnalyticsSnapshot' } }
+    /**
+     * Find zero or one WorkoutAnalyticsSnapshot that matches the filter.
+     * @param {WorkoutAnalyticsSnapshotFindUniqueArgs} args - Arguments to find a WorkoutAnalyticsSnapshot
+     * @example
+     * // Get one WorkoutAnalyticsSnapshot
+     * const workoutAnalyticsSnapshot = await prisma.workoutAnalyticsSnapshot.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends WorkoutAnalyticsSnapshotFindUniqueArgs>(args: SelectSubset<T, WorkoutAnalyticsSnapshotFindUniqueArgs<ExtArgs>>): Prisma__WorkoutAnalyticsSnapshotClient<$Result.GetResult<Prisma.$WorkoutAnalyticsSnapshotPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one WorkoutAnalyticsSnapshot that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {WorkoutAnalyticsSnapshotFindUniqueOrThrowArgs} args - Arguments to find a WorkoutAnalyticsSnapshot
+     * @example
+     * // Get one WorkoutAnalyticsSnapshot
+     * const workoutAnalyticsSnapshot = await prisma.workoutAnalyticsSnapshot.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends WorkoutAnalyticsSnapshotFindUniqueOrThrowArgs>(args: SelectSubset<T, WorkoutAnalyticsSnapshotFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WorkoutAnalyticsSnapshotClient<$Result.GetResult<Prisma.$WorkoutAnalyticsSnapshotPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first WorkoutAnalyticsSnapshot that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WorkoutAnalyticsSnapshotFindFirstArgs} args - Arguments to find a WorkoutAnalyticsSnapshot
+     * @example
+     * // Get one WorkoutAnalyticsSnapshot
+     * const workoutAnalyticsSnapshot = await prisma.workoutAnalyticsSnapshot.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends WorkoutAnalyticsSnapshotFindFirstArgs>(args?: SelectSubset<T, WorkoutAnalyticsSnapshotFindFirstArgs<ExtArgs>>): Prisma__WorkoutAnalyticsSnapshotClient<$Result.GetResult<Prisma.$WorkoutAnalyticsSnapshotPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first WorkoutAnalyticsSnapshot that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WorkoutAnalyticsSnapshotFindFirstOrThrowArgs} args - Arguments to find a WorkoutAnalyticsSnapshot
+     * @example
+     * // Get one WorkoutAnalyticsSnapshot
+     * const workoutAnalyticsSnapshot = await prisma.workoutAnalyticsSnapshot.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends WorkoutAnalyticsSnapshotFindFirstOrThrowArgs>(args?: SelectSubset<T, WorkoutAnalyticsSnapshotFindFirstOrThrowArgs<ExtArgs>>): Prisma__WorkoutAnalyticsSnapshotClient<$Result.GetResult<Prisma.$WorkoutAnalyticsSnapshotPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more WorkoutAnalyticsSnapshots that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WorkoutAnalyticsSnapshotFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WorkoutAnalyticsSnapshots
+     * const workoutAnalyticsSnapshots = await prisma.workoutAnalyticsSnapshot.findMany()
+     * 
+     * // Get first 10 WorkoutAnalyticsSnapshots
+     * const workoutAnalyticsSnapshots = await prisma.workoutAnalyticsSnapshot.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const workoutAnalyticsSnapshotWithIdOnly = await prisma.workoutAnalyticsSnapshot.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends WorkoutAnalyticsSnapshotFindManyArgs>(args?: SelectSubset<T, WorkoutAnalyticsSnapshotFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkoutAnalyticsSnapshotPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a WorkoutAnalyticsSnapshot.
+     * @param {WorkoutAnalyticsSnapshotCreateArgs} args - Arguments to create a WorkoutAnalyticsSnapshot.
+     * @example
+     * // Create one WorkoutAnalyticsSnapshot
+     * const WorkoutAnalyticsSnapshot = await prisma.workoutAnalyticsSnapshot.create({
+     *   data: {
+     *     // ... data to create a WorkoutAnalyticsSnapshot
+     *   }
+     * })
+     * 
+     */
+    create<T extends WorkoutAnalyticsSnapshotCreateArgs>(args: SelectSubset<T, WorkoutAnalyticsSnapshotCreateArgs<ExtArgs>>): Prisma__WorkoutAnalyticsSnapshotClient<$Result.GetResult<Prisma.$WorkoutAnalyticsSnapshotPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many WorkoutAnalyticsSnapshots.
+     * @param {WorkoutAnalyticsSnapshotCreateManyArgs} args - Arguments to create many WorkoutAnalyticsSnapshots.
+     * @example
+     * // Create many WorkoutAnalyticsSnapshots
+     * const workoutAnalyticsSnapshot = await prisma.workoutAnalyticsSnapshot.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends WorkoutAnalyticsSnapshotCreateManyArgs>(args?: SelectSubset<T, WorkoutAnalyticsSnapshotCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many WorkoutAnalyticsSnapshots and returns the data saved in the database.
+     * @param {WorkoutAnalyticsSnapshotCreateManyAndReturnArgs} args - Arguments to create many WorkoutAnalyticsSnapshots.
+     * @example
+     * // Create many WorkoutAnalyticsSnapshots
+     * const workoutAnalyticsSnapshot = await prisma.workoutAnalyticsSnapshot.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many WorkoutAnalyticsSnapshots and only return the `id`
+     * const workoutAnalyticsSnapshotWithIdOnly = await prisma.workoutAnalyticsSnapshot.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends WorkoutAnalyticsSnapshotCreateManyAndReturnArgs>(args?: SelectSubset<T, WorkoutAnalyticsSnapshotCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkoutAnalyticsSnapshotPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a WorkoutAnalyticsSnapshot.
+     * @param {WorkoutAnalyticsSnapshotDeleteArgs} args - Arguments to delete one WorkoutAnalyticsSnapshot.
+     * @example
+     * // Delete one WorkoutAnalyticsSnapshot
+     * const WorkoutAnalyticsSnapshot = await prisma.workoutAnalyticsSnapshot.delete({
+     *   where: {
+     *     // ... filter to delete one WorkoutAnalyticsSnapshot
+     *   }
+     * })
+     * 
+     */
+    delete<T extends WorkoutAnalyticsSnapshotDeleteArgs>(args: SelectSubset<T, WorkoutAnalyticsSnapshotDeleteArgs<ExtArgs>>): Prisma__WorkoutAnalyticsSnapshotClient<$Result.GetResult<Prisma.$WorkoutAnalyticsSnapshotPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one WorkoutAnalyticsSnapshot.
+     * @param {WorkoutAnalyticsSnapshotUpdateArgs} args - Arguments to update one WorkoutAnalyticsSnapshot.
+     * @example
+     * // Update one WorkoutAnalyticsSnapshot
+     * const workoutAnalyticsSnapshot = await prisma.workoutAnalyticsSnapshot.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends WorkoutAnalyticsSnapshotUpdateArgs>(args: SelectSubset<T, WorkoutAnalyticsSnapshotUpdateArgs<ExtArgs>>): Prisma__WorkoutAnalyticsSnapshotClient<$Result.GetResult<Prisma.$WorkoutAnalyticsSnapshotPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more WorkoutAnalyticsSnapshots.
+     * @param {WorkoutAnalyticsSnapshotDeleteManyArgs} args - Arguments to filter WorkoutAnalyticsSnapshots to delete.
+     * @example
+     * // Delete a few WorkoutAnalyticsSnapshots
+     * const { count } = await prisma.workoutAnalyticsSnapshot.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends WorkoutAnalyticsSnapshotDeleteManyArgs>(args?: SelectSubset<T, WorkoutAnalyticsSnapshotDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WorkoutAnalyticsSnapshots.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WorkoutAnalyticsSnapshotUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WorkoutAnalyticsSnapshots
+     * const workoutAnalyticsSnapshot = await prisma.workoutAnalyticsSnapshot.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends WorkoutAnalyticsSnapshotUpdateManyArgs>(args: SelectSubset<T, WorkoutAnalyticsSnapshotUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WorkoutAnalyticsSnapshots and returns the data updated in the database.
+     * @param {WorkoutAnalyticsSnapshotUpdateManyAndReturnArgs} args - Arguments to update many WorkoutAnalyticsSnapshots.
+     * @example
+     * // Update many WorkoutAnalyticsSnapshots
+     * const workoutAnalyticsSnapshot = await prisma.workoutAnalyticsSnapshot.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more WorkoutAnalyticsSnapshots and only return the `id`
+     * const workoutAnalyticsSnapshotWithIdOnly = await prisma.workoutAnalyticsSnapshot.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends WorkoutAnalyticsSnapshotUpdateManyAndReturnArgs>(args: SelectSubset<T, WorkoutAnalyticsSnapshotUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WorkoutAnalyticsSnapshotPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one WorkoutAnalyticsSnapshot.
+     * @param {WorkoutAnalyticsSnapshotUpsertArgs} args - Arguments to update or create a WorkoutAnalyticsSnapshot.
+     * @example
+     * // Update or create a WorkoutAnalyticsSnapshot
+     * const workoutAnalyticsSnapshot = await prisma.workoutAnalyticsSnapshot.upsert({
+     *   create: {
+     *     // ... data to create a WorkoutAnalyticsSnapshot
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WorkoutAnalyticsSnapshot we want to update
+     *   }
+     * })
+     */
+    upsert<T extends WorkoutAnalyticsSnapshotUpsertArgs>(args: SelectSubset<T, WorkoutAnalyticsSnapshotUpsertArgs<ExtArgs>>): Prisma__WorkoutAnalyticsSnapshotClient<$Result.GetResult<Prisma.$WorkoutAnalyticsSnapshotPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of WorkoutAnalyticsSnapshots.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WorkoutAnalyticsSnapshotCountArgs} args - Arguments to filter WorkoutAnalyticsSnapshots to count.
+     * @example
+     * // Count the number of WorkoutAnalyticsSnapshots
+     * const count = await prisma.workoutAnalyticsSnapshot.count({
+     *   where: {
+     *     // ... the filter for the WorkoutAnalyticsSnapshots we want to count
+     *   }
+     * })
+    **/
+    count<T extends WorkoutAnalyticsSnapshotCountArgs>(
+      args?: Subset<T, WorkoutAnalyticsSnapshotCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WorkoutAnalyticsSnapshotCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WorkoutAnalyticsSnapshot.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WorkoutAnalyticsSnapshotAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WorkoutAnalyticsSnapshotAggregateArgs>(args: Subset<T, WorkoutAnalyticsSnapshotAggregateArgs>): Prisma.PrismaPromise<GetWorkoutAnalyticsSnapshotAggregateType<T>>
+
+    /**
+     * Group by WorkoutAnalyticsSnapshot.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WorkoutAnalyticsSnapshotGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WorkoutAnalyticsSnapshotGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WorkoutAnalyticsSnapshotGroupByArgs['orderBy'] }
+        : { orderBy?: WorkoutAnalyticsSnapshotGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WorkoutAnalyticsSnapshotGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWorkoutAnalyticsSnapshotGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the WorkoutAnalyticsSnapshot model
+   */
+  readonly fields: WorkoutAnalyticsSnapshotFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WorkoutAnalyticsSnapshot.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__WorkoutAnalyticsSnapshotClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    athlete<T extends AthleteDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AthleteDefaultArgs<ExtArgs>>): Prisma__AthleteClient<$Result.GetResult<Prisma.$AthletePayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    team<T extends TeamDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TeamDefaultArgs<ExtArgs>>): Prisma__TeamClient<$Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the WorkoutAnalyticsSnapshot model
+   */ 
+  interface WorkoutAnalyticsSnapshotFieldRefs {
+    readonly id: FieldRef<"WorkoutAnalyticsSnapshot", 'String'>
+    readonly athleteId: FieldRef<"WorkoutAnalyticsSnapshot", 'String'>
+    readonly teamId: FieldRef<"WorkoutAnalyticsSnapshot", 'String'>
+    readonly plannedMetricCount: FieldRef<"WorkoutAnalyticsSnapshot", 'Int'>
+    readonly aboveTargetCount: FieldRef<"WorkoutAnalyticsSnapshot", 'Int'>
+    readonly onTargetCount: FieldRef<"WorkoutAnalyticsSnapshot", 'Int'>
+    readonly belowTargetCount: FieldRef<"WorkoutAnalyticsSnapshot", 'Int'>
+    readonly adherencePercent: FieldRef<"WorkoutAnalyticsSnapshot", 'Float'>
+    readonly rolling7: FieldRef<"WorkoutAnalyticsSnapshot", 'Json'>
+    readonly rolling14: FieldRef<"WorkoutAnalyticsSnapshot", 'Json'>
+    readonly rolling30: FieldRef<"WorkoutAnalyticsSnapshot", 'Json'>
+    readonly recentProgression: FieldRef<"WorkoutAnalyticsSnapshot", 'Json'>
+    readonly summaryJson: FieldRef<"WorkoutAnalyticsSnapshot", 'Json'>
+    readonly aiSummary: FieldRef<"WorkoutAnalyticsSnapshot", 'String'>
+    readonly refreshedAt: FieldRef<"WorkoutAnalyticsSnapshot", 'DateTime'>
+    readonly createdAt: FieldRef<"WorkoutAnalyticsSnapshot", 'DateTime'>
+    readonly updatedAt: FieldRef<"WorkoutAnalyticsSnapshot", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * WorkoutAnalyticsSnapshot findUnique
+   */
+  export type WorkoutAnalyticsSnapshotFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkoutAnalyticsSnapshot
+     */
+    select?: WorkoutAnalyticsSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkoutAnalyticsSnapshot
+     */
+    omit?: WorkoutAnalyticsSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkoutAnalyticsSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which WorkoutAnalyticsSnapshot to fetch.
+     */
+    where: WorkoutAnalyticsSnapshotWhereUniqueInput
+  }
+
+  /**
+   * WorkoutAnalyticsSnapshot findUniqueOrThrow
+   */
+  export type WorkoutAnalyticsSnapshotFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkoutAnalyticsSnapshot
+     */
+    select?: WorkoutAnalyticsSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkoutAnalyticsSnapshot
+     */
+    omit?: WorkoutAnalyticsSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkoutAnalyticsSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which WorkoutAnalyticsSnapshot to fetch.
+     */
+    where: WorkoutAnalyticsSnapshotWhereUniqueInput
+  }
+
+  /**
+   * WorkoutAnalyticsSnapshot findFirst
+   */
+  export type WorkoutAnalyticsSnapshotFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkoutAnalyticsSnapshot
+     */
+    select?: WorkoutAnalyticsSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkoutAnalyticsSnapshot
+     */
+    omit?: WorkoutAnalyticsSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkoutAnalyticsSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which WorkoutAnalyticsSnapshot to fetch.
+     */
+    where?: WorkoutAnalyticsSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WorkoutAnalyticsSnapshots to fetch.
+     */
+    orderBy?: WorkoutAnalyticsSnapshotOrderByWithRelationInput | WorkoutAnalyticsSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WorkoutAnalyticsSnapshots.
+     */
+    cursor?: WorkoutAnalyticsSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WorkoutAnalyticsSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WorkoutAnalyticsSnapshots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WorkoutAnalyticsSnapshots.
+     */
+    distinct?: WorkoutAnalyticsSnapshotScalarFieldEnum | WorkoutAnalyticsSnapshotScalarFieldEnum[]
+  }
+
+  /**
+   * WorkoutAnalyticsSnapshot findFirstOrThrow
+   */
+  export type WorkoutAnalyticsSnapshotFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkoutAnalyticsSnapshot
+     */
+    select?: WorkoutAnalyticsSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkoutAnalyticsSnapshot
+     */
+    omit?: WorkoutAnalyticsSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkoutAnalyticsSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which WorkoutAnalyticsSnapshot to fetch.
+     */
+    where?: WorkoutAnalyticsSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WorkoutAnalyticsSnapshots to fetch.
+     */
+    orderBy?: WorkoutAnalyticsSnapshotOrderByWithRelationInput | WorkoutAnalyticsSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WorkoutAnalyticsSnapshots.
+     */
+    cursor?: WorkoutAnalyticsSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WorkoutAnalyticsSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WorkoutAnalyticsSnapshots.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WorkoutAnalyticsSnapshots.
+     */
+    distinct?: WorkoutAnalyticsSnapshotScalarFieldEnum | WorkoutAnalyticsSnapshotScalarFieldEnum[]
+  }
+
+  /**
+   * WorkoutAnalyticsSnapshot findMany
+   */
+  export type WorkoutAnalyticsSnapshotFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkoutAnalyticsSnapshot
+     */
+    select?: WorkoutAnalyticsSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkoutAnalyticsSnapshot
+     */
+    omit?: WorkoutAnalyticsSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkoutAnalyticsSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter, which WorkoutAnalyticsSnapshots to fetch.
+     */
+    where?: WorkoutAnalyticsSnapshotWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WorkoutAnalyticsSnapshots to fetch.
+     */
+    orderBy?: WorkoutAnalyticsSnapshotOrderByWithRelationInput | WorkoutAnalyticsSnapshotOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WorkoutAnalyticsSnapshots.
+     */
+    cursor?: WorkoutAnalyticsSnapshotWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WorkoutAnalyticsSnapshots from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WorkoutAnalyticsSnapshots.
+     */
+    skip?: number
+    distinct?: WorkoutAnalyticsSnapshotScalarFieldEnum | WorkoutAnalyticsSnapshotScalarFieldEnum[]
+  }
+
+  /**
+   * WorkoutAnalyticsSnapshot create
+   */
+  export type WorkoutAnalyticsSnapshotCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkoutAnalyticsSnapshot
+     */
+    select?: WorkoutAnalyticsSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkoutAnalyticsSnapshot
+     */
+    omit?: WorkoutAnalyticsSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkoutAnalyticsSnapshotInclude<ExtArgs> | null
+    /**
+     * The data needed to create a WorkoutAnalyticsSnapshot.
+     */
+    data: XOR<WorkoutAnalyticsSnapshotCreateInput, WorkoutAnalyticsSnapshotUncheckedCreateInput>
+  }
+
+  /**
+   * WorkoutAnalyticsSnapshot createMany
+   */
+  export type WorkoutAnalyticsSnapshotCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many WorkoutAnalyticsSnapshots.
+     */
+    data: WorkoutAnalyticsSnapshotCreateManyInput | WorkoutAnalyticsSnapshotCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * WorkoutAnalyticsSnapshot createManyAndReturn
+   */
+  export type WorkoutAnalyticsSnapshotCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkoutAnalyticsSnapshot
+     */
+    select?: WorkoutAnalyticsSnapshotSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkoutAnalyticsSnapshot
+     */
+    omit?: WorkoutAnalyticsSnapshotOmit<ExtArgs> | null
+    /**
+     * The data used to create many WorkoutAnalyticsSnapshots.
+     */
+    data: WorkoutAnalyticsSnapshotCreateManyInput | WorkoutAnalyticsSnapshotCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkoutAnalyticsSnapshotIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * WorkoutAnalyticsSnapshot update
+   */
+  export type WorkoutAnalyticsSnapshotUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkoutAnalyticsSnapshot
+     */
+    select?: WorkoutAnalyticsSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkoutAnalyticsSnapshot
+     */
+    omit?: WorkoutAnalyticsSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkoutAnalyticsSnapshotInclude<ExtArgs> | null
+    /**
+     * The data needed to update a WorkoutAnalyticsSnapshot.
+     */
+    data: XOR<WorkoutAnalyticsSnapshotUpdateInput, WorkoutAnalyticsSnapshotUncheckedUpdateInput>
+    /**
+     * Choose, which WorkoutAnalyticsSnapshot to update.
+     */
+    where: WorkoutAnalyticsSnapshotWhereUniqueInput
+  }
+
+  /**
+   * WorkoutAnalyticsSnapshot updateMany
+   */
+  export type WorkoutAnalyticsSnapshotUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update WorkoutAnalyticsSnapshots.
+     */
+    data: XOR<WorkoutAnalyticsSnapshotUpdateManyMutationInput, WorkoutAnalyticsSnapshotUncheckedUpdateManyInput>
+    /**
+     * Filter which WorkoutAnalyticsSnapshots to update
+     */
+    where?: WorkoutAnalyticsSnapshotWhereInput
+    /**
+     * Limit how many WorkoutAnalyticsSnapshots to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * WorkoutAnalyticsSnapshot updateManyAndReturn
+   */
+  export type WorkoutAnalyticsSnapshotUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkoutAnalyticsSnapshot
+     */
+    select?: WorkoutAnalyticsSnapshotSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkoutAnalyticsSnapshot
+     */
+    omit?: WorkoutAnalyticsSnapshotOmit<ExtArgs> | null
+    /**
+     * The data used to update WorkoutAnalyticsSnapshots.
+     */
+    data: XOR<WorkoutAnalyticsSnapshotUpdateManyMutationInput, WorkoutAnalyticsSnapshotUncheckedUpdateManyInput>
+    /**
+     * Filter which WorkoutAnalyticsSnapshots to update
+     */
+    where?: WorkoutAnalyticsSnapshotWhereInput
+    /**
+     * Limit how many WorkoutAnalyticsSnapshots to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkoutAnalyticsSnapshotIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * WorkoutAnalyticsSnapshot upsert
+   */
+  export type WorkoutAnalyticsSnapshotUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkoutAnalyticsSnapshot
+     */
+    select?: WorkoutAnalyticsSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkoutAnalyticsSnapshot
+     */
+    omit?: WorkoutAnalyticsSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkoutAnalyticsSnapshotInclude<ExtArgs> | null
+    /**
+     * The filter to search for the WorkoutAnalyticsSnapshot to update in case it exists.
+     */
+    where: WorkoutAnalyticsSnapshotWhereUniqueInput
+    /**
+     * In case the WorkoutAnalyticsSnapshot found by the `where` argument doesn't exist, create a new WorkoutAnalyticsSnapshot with this data.
+     */
+    create: XOR<WorkoutAnalyticsSnapshotCreateInput, WorkoutAnalyticsSnapshotUncheckedCreateInput>
+    /**
+     * In case the WorkoutAnalyticsSnapshot was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WorkoutAnalyticsSnapshotUpdateInput, WorkoutAnalyticsSnapshotUncheckedUpdateInput>
+  }
+
+  /**
+   * WorkoutAnalyticsSnapshot delete
+   */
+  export type WorkoutAnalyticsSnapshotDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkoutAnalyticsSnapshot
+     */
+    select?: WorkoutAnalyticsSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkoutAnalyticsSnapshot
+     */
+    omit?: WorkoutAnalyticsSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkoutAnalyticsSnapshotInclude<ExtArgs> | null
+    /**
+     * Filter which WorkoutAnalyticsSnapshot to delete.
+     */
+    where: WorkoutAnalyticsSnapshotWhereUniqueInput
+  }
+
+  /**
+   * WorkoutAnalyticsSnapshot deleteMany
+   */
+  export type WorkoutAnalyticsSnapshotDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WorkoutAnalyticsSnapshots to delete
+     */
+    where?: WorkoutAnalyticsSnapshotWhereInput
+    /**
+     * Limit how many WorkoutAnalyticsSnapshots to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * WorkoutAnalyticsSnapshot without action
+   */
+  export type WorkoutAnalyticsSnapshotDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WorkoutAnalyticsSnapshot
+     */
+    select?: WorkoutAnalyticsSnapshotSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WorkoutAnalyticsSnapshot
+     */
+    omit?: WorkoutAnalyticsSnapshotOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WorkoutAnalyticsSnapshotInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model IntegrationRun
+   */
+
+  export type AggregateIntegrationRun = {
+    _count: IntegrationRunCountAggregateOutputType | null
+    _min: IntegrationRunMinAggregateOutputType | null
+    _max: IntegrationRunMaxAggregateOutputType | null
+  }
+
+  export type IntegrationRunMinAggregateOutputType = {
+    id: string | null
+    provider: string | null
+    triggerType: string | null
+    status: string | null
+    startedAt: Date | null
+    finishedAt: Date | null
+    triggeredByUserId: string | null
+    errorMessage: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type IntegrationRunMaxAggregateOutputType = {
+    id: string | null
+    provider: string | null
+    triggerType: string | null
+    status: string | null
+    startedAt: Date | null
+    finishedAt: Date | null
+    triggeredByUserId: string | null
+    errorMessage: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type IntegrationRunCountAggregateOutputType = {
+    id: number
+    provider: number
+    triggerType: number
+    status: number
+    startedAt: number
+    finishedAt: number
+    triggeredByUserId: number
+    scopeJson: number
+    resultSummary: number
+    errorMessage: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type IntegrationRunMinAggregateInputType = {
+    id?: true
+    provider?: true
+    triggerType?: true
+    status?: true
+    startedAt?: true
+    finishedAt?: true
+    triggeredByUserId?: true
+    errorMessage?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type IntegrationRunMaxAggregateInputType = {
+    id?: true
+    provider?: true
+    triggerType?: true
+    status?: true
+    startedAt?: true
+    finishedAt?: true
+    triggeredByUserId?: true
+    errorMessage?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type IntegrationRunCountAggregateInputType = {
+    id?: true
+    provider?: true
+    triggerType?: true
+    status?: true
+    startedAt?: true
+    finishedAt?: true
+    triggeredByUserId?: true
+    scopeJson?: true
+    resultSummary?: true
+    errorMessage?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type IntegrationRunAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which IntegrationRun to aggregate.
+     */
+    where?: IntegrationRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IntegrationRuns to fetch.
+     */
+    orderBy?: IntegrationRunOrderByWithRelationInput | IntegrationRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: IntegrationRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IntegrationRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IntegrationRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned IntegrationRuns
+    **/
+    _count?: true | IntegrationRunCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: IntegrationRunMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: IntegrationRunMaxAggregateInputType
+  }
+
+  export type GetIntegrationRunAggregateType<T extends IntegrationRunAggregateArgs> = {
+        [P in keyof T & keyof AggregateIntegrationRun]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateIntegrationRun[P]>
+      : GetScalarType<T[P], AggregateIntegrationRun[P]>
+  }
+
+
+
+
+  export type IntegrationRunGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IntegrationRunWhereInput
+    orderBy?: IntegrationRunOrderByWithAggregationInput | IntegrationRunOrderByWithAggregationInput[]
+    by: IntegrationRunScalarFieldEnum[] | IntegrationRunScalarFieldEnum
+    having?: IntegrationRunScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: IntegrationRunCountAggregateInputType | true
+    _min?: IntegrationRunMinAggregateInputType
+    _max?: IntegrationRunMaxAggregateInputType
+  }
+
+  export type IntegrationRunGroupByOutputType = {
+    id: string
+    provider: string
+    triggerType: string
+    status: string
+    startedAt: Date
+    finishedAt: Date | null
+    triggeredByUserId: string | null
+    scopeJson: JsonValue | null
+    resultSummary: JsonValue | null
+    errorMessage: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: IntegrationRunCountAggregateOutputType | null
+    _min: IntegrationRunMinAggregateOutputType | null
+    _max: IntegrationRunMaxAggregateOutputType | null
+  }
+
+  type GetIntegrationRunGroupByPayload<T extends IntegrationRunGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<IntegrationRunGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof IntegrationRunGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], IntegrationRunGroupByOutputType[P]>
+            : GetScalarType<T[P], IntegrationRunGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type IntegrationRunSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    provider?: boolean
+    triggerType?: boolean
+    status?: boolean
+    startedAt?: boolean
+    finishedAt?: boolean
+    triggeredByUserId?: boolean
+    scopeJson?: boolean
+    resultSummary?: boolean
+    errorMessage?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    triggeredBy?: boolean | IntegrationRun$triggeredByArgs<ExtArgs>
+  }, ExtArgs["result"]["integrationRun"]>
+
+  export type IntegrationRunSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    provider?: boolean
+    triggerType?: boolean
+    status?: boolean
+    startedAt?: boolean
+    finishedAt?: boolean
+    triggeredByUserId?: boolean
+    scopeJson?: boolean
+    resultSummary?: boolean
+    errorMessage?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    triggeredBy?: boolean | IntegrationRun$triggeredByArgs<ExtArgs>
+  }, ExtArgs["result"]["integrationRun"]>
+
+  export type IntegrationRunSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    provider?: boolean
+    triggerType?: boolean
+    status?: boolean
+    startedAt?: boolean
+    finishedAt?: boolean
+    triggeredByUserId?: boolean
+    scopeJson?: boolean
+    resultSummary?: boolean
+    errorMessage?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    triggeredBy?: boolean | IntegrationRun$triggeredByArgs<ExtArgs>
+  }, ExtArgs["result"]["integrationRun"]>
+
+  export type IntegrationRunSelectScalar = {
+    id?: boolean
+    provider?: boolean
+    triggerType?: boolean
+    status?: boolean
+    startedAt?: boolean
+    finishedAt?: boolean
+    triggeredByUserId?: boolean
+    scopeJson?: boolean
+    resultSummary?: boolean
+    errorMessage?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type IntegrationRunOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "provider" | "triggerType" | "status" | "startedAt" | "finishedAt" | "triggeredByUserId" | "scopeJson" | "resultSummary" | "errorMessage" | "createdAt" | "updatedAt", ExtArgs["result"]["integrationRun"]>
+  export type IntegrationRunInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    triggeredBy?: boolean | IntegrationRun$triggeredByArgs<ExtArgs>
+  }
+  export type IntegrationRunIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    triggeredBy?: boolean | IntegrationRun$triggeredByArgs<ExtArgs>
+  }
+  export type IntegrationRunIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    triggeredBy?: boolean | IntegrationRun$triggeredByArgs<ExtArgs>
+  }
+
+  export type $IntegrationRunPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "IntegrationRun"
+    objects: {
+      triggeredBy: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      provider: string
+      triggerType: string
+      status: string
+      startedAt: Date
+      finishedAt: Date | null
+      triggeredByUserId: string | null
+      scopeJson: Prisma.JsonValue | null
+      resultSummary: Prisma.JsonValue | null
+      errorMessage: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["integrationRun"]>
+    composites: {}
+  }
+
+  type IntegrationRunGetPayload<S extends boolean | null | undefined | IntegrationRunDefaultArgs> = $Result.GetResult<Prisma.$IntegrationRunPayload, S>
+
+  type IntegrationRunCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<IntegrationRunFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: IntegrationRunCountAggregateInputType | true
+    }
+
+  export interface IntegrationRunDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['IntegrationRun'], meta: { name: 'IntegrationRun' } }
+    /**
+     * Find zero or one IntegrationRun that matches the filter.
+     * @param {IntegrationRunFindUniqueArgs} args - Arguments to find a IntegrationRun
+     * @example
+     * // Get one IntegrationRun
+     * const integrationRun = await prisma.integrationRun.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends IntegrationRunFindUniqueArgs>(args: SelectSubset<T, IntegrationRunFindUniqueArgs<ExtArgs>>): Prisma__IntegrationRunClient<$Result.GetResult<Prisma.$IntegrationRunPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one IntegrationRun that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {IntegrationRunFindUniqueOrThrowArgs} args - Arguments to find a IntegrationRun
+     * @example
+     * // Get one IntegrationRun
+     * const integrationRun = await prisma.integrationRun.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends IntegrationRunFindUniqueOrThrowArgs>(args: SelectSubset<T, IntegrationRunFindUniqueOrThrowArgs<ExtArgs>>): Prisma__IntegrationRunClient<$Result.GetResult<Prisma.$IntegrationRunPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first IntegrationRun that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IntegrationRunFindFirstArgs} args - Arguments to find a IntegrationRun
+     * @example
+     * // Get one IntegrationRun
+     * const integrationRun = await prisma.integrationRun.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends IntegrationRunFindFirstArgs>(args?: SelectSubset<T, IntegrationRunFindFirstArgs<ExtArgs>>): Prisma__IntegrationRunClient<$Result.GetResult<Prisma.$IntegrationRunPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first IntegrationRun that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IntegrationRunFindFirstOrThrowArgs} args - Arguments to find a IntegrationRun
+     * @example
+     * // Get one IntegrationRun
+     * const integrationRun = await prisma.integrationRun.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends IntegrationRunFindFirstOrThrowArgs>(args?: SelectSubset<T, IntegrationRunFindFirstOrThrowArgs<ExtArgs>>): Prisma__IntegrationRunClient<$Result.GetResult<Prisma.$IntegrationRunPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more IntegrationRuns that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IntegrationRunFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all IntegrationRuns
+     * const integrationRuns = await prisma.integrationRun.findMany()
+     * 
+     * // Get first 10 IntegrationRuns
+     * const integrationRuns = await prisma.integrationRun.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const integrationRunWithIdOnly = await prisma.integrationRun.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends IntegrationRunFindManyArgs>(args?: SelectSubset<T, IntegrationRunFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IntegrationRunPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a IntegrationRun.
+     * @param {IntegrationRunCreateArgs} args - Arguments to create a IntegrationRun.
+     * @example
+     * // Create one IntegrationRun
+     * const IntegrationRun = await prisma.integrationRun.create({
+     *   data: {
+     *     // ... data to create a IntegrationRun
+     *   }
+     * })
+     * 
+     */
+    create<T extends IntegrationRunCreateArgs>(args: SelectSubset<T, IntegrationRunCreateArgs<ExtArgs>>): Prisma__IntegrationRunClient<$Result.GetResult<Prisma.$IntegrationRunPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many IntegrationRuns.
+     * @param {IntegrationRunCreateManyArgs} args - Arguments to create many IntegrationRuns.
+     * @example
+     * // Create many IntegrationRuns
+     * const integrationRun = await prisma.integrationRun.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends IntegrationRunCreateManyArgs>(args?: SelectSubset<T, IntegrationRunCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many IntegrationRuns and returns the data saved in the database.
+     * @param {IntegrationRunCreateManyAndReturnArgs} args - Arguments to create many IntegrationRuns.
+     * @example
+     * // Create many IntegrationRuns
+     * const integrationRun = await prisma.integrationRun.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many IntegrationRuns and only return the `id`
+     * const integrationRunWithIdOnly = await prisma.integrationRun.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends IntegrationRunCreateManyAndReturnArgs>(args?: SelectSubset<T, IntegrationRunCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IntegrationRunPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a IntegrationRun.
+     * @param {IntegrationRunDeleteArgs} args - Arguments to delete one IntegrationRun.
+     * @example
+     * // Delete one IntegrationRun
+     * const IntegrationRun = await prisma.integrationRun.delete({
+     *   where: {
+     *     // ... filter to delete one IntegrationRun
+     *   }
+     * })
+     * 
+     */
+    delete<T extends IntegrationRunDeleteArgs>(args: SelectSubset<T, IntegrationRunDeleteArgs<ExtArgs>>): Prisma__IntegrationRunClient<$Result.GetResult<Prisma.$IntegrationRunPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one IntegrationRun.
+     * @param {IntegrationRunUpdateArgs} args - Arguments to update one IntegrationRun.
+     * @example
+     * // Update one IntegrationRun
+     * const integrationRun = await prisma.integrationRun.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends IntegrationRunUpdateArgs>(args: SelectSubset<T, IntegrationRunUpdateArgs<ExtArgs>>): Prisma__IntegrationRunClient<$Result.GetResult<Prisma.$IntegrationRunPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more IntegrationRuns.
+     * @param {IntegrationRunDeleteManyArgs} args - Arguments to filter IntegrationRuns to delete.
+     * @example
+     * // Delete a few IntegrationRuns
+     * const { count } = await prisma.integrationRun.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends IntegrationRunDeleteManyArgs>(args?: SelectSubset<T, IntegrationRunDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more IntegrationRuns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IntegrationRunUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many IntegrationRuns
+     * const integrationRun = await prisma.integrationRun.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends IntegrationRunUpdateManyArgs>(args: SelectSubset<T, IntegrationRunUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more IntegrationRuns and returns the data updated in the database.
+     * @param {IntegrationRunUpdateManyAndReturnArgs} args - Arguments to update many IntegrationRuns.
+     * @example
+     * // Update many IntegrationRuns
+     * const integrationRun = await prisma.integrationRun.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more IntegrationRuns and only return the `id`
+     * const integrationRunWithIdOnly = await prisma.integrationRun.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends IntegrationRunUpdateManyAndReturnArgs>(args: SelectSubset<T, IntegrationRunUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IntegrationRunPayload<ExtArgs>, T, "updateManyAndReturn", ClientOptions>>
+
+    /**
+     * Create or update one IntegrationRun.
+     * @param {IntegrationRunUpsertArgs} args - Arguments to update or create a IntegrationRun.
+     * @example
+     * // Update or create a IntegrationRun
+     * const integrationRun = await prisma.integrationRun.upsert({
+     *   create: {
+     *     // ... data to create a IntegrationRun
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the IntegrationRun we want to update
+     *   }
+     * })
+     */
+    upsert<T extends IntegrationRunUpsertArgs>(args: SelectSubset<T, IntegrationRunUpsertArgs<ExtArgs>>): Prisma__IntegrationRunClient<$Result.GetResult<Prisma.$IntegrationRunPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of IntegrationRuns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IntegrationRunCountArgs} args - Arguments to filter IntegrationRuns to count.
+     * @example
+     * // Count the number of IntegrationRuns
+     * const count = await prisma.integrationRun.count({
+     *   where: {
+     *     // ... the filter for the IntegrationRuns we want to count
+     *   }
+     * })
+    **/
+    count<T extends IntegrationRunCountArgs>(
+      args?: Subset<T, IntegrationRunCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], IntegrationRunCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a IntegrationRun.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IntegrationRunAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends IntegrationRunAggregateArgs>(args: Subset<T, IntegrationRunAggregateArgs>): Prisma.PrismaPromise<GetIntegrationRunAggregateType<T>>
+
+    /**
+     * Group by IntegrationRun.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IntegrationRunGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends IntegrationRunGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: IntegrationRunGroupByArgs['orderBy'] }
+        : { orderBy?: IntegrationRunGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, IntegrationRunGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetIntegrationRunGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the IntegrationRun model
+   */
+  readonly fields: IntegrationRunFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for IntegrationRun.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__IntegrationRunClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    triggeredBy<T extends IntegrationRun$triggeredByArgs<ExtArgs> = {}>(args?: Subset<T, IntegrationRun$triggeredByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the IntegrationRun model
+   */ 
+  interface IntegrationRunFieldRefs {
+    readonly id: FieldRef<"IntegrationRun", 'String'>
+    readonly provider: FieldRef<"IntegrationRun", 'String'>
+    readonly triggerType: FieldRef<"IntegrationRun", 'String'>
+    readonly status: FieldRef<"IntegrationRun", 'String'>
+    readonly startedAt: FieldRef<"IntegrationRun", 'DateTime'>
+    readonly finishedAt: FieldRef<"IntegrationRun", 'DateTime'>
+    readonly triggeredByUserId: FieldRef<"IntegrationRun", 'String'>
+    readonly scopeJson: FieldRef<"IntegrationRun", 'Json'>
+    readonly resultSummary: FieldRef<"IntegrationRun", 'Json'>
+    readonly errorMessage: FieldRef<"IntegrationRun", 'String'>
+    readonly createdAt: FieldRef<"IntegrationRun", 'DateTime'>
+    readonly updatedAt: FieldRef<"IntegrationRun", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * IntegrationRun findUnique
+   */
+  export type IntegrationRunFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationRun
+     */
+    select?: IntegrationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationRun
+     */
+    omit?: IntegrationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationRunInclude<ExtArgs> | null
+    /**
+     * Filter, which IntegrationRun to fetch.
+     */
+    where: IntegrationRunWhereUniqueInput
+  }
+
+  /**
+   * IntegrationRun findUniqueOrThrow
+   */
+  export type IntegrationRunFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationRun
+     */
+    select?: IntegrationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationRun
+     */
+    omit?: IntegrationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationRunInclude<ExtArgs> | null
+    /**
+     * Filter, which IntegrationRun to fetch.
+     */
+    where: IntegrationRunWhereUniqueInput
+  }
+
+  /**
+   * IntegrationRun findFirst
+   */
+  export type IntegrationRunFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationRun
+     */
+    select?: IntegrationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationRun
+     */
+    omit?: IntegrationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationRunInclude<ExtArgs> | null
+    /**
+     * Filter, which IntegrationRun to fetch.
+     */
+    where?: IntegrationRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IntegrationRuns to fetch.
+     */
+    orderBy?: IntegrationRunOrderByWithRelationInput | IntegrationRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for IntegrationRuns.
+     */
+    cursor?: IntegrationRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IntegrationRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IntegrationRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of IntegrationRuns.
+     */
+    distinct?: IntegrationRunScalarFieldEnum | IntegrationRunScalarFieldEnum[]
+  }
+
+  /**
+   * IntegrationRun findFirstOrThrow
+   */
+  export type IntegrationRunFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationRun
+     */
+    select?: IntegrationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationRun
+     */
+    omit?: IntegrationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationRunInclude<ExtArgs> | null
+    /**
+     * Filter, which IntegrationRun to fetch.
+     */
+    where?: IntegrationRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IntegrationRuns to fetch.
+     */
+    orderBy?: IntegrationRunOrderByWithRelationInput | IntegrationRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for IntegrationRuns.
+     */
+    cursor?: IntegrationRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IntegrationRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IntegrationRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of IntegrationRuns.
+     */
+    distinct?: IntegrationRunScalarFieldEnum | IntegrationRunScalarFieldEnum[]
+  }
+
+  /**
+   * IntegrationRun findMany
+   */
+  export type IntegrationRunFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationRun
+     */
+    select?: IntegrationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationRun
+     */
+    omit?: IntegrationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationRunInclude<ExtArgs> | null
+    /**
+     * Filter, which IntegrationRuns to fetch.
+     */
+    where?: IntegrationRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IntegrationRuns to fetch.
+     */
+    orderBy?: IntegrationRunOrderByWithRelationInput | IntegrationRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing IntegrationRuns.
+     */
+    cursor?: IntegrationRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IntegrationRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IntegrationRuns.
+     */
+    skip?: number
+    distinct?: IntegrationRunScalarFieldEnum | IntegrationRunScalarFieldEnum[]
+  }
+
+  /**
+   * IntegrationRun create
+   */
+  export type IntegrationRunCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationRun
+     */
+    select?: IntegrationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationRun
+     */
+    omit?: IntegrationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationRunInclude<ExtArgs> | null
+    /**
+     * The data needed to create a IntegrationRun.
+     */
+    data: XOR<IntegrationRunCreateInput, IntegrationRunUncheckedCreateInput>
+  }
+
+  /**
+   * IntegrationRun createMany
+   */
+  export type IntegrationRunCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many IntegrationRuns.
+     */
+    data: IntegrationRunCreateManyInput | IntegrationRunCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * IntegrationRun createManyAndReturn
+   */
+  export type IntegrationRunCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationRun
+     */
+    select?: IntegrationRunSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationRun
+     */
+    omit?: IntegrationRunOmit<ExtArgs> | null
+    /**
+     * The data used to create many IntegrationRuns.
+     */
+    data: IntegrationRunCreateManyInput | IntegrationRunCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationRunIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * IntegrationRun update
+   */
+  export type IntegrationRunUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationRun
+     */
+    select?: IntegrationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationRun
+     */
+    omit?: IntegrationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationRunInclude<ExtArgs> | null
+    /**
+     * The data needed to update a IntegrationRun.
+     */
+    data: XOR<IntegrationRunUpdateInput, IntegrationRunUncheckedUpdateInput>
+    /**
+     * Choose, which IntegrationRun to update.
+     */
+    where: IntegrationRunWhereUniqueInput
+  }
+
+  /**
+   * IntegrationRun updateMany
+   */
+  export type IntegrationRunUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update IntegrationRuns.
+     */
+    data: XOR<IntegrationRunUpdateManyMutationInput, IntegrationRunUncheckedUpdateManyInput>
+    /**
+     * Filter which IntegrationRuns to update
+     */
+    where?: IntegrationRunWhereInput
+    /**
+     * Limit how many IntegrationRuns to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * IntegrationRun updateManyAndReturn
+   */
+  export type IntegrationRunUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationRun
+     */
+    select?: IntegrationRunSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationRun
+     */
+    omit?: IntegrationRunOmit<ExtArgs> | null
+    /**
+     * The data used to update IntegrationRuns.
+     */
+    data: XOR<IntegrationRunUpdateManyMutationInput, IntegrationRunUncheckedUpdateManyInput>
+    /**
+     * Filter which IntegrationRuns to update
+     */
+    where?: IntegrationRunWhereInput
+    /**
+     * Limit how many IntegrationRuns to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationRunIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * IntegrationRun upsert
+   */
+  export type IntegrationRunUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationRun
+     */
+    select?: IntegrationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationRun
+     */
+    omit?: IntegrationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationRunInclude<ExtArgs> | null
+    /**
+     * The filter to search for the IntegrationRun to update in case it exists.
+     */
+    where: IntegrationRunWhereUniqueInput
+    /**
+     * In case the IntegrationRun found by the `where` argument doesn't exist, create a new IntegrationRun with this data.
+     */
+    create: XOR<IntegrationRunCreateInput, IntegrationRunUncheckedCreateInput>
+    /**
+     * In case the IntegrationRun was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<IntegrationRunUpdateInput, IntegrationRunUncheckedUpdateInput>
+  }
+
+  /**
+   * IntegrationRun delete
+   */
+  export type IntegrationRunDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationRun
+     */
+    select?: IntegrationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationRun
+     */
+    omit?: IntegrationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationRunInclude<ExtArgs> | null
+    /**
+     * Filter which IntegrationRun to delete.
+     */
+    where: IntegrationRunWhereUniqueInput
+  }
+
+  /**
+   * IntegrationRun deleteMany
+   */
+  export type IntegrationRunDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which IntegrationRuns to delete
+     */
+    where?: IntegrationRunWhereInput
+    /**
+     * Limit how many IntegrationRuns to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * IntegrationRun.triggeredBy
+   */
+  export type IntegrationRun$triggeredByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * IntegrationRun without action
+   */
+  export type IntegrationRunDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntegrationRun
+     */
+    select?: IntegrationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntegrationRun
+     */
+    omit?: IntegrationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntegrationRunInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -21458,11 +29522,38 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     sport: 'sport',
-    institution: 'institution',
+    institutionId: 'institutionId',
+    seasonId: 'seasonId',
     createdAt: 'createdAt'
   };
 
   export type TeamScalarFieldEnum = (typeof TeamScalarFieldEnum)[keyof typeof TeamScalarFieldEnum]
+
+
+  export const InstitutionScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    type: 'type',
+    address: 'address',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type InstitutionScalarFieldEnum = (typeof InstitutionScalarFieldEnum)[keyof typeof InstitutionScalarFieldEnum]
+
+
+  export const SeasonScalarFieldEnum: {
+    id: 'id',
+    institutionId: 'institutionId',
+    name: 'name',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    sport: 'sport',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SeasonScalarFieldEnum = (typeof SeasonScalarFieldEnum)[keyof typeof SeasonScalarFieldEnum]
 
 
   export const AthleteScalarFieldEnum: {
@@ -21677,6 +29768,90 @@ export namespace Prisma {
   };
 
   export type UserSettingsScalarFieldEnum = (typeof UserSettingsScalarFieldEnum)[keyof typeof UserSettingsScalarFieldEnum]
+
+
+  export const AthletePerformanceSnapshotScalarFieldEnum: {
+    id: 'id',
+    athleteId: 'athleteId',
+    teamId: 'teamId',
+    trainingStatus: 'trainingStatus',
+    readinessScore: 'readinessScore',
+    readinessLabel: 'readinessLabel',
+    riskLevel: 'riskLevel',
+    lastWorkoutAt: 'lastWorkoutAt',
+    summaryJson: 'summaryJson',
+    aiSummary: 'aiSummary',
+    refreshedAt: 'refreshedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type AthletePerformanceSnapshotScalarFieldEnum = (typeof AthletePerformanceSnapshotScalarFieldEnum)[keyof typeof AthletePerformanceSnapshotScalarFieldEnum]
+
+
+  export const EventPerformanceTrendScalarFieldEnum: {
+    id: 'id',
+    athleteId: 'athleteId',
+    teamId: 'teamId',
+    eventName: 'eventName',
+    metricType: 'metricType',
+    baseline: 'baseline',
+    recentAverage: 'recentAverage',
+    latestValue: 'latestValue',
+    latestRank: 'latestRank',
+    recentDelta: 'recentDelta',
+    slope: 'slope',
+    confidenceLabel: 'confidenceLabel',
+    sampleSize: 'sampleSize',
+    summaryJson: 'summaryJson',
+    aiSummary: 'aiSummary',
+    refreshedAt: 'refreshedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type EventPerformanceTrendScalarFieldEnum = (typeof EventPerformanceTrendScalarFieldEnum)[keyof typeof EventPerformanceTrendScalarFieldEnum]
+
+
+  export const WorkoutAnalyticsSnapshotScalarFieldEnum: {
+    id: 'id',
+    athleteId: 'athleteId',
+    teamId: 'teamId',
+    plannedMetricCount: 'plannedMetricCount',
+    aboveTargetCount: 'aboveTargetCount',
+    onTargetCount: 'onTargetCount',
+    belowTargetCount: 'belowTargetCount',
+    adherencePercent: 'adherencePercent',
+    rolling7: 'rolling7',
+    rolling14: 'rolling14',
+    rolling30: 'rolling30',
+    recentProgression: 'recentProgression',
+    summaryJson: 'summaryJson',
+    aiSummary: 'aiSummary',
+    refreshedAt: 'refreshedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WorkoutAnalyticsSnapshotScalarFieldEnum = (typeof WorkoutAnalyticsSnapshotScalarFieldEnum)[keyof typeof WorkoutAnalyticsSnapshotScalarFieldEnum]
+
+
+  export const IntegrationRunScalarFieldEnum: {
+    id: 'id',
+    provider: 'provider',
+    triggerType: 'triggerType',
+    status: 'status',
+    startedAt: 'startedAt',
+    finishedAt: 'finishedAt',
+    triggeredByUserId: 'triggeredByUserId',
+    scopeJson: 'scopeJson',
+    resultSummary: 'resultSummary',
+    errorMessage: 'errorMessage',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type IntegrationRunScalarFieldEnum = (typeof IntegrationRunScalarFieldEnum)[keyof typeof IntegrationRunScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -21949,6 +30124,7 @@ export namespace Prisma {
     journals?: AthleteJournalListRelationFilter
     notes?: NoteListRelationFilter
     userSettings?: XOR<UserSettingsNullableScalarRelationFilter, UserSettingsWhereInput> | null
+    integrationRuns?: IntegrationRunListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -21966,6 +30142,7 @@ export namespace Prisma {
     journals?: AthleteJournalOrderByRelationAggregateInput
     notes?: NoteOrderByRelationAggregateInput
     userSettings?: UserSettingsOrderByWithRelationInput
+    integrationRuns?: IntegrationRunOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -21986,6 +30163,7 @@ export namespace Prisma {
     journals?: AthleteJournalListRelationFilter
     notes?: NoteListRelationFilter
     userSettings?: XOR<UserSettingsNullableScalarRelationFilter, UserSettingsWhereInput> | null
+    integrationRuns?: IntegrationRunListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -22021,24 +30199,36 @@ export namespace Prisma {
     id?: StringFilter<"Team"> | string
     name?: StringFilter<"Team"> | string
     sport?: EnumSportFilter<"Team"> | $Enums.Sport
-    institution?: StringNullableFilter<"Team"> | string | null
+    institutionId?: StringNullableFilter<"Team"> | string | null
+    seasonId?: StringNullableFilter<"Team"> | string | null
     createdAt?: DateTimeFilter<"Team"> | Date | string
+    institution?: XOR<InstitutionNullableScalarRelationFilter, InstitutionWhereInput> | null
+    season?: XOR<SeasonNullableScalarRelationFilter, SeasonWhereInput> | null
     athletes?: AthleteListRelationFilter
     events?: EventListRelationFilter
     workoutTemplates?: WorkoutTemplateListRelationFilter
     meetEntries?: MeetEntryListRelationFilter
+    performanceSnapshots?: AthletePerformanceSnapshotListRelationFilter
+    eventPerformanceTrends?: EventPerformanceTrendListRelationFilter
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotListRelationFilter
   }
 
   export type TeamOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
     sport?: SortOrder
-    institution?: SortOrderInput | SortOrder
+    institutionId?: SortOrderInput | SortOrder
+    seasonId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    institution?: InstitutionOrderByWithRelationInput
+    season?: SeasonOrderByWithRelationInput
     athletes?: AthleteOrderByRelationAggregateInput
     events?: EventOrderByRelationAggregateInput
     workoutTemplates?: WorkoutTemplateOrderByRelationAggregateInput
     meetEntries?: MeetEntryOrderByRelationAggregateInput
+    performanceSnapshots?: AthletePerformanceSnapshotOrderByRelationAggregateInput
+    eventPerformanceTrends?: EventPerformanceTrendOrderByRelationAggregateInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotOrderByRelationAggregateInput
   }
 
   export type TeamWhereUniqueInput = Prisma.AtLeast<{
@@ -22048,19 +30238,26 @@ export namespace Prisma {
     NOT?: TeamWhereInput | TeamWhereInput[]
     name?: StringFilter<"Team"> | string
     sport?: EnumSportFilter<"Team"> | $Enums.Sport
-    institution?: StringNullableFilter<"Team"> | string | null
+    institutionId?: StringNullableFilter<"Team"> | string | null
+    seasonId?: StringNullableFilter<"Team"> | string | null
     createdAt?: DateTimeFilter<"Team"> | Date | string
+    institution?: XOR<InstitutionNullableScalarRelationFilter, InstitutionWhereInput> | null
+    season?: XOR<SeasonNullableScalarRelationFilter, SeasonWhereInput> | null
     athletes?: AthleteListRelationFilter
     events?: EventListRelationFilter
     workoutTemplates?: WorkoutTemplateListRelationFilter
     meetEntries?: MeetEntryListRelationFilter
+    performanceSnapshots?: AthletePerformanceSnapshotListRelationFilter
+    eventPerformanceTrends?: EventPerformanceTrendListRelationFilter
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotListRelationFilter
   }, "id">
 
   export type TeamOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
     sport?: SortOrder
-    institution?: SortOrderInput | SortOrder
+    institutionId?: SortOrderInput | SortOrder
+    seasonId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: TeamCountOrderByAggregateInput
     _max?: TeamMaxOrderByAggregateInput
@@ -22074,8 +30271,146 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Team"> | string
     name?: StringWithAggregatesFilter<"Team"> | string
     sport?: EnumSportWithAggregatesFilter<"Team"> | $Enums.Sport
-    institution?: StringNullableWithAggregatesFilter<"Team"> | string | null
+    institutionId?: StringNullableWithAggregatesFilter<"Team"> | string | null
+    seasonId?: StringNullableWithAggregatesFilter<"Team"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Team"> | Date | string
+  }
+
+  export type InstitutionWhereInput = {
+    AND?: InstitutionWhereInput | InstitutionWhereInput[]
+    OR?: InstitutionWhereInput[]
+    NOT?: InstitutionWhereInput | InstitutionWhereInput[]
+    id?: StringFilter<"Institution"> | string
+    name?: StringFilter<"Institution"> | string
+    type?: StringNullableFilter<"Institution"> | string | null
+    address?: StringNullableFilter<"Institution"> | string | null
+    createdAt?: DateTimeFilter<"Institution"> | Date | string
+    updatedAt?: DateTimeFilter<"Institution"> | Date | string
+    teams?: TeamListRelationFilter
+    seasons?: SeasonListRelationFilter
+  }
+
+  export type InstitutionOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    type?: SortOrderInput | SortOrder
+    address?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    teams?: TeamOrderByRelationAggregateInput
+    seasons?: SeasonOrderByRelationAggregateInput
+  }
+
+  export type InstitutionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: InstitutionWhereInput | InstitutionWhereInput[]
+    OR?: InstitutionWhereInput[]
+    NOT?: InstitutionWhereInput | InstitutionWhereInput[]
+    name?: StringFilter<"Institution"> | string
+    type?: StringNullableFilter<"Institution"> | string | null
+    address?: StringNullableFilter<"Institution"> | string | null
+    createdAt?: DateTimeFilter<"Institution"> | Date | string
+    updatedAt?: DateTimeFilter<"Institution"> | Date | string
+    teams?: TeamListRelationFilter
+    seasons?: SeasonListRelationFilter
+  }, "id">
+
+  export type InstitutionOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    type?: SortOrderInput | SortOrder
+    address?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: InstitutionCountOrderByAggregateInput
+    _max?: InstitutionMaxOrderByAggregateInput
+    _min?: InstitutionMinOrderByAggregateInput
+  }
+
+  export type InstitutionScalarWhereWithAggregatesInput = {
+    AND?: InstitutionScalarWhereWithAggregatesInput | InstitutionScalarWhereWithAggregatesInput[]
+    OR?: InstitutionScalarWhereWithAggregatesInput[]
+    NOT?: InstitutionScalarWhereWithAggregatesInput | InstitutionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Institution"> | string
+    name?: StringWithAggregatesFilter<"Institution"> | string
+    type?: StringNullableWithAggregatesFilter<"Institution"> | string | null
+    address?: StringNullableWithAggregatesFilter<"Institution"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Institution"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Institution"> | Date | string
+  }
+
+  export type SeasonWhereInput = {
+    AND?: SeasonWhereInput | SeasonWhereInput[]
+    OR?: SeasonWhereInput[]
+    NOT?: SeasonWhereInput | SeasonWhereInput[]
+    id?: StringFilter<"Season"> | string
+    institutionId?: StringFilter<"Season"> | string
+    name?: StringFilter<"Season"> | string
+    startDate?: DateTimeFilter<"Season"> | Date | string
+    endDate?: DateTimeFilter<"Season"> | Date | string
+    sport?: EnumSportFilter<"Season"> | $Enums.Sport
+    createdAt?: DateTimeFilter<"Season"> | Date | string
+    updatedAt?: DateTimeFilter<"Season"> | Date | string
+    institution?: XOR<InstitutionScalarRelationFilter, InstitutionWhereInput>
+    teams?: TeamListRelationFilter
+  }
+
+  export type SeasonOrderByWithRelationInput = {
+    id?: SortOrder
+    institutionId?: SortOrder
+    name?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    sport?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    institution?: InstitutionOrderByWithRelationInput
+    teams?: TeamOrderByRelationAggregateInput
+  }
+
+  export type SeasonWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    institutionId_name_sport?: SeasonInstitutionIdNameSportCompoundUniqueInput
+    AND?: SeasonWhereInput | SeasonWhereInput[]
+    OR?: SeasonWhereInput[]
+    NOT?: SeasonWhereInput | SeasonWhereInput[]
+    institutionId?: StringFilter<"Season"> | string
+    name?: StringFilter<"Season"> | string
+    startDate?: DateTimeFilter<"Season"> | Date | string
+    endDate?: DateTimeFilter<"Season"> | Date | string
+    sport?: EnumSportFilter<"Season"> | $Enums.Sport
+    createdAt?: DateTimeFilter<"Season"> | Date | string
+    updatedAt?: DateTimeFilter<"Season"> | Date | string
+    institution?: XOR<InstitutionScalarRelationFilter, InstitutionWhereInput>
+    teams?: TeamListRelationFilter
+  }, "id" | "institutionId_name_sport">
+
+  export type SeasonOrderByWithAggregationInput = {
+    id?: SortOrder
+    institutionId?: SortOrder
+    name?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    sport?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SeasonCountOrderByAggregateInput
+    _max?: SeasonMaxOrderByAggregateInput
+    _min?: SeasonMinOrderByAggregateInput
+  }
+
+  export type SeasonScalarWhereWithAggregatesInput = {
+    AND?: SeasonScalarWhereWithAggregatesInput | SeasonScalarWhereWithAggregatesInput[]
+    OR?: SeasonScalarWhereWithAggregatesInput[]
+    NOT?: SeasonScalarWhereWithAggregatesInput | SeasonScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Season"> | string
+    institutionId?: StringWithAggregatesFilter<"Season"> | string
+    name?: StringWithAggregatesFilter<"Season"> | string
+    startDate?: DateTimeWithAggregatesFilter<"Season"> | Date | string
+    endDate?: DateTimeWithAggregatesFilter<"Season"> | Date | string
+    sport?: EnumSportWithAggregatesFilter<"Season"> | $Enums.Sport
+    createdAt?: DateTimeWithAggregatesFilter<"Season"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Season"> | Date | string
   }
 
   export type AthleteWhereInput = {
@@ -22113,6 +30448,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordListRelationFilter
     meetEntries?: MeetEntryListRelationFilter
     journals?: AthleteJournalListRelationFilter
+    performanceSnapshot?: XOR<AthletePerformanceSnapshotNullableScalarRelationFilter, AthletePerformanceSnapshotWhereInput> | null
+    eventPerformanceTrends?: EventPerformanceTrendListRelationFilter
+    workoutAnalyticsSnapshot?: XOR<WorkoutAnalyticsSnapshotNullableScalarRelationFilter, WorkoutAnalyticsSnapshotWhereInput> | null
   }
 
   export type AthleteOrderByWithRelationInput = {
@@ -22147,6 +30485,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordOrderByRelationAggregateInput
     meetEntries?: MeetEntryOrderByRelationAggregateInput
     journals?: AthleteJournalOrderByRelationAggregateInput
+    performanceSnapshot?: AthletePerformanceSnapshotOrderByWithRelationInput
+    eventPerformanceTrends?: EventPerformanceTrendOrderByRelationAggregateInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotOrderByWithRelationInput
   }
 
   export type AthleteWhereUniqueInput = Prisma.AtLeast<{
@@ -22184,6 +30525,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordListRelationFilter
     meetEntries?: MeetEntryListRelationFilter
     journals?: AthleteJournalListRelationFilter
+    performanceSnapshot?: XOR<AthletePerformanceSnapshotNullableScalarRelationFilter, AthletePerformanceSnapshotWhereInput> | null
+    eventPerformanceTrends?: EventPerformanceTrendListRelationFilter
+    workoutAnalyticsSnapshot?: XOR<WorkoutAnalyticsSnapshotNullableScalarRelationFilter, WorkoutAnalyticsSnapshotWhereInput> | null
   }, "id">
 
   export type AthleteOrderByWithAggregationInput = {
@@ -23223,6 +31567,442 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"UserSettings"> | Date | string
   }
 
+  export type AthletePerformanceSnapshotWhereInput = {
+    AND?: AthletePerformanceSnapshotWhereInput | AthletePerformanceSnapshotWhereInput[]
+    OR?: AthletePerformanceSnapshotWhereInput[]
+    NOT?: AthletePerformanceSnapshotWhereInput | AthletePerformanceSnapshotWhereInput[]
+    id?: StringFilter<"AthletePerformanceSnapshot"> | string
+    athleteId?: StringFilter<"AthletePerformanceSnapshot"> | string
+    teamId?: StringFilter<"AthletePerformanceSnapshot"> | string
+    trainingStatus?: StringFilter<"AthletePerformanceSnapshot"> | string
+    readinessScore?: FloatNullableFilter<"AthletePerformanceSnapshot"> | number | null
+    readinessLabel?: StringNullableFilter<"AthletePerformanceSnapshot"> | string | null
+    riskLevel?: EnumRiskFlagNullableFilter<"AthletePerformanceSnapshot"> | $Enums.RiskFlag | null
+    lastWorkoutAt?: DateTimeNullableFilter<"AthletePerformanceSnapshot"> | Date | string | null
+    summaryJson?: JsonNullableFilter<"AthletePerformanceSnapshot">
+    aiSummary?: StringNullableFilter<"AthletePerformanceSnapshot"> | string | null
+    refreshedAt?: DateTimeFilter<"AthletePerformanceSnapshot"> | Date | string
+    createdAt?: DateTimeFilter<"AthletePerformanceSnapshot"> | Date | string
+    updatedAt?: DateTimeFilter<"AthletePerformanceSnapshot"> | Date | string
+    athlete?: XOR<AthleteScalarRelationFilter, AthleteWhereInput>
+    team?: XOR<TeamScalarRelationFilter, TeamWhereInput>
+  }
+
+  export type AthletePerformanceSnapshotOrderByWithRelationInput = {
+    id?: SortOrder
+    athleteId?: SortOrder
+    teamId?: SortOrder
+    trainingStatus?: SortOrder
+    readinessScore?: SortOrderInput | SortOrder
+    readinessLabel?: SortOrderInput | SortOrder
+    riskLevel?: SortOrderInput | SortOrder
+    lastWorkoutAt?: SortOrderInput | SortOrder
+    summaryJson?: SortOrderInput | SortOrder
+    aiSummary?: SortOrderInput | SortOrder
+    refreshedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    athlete?: AthleteOrderByWithRelationInput
+    team?: TeamOrderByWithRelationInput
+  }
+
+  export type AthletePerformanceSnapshotWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    athleteId?: string
+    AND?: AthletePerformanceSnapshotWhereInput | AthletePerformanceSnapshotWhereInput[]
+    OR?: AthletePerformanceSnapshotWhereInput[]
+    NOT?: AthletePerformanceSnapshotWhereInput | AthletePerformanceSnapshotWhereInput[]
+    teamId?: StringFilter<"AthletePerformanceSnapshot"> | string
+    trainingStatus?: StringFilter<"AthletePerformanceSnapshot"> | string
+    readinessScore?: FloatNullableFilter<"AthletePerformanceSnapshot"> | number | null
+    readinessLabel?: StringNullableFilter<"AthletePerformanceSnapshot"> | string | null
+    riskLevel?: EnumRiskFlagNullableFilter<"AthletePerformanceSnapshot"> | $Enums.RiskFlag | null
+    lastWorkoutAt?: DateTimeNullableFilter<"AthletePerformanceSnapshot"> | Date | string | null
+    summaryJson?: JsonNullableFilter<"AthletePerformanceSnapshot">
+    aiSummary?: StringNullableFilter<"AthletePerformanceSnapshot"> | string | null
+    refreshedAt?: DateTimeFilter<"AthletePerformanceSnapshot"> | Date | string
+    createdAt?: DateTimeFilter<"AthletePerformanceSnapshot"> | Date | string
+    updatedAt?: DateTimeFilter<"AthletePerformanceSnapshot"> | Date | string
+    athlete?: XOR<AthleteScalarRelationFilter, AthleteWhereInput>
+    team?: XOR<TeamScalarRelationFilter, TeamWhereInput>
+  }, "id" | "athleteId">
+
+  export type AthletePerformanceSnapshotOrderByWithAggregationInput = {
+    id?: SortOrder
+    athleteId?: SortOrder
+    teamId?: SortOrder
+    trainingStatus?: SortOrder
+    readinessScore?: SortOrderInput | SortOrder
+    readinessLabel?: SortOrderInput | SortOrder
+    riskLevel?: SortOrderInput | SortOrder
+    lastWorkoutAt?: SortOrderInput | SortOrder
+    summaryJson?: SortOrderInput | SortOrder
+    aiSummary?: SortOrderInput | SortOrder
+    refreshedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AthletePerformanceSnapshotCountOrderByAggregateInput
+    _avg?: AthletePerformanceSnapshotAvgOrderByAggregateInput
+    _max?: AthletePerformanceSnapshotMaxOrderByAggregateInput
+    _min?: AthletePerformanceSnapshotMinOrderByAggregateInput
+    _sum?: AthletePerformanceSnapshotSumOrderByAggregateInput
+  }
+
+  export type AthletePerformanceSnapshotScalarWhereWithAggregatesInput = {
+    AND?: AthletePerformanceSnapshotScalarWhereWithAggregatesInput | AthletePerformanceSnapshotScalarWhereWithAggregatesInput[]
+    OR?: AthletePerformanceSnapshotScalarWhereWithAggregatesInput[]
+    NOT?: AthletePerformanceSnapshotScalarWhereWithAggregatesInput | AthletePerformanceSnapshotScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AthletePerformanceSnapshot"> | string
+    athleteId?: StringWithAggregatesFilter<"AthletePerformanceSnapshot"> | string
+    teamId?: StringWithAggregatesFilter<"AthletePerformanceSnapshot"> | string
+    trainingStatus?: StringWithAggregatesFilter<"AthletePerformanceSnapshot"> | string
+    readinessScore?: FloatNullableWithAggregatesFilter<"AthletePerformanceSnapshot"> | number | null
+    readinessLabel?: StringNullableWithAggregatesFilter<"AthletePerformanceSnapshot"> | string | null
+    riskLevel?: EnumRiskFlagNullableWithAggregatesFilter<"AthletePerformanceSnapshot"> | $Enums.RiskFlag | null
+    lastWorkoutAt?: DateTimeNullableWithAggregatesFilter<"AthletePerformanceSnapshot"> | Date | string | null
+    summaryJson?: JsonNullableWithAggregatesFilter<"AthletePerformanceSnapshot">
+    aiSummary?: StringNullableWithAggregatesFilter<"AthletePerformanceSnapshot"> | string | null
+    refreshedAt?: DateTimeWithAggregatesFilter<"AthletePerformanceSnapshot"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"AthletePerformanceSnapshot"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AthletePerformanceSnapshot"> | Date | string
+  }
+
+  export type EventPerformanceTrendWhereInput = {
+    AND?: EventPerformanceTrendWhereInput | EventPerformanceTrendWhereInput[]
+    OR?: EventPerformanceTrendWhereInput[]
+    NOT?: EventPerformanceTrendWhereInput | EventPerformanceTrendWhereInput[]
+    id?: StringFilter<"EventPerformanceTrend"> | string
+    athleteId?: StringFilter<"EventPerformanceTrend"> | string
+    teamId?: StringFilter<"EventPerformanceTrend"> | string
+    eventName?: StringFilter<"EventPerformanceTrend"> | string
+    metricType?: StringFilter<"EventPerformanceTrend"> | string
+    baseline?: FloatNullableFilter<"EventPerformanceTrend"> | number | null
+    recentAverage?: FloatNullableFilter<"EventPerformanceTrend"> | number | null
+    latestValue?: FloatNullableFilter<"EventPerformanceTrend"> | number | null
+    latestRank?: IntNullableFilter<"EventPerformanceTrend"> | number | null
+    recentDelta?: FloatNullableFilter<"EventPerformanceTrend"> | number | null
+    slope?: FloatNullableFilter<"EventPerformanceTrend"> | number | null
+    confidenceLabel?: StringFilter<"EventPerformanceTrend"> | string
+    sampleSize?: IntFilter<"EventPerformanceTrend"> | number
+    summaryJson?: JsonNullableFilter<"EventPerformanceTrend">
+    aiSummary?: StringNullableFilter<"EventPerformanceTrend"> | string | null
+    refreshedAt?: DateTimeFilter<"EventPerformanceTrend"> | Date | string
+    createdAt?: DateTimeFilter<"EventPerformanceTrend"> | Date | string
+    updatedAt?: DateTimeFilter<"EventPerformanceTrend"> | Date | string
+    athlete?: XOR<AthleteScalarRelationFilter, AthleteWhereInput>
+    team?: XOR<TeamScalarRelationFilter, TeamWhereInput>
+  }
+
+  export type EventPerformanceTrendOrderByWithRelationInput = {
+    id?: SortOrder
+    athleteId?: SortOrder
+    teamId?: SortOrder
+    eventName?: SortOrder
+    metricType?: SortOrder
+    baseline?: SortOrderInput | SortOrder
+    recentAverage?: SortOrderInput | SortOrder
+    latestValue?: SortOrderInput | SortOrder
+    latestRank?: SortOrderInput | SortOrder
+    recentDelta?: SortOrderInput | SortOrder
+    slope?: SortOrderInput | SortOrder
+    confidenceLabel?: SortOrder
+    sampleSize?: SortOrder
+    summaryJson?: SortOrderInput | SortOrder
+    aiSummary?: SortOrderInput | SortOrder
+    refreshedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    athlete?: AthleteOrderByWithRelationInput
+    team?: TeamOrderByWithRelationInput
+  }
+
+  export type EventPerformanceTrendWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    athleteId_eventName_metricType?: EventPerformanceTrendAthleteIdEventNameMetricTypeCompoundUniqueInput
+    AND?: EventPerformanceTrendWhereInput | EventPerformanceTrendWhereInput[]
+    OR?: EventPerformanceTrendWhereInput[]
+    NOT?: EventPerformanceTrendWhereInput | EventPerformanceTrendWhereInput[]
+    athleteId?: StringFilter<"EventPerformanceTrend"> | string
+    teamId?: StringFilter<"EventPerformanceTrend"> | string
+    eventName?: StringFilter<"EventPerformanceTrend"> | string
+    metricType?: StringFilter<"EventPerformanceTrend"> | string
+    baseline?: FloatNullableFilter<"EventPerformanceTrend"> | number | null
+    recentAverage?: FloatNullableFilter<"EventPerformanceTrend"> | number | null
+    latestValue?: FloatNullableFilter<"EventPerformanceTrend"> | number | null
+    latestRank?: IntNullableFilter<"EventPerformanceTrend"> | number | null
+    recentDelta?: FloatNullableFilter<"EventPerformanceTrend"> | number | null
+    slope?: FloatNullableFilter<"EventPerformanceTrend"> | number | null
+    confidenceLabel?: StringFilter<"EventPerformanceTrend"> | string
+    sampleSize?: IntFilter<"EventPerformanceTrend"> | number
+    summaryJson?: JsonNullableFilter<"EventPerformanceTrend">
+    aiSummary?: StringNullableFilter<"EventPerformanceTrend"> | string | null
+    refreshedAt?: DateTimeFilter<"EventPerformanceTrend"> | Date | string
+    createdAt?: DateTimeFilter<"EventPerformanceTrend"> | Date | string
+    updatedAt?: DateTimeFilter<"EventPerformanceTrend"> | Date | string
+    athlete?: XOR<AthleteScalarRelationFilter, AthleteWhereInput>
+    team?: XOR<TeamScalarRelationFilter, TeamWhereInput>
+  }, "id" | "athleteId_eventName_metricType">
+
+  export type EventPerformanceTrendOrderByWithAggregationInput = {
+    id?: SortOrder
+    athleteId?: SortOrder
+    teamId?: SortOrder
+    eventName?: SortOrder
+    metricType?: SortOrder
+    baseline?: SortOrderInput | SortOrder
+    recentAverage?: SortOrderInput | SortOrder
+    latestValue?: SortOrderInput | SortOrder
+    latestRank?: SortOrderInput | SortOrder
+    recentDelta?: SortOrderInput | SortOrder
+    slope?: SortOrderInput | SortOrder
+    confidenceLabel?: SortOrder
+    sampleSize?: SortOrder
+    summaryJson?: SortOrderInput | SortOrder
+    aiSummary?: SortOrderInput | SortOrder
+    refreshedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: EventPerformanceTrendCountOrderByAggregateInput
+    _avg?: EventPerformanceTrendAvgOrderByAggregateInput
+    _max?: EventPerformanceTrendMaxOrderByAggregateInput
+    _min?: EventPerformanceTrendMinOrderByAggregateInput
+    _sum?: EventPerformanceTrendSumOrderByAggregateInput
+  }
+
+  export type EventPerformanceTrendScalarWhereWithAggregatesInput = {
+    AND?: EventPerformanceTrendScalarWhereWithAggregatesInput | EventPerformanceTrendScalarWhereWithAggregatesInput[]
+    OR?: EventPerformanceTrendScalarWhereWithAggregatesInput[]
+    NOT?: EventPerformanceTrendScalarWhereWithAggregatesInput | EventPerformanceTrendScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"EventPerformanceTrend"> | string
+    athleteId?: StringWithAggregatesFilter<"EventPerformanceTrend"> | string
+    teamId?: StringWithAggregatesFilter<"EventPerformanceTrend"> | string
+    eventName?: StringWithAggregatesFilter<"EventPerformanceTrend"> | string
+    metricType?: StringWithAggregatesFilter<"EventPerformanceTrend"> | string
+    baseline?: FloatNullableWithAggregatesFilter<"EventPerformanceTrend"> | number | null
+    recentAverage?: FloatNullableWithAggregatesFilter<"EventPerformanceTrend"> | number | null
+    latestValue?: FloatNullableWithAggregatesFilter<"EventPerformanceTrend"> | number | null
+    latestRank?: IntNullableWithAggregatesFilter<"EventPerformanceTrend"> | number | null
+    recentDelta?: FloatNullableWithAggregatesFilter<"EventPerformanceTrend"> | number | null
+    slope?: FloatNullableWithAggregatesFilter<"EventPerformanceTrend"> | number | null
+    confidenceLabel?: StringWithAggregatesFilter<"EventPerformanceTrend"> | string
+    sampleSize?: IntWithAggregatesFilter<"EventPerformanceTrend"> | number
+    summaryJson?: JsonNullableWithAggregatesFilter<"EventPerformanceTrend">
+    aiSummary?: StringNullableWithAggregatesFilter<"EventPerformanceTrend"> | string | null
+    refreshedAt?: DateTimeWithAggregatesFilter<"EventPerformanceTrend"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"EventPerformanceTrend"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"EventPerformanceTrend"> | Date | string
+  }
+
+  export type WorkoutAnalyticsSnapshotWhereInput = {
+    AND?: WorkoutAnalyticsSnapshotWhereInput | WorkoutAnalyticsSnapshotWhereInput[]
+    OR?: WorkoutAnalyticsSnapshotWhereInput[]
+    NOT?: WorkoutAnalyticsSnapshotWhereInput | WorkoutAnalyticsSnapshotWhereInput[]
+    id?: StringFilter<"WorkoutAnalyticsSnapshot"> | string
+    athleteId?: StringFilter<"WorkoutAnalyticsSnapshot"> | string
+    teamId?: StringFilter<"WorkoutAnalyticsSnapshot"> | string
+    plannedMetricCount?: IntFilter<"WorkoutAnalyticsSnapshot"> | number
+    aboveTargetCount?: IntFilter<"WorkoutAnalyticsSnapshot"> | number
+    onTargetCount?: IntFilter<"WorkoutAnalyticsSnapshot"> | number
+    belowTargetCount?: IntFilter<"WorkoutAnalyticsSnapshot"> | number
+    adherencePercent?: FloatNullableFilter<"WorkoutAnalyticsSnapshot"> | number | null
+    rolling7?: JsonNullableFilter<"WorkoutAnalyticsSnapshot">
+    rolling14?: JsonNullableFilter<"WorkoutAnalyticsSnapshot">
+    rolling30?: JsonNullableFilter<"WorkoutAnalyticsSnapshot">
+    recentProgression?: JsonNullableFilter<"WorkoutAnalyticsSnapshot">
+    summaryJson?: JsonNullableFilter<"WorkoutAnalyticsSnapshot">
+    aiSummary?: StringNullableFilter<"WorkoutAnalyticsSnapshot"> | string | null
+    refreshedAt?: DateTimeFilter<"WorkoutAnalyticsSnapshot"> | Date | string
+    createdAt?: DateTimeFilter<"WorkoutAnalyticsSnapshot"> | Date | string
+    updatedAt?: DateTimeFilter<"WorkoutAnalyticsSnapshot"> | Date | string
+    athlete?: XOR<AthleteScalarRelationFilter, AthleteWhereInput>
+    team?: XOR<TeamScalarRelationFilter, TeamWhereInput>
+  }
+
+  export type WorkoutAnalyticsSnapshotOrderByWithRelationInput = {
+    id?: SortOrder
+    athleteId?: SortOrder
+    teamId?: SortOrder
+    plannedMetricCount?: SortOrder
+    aboveTargetCount?: SortOrder
+    onTargetCount?: SortOrder
+    belowTargetCount?: SortOrder
+    adherencePercent?: SortOrderInput | SortOrder
+    rolling7?: SortOrderInput | SortOrder
+    rolling14?: SortOrderInput | SortOrder
+    rolling30?: SortOrderInput | SortOrder
+    recentProgression?: SortOrderInput | SortOrder
+    summaryJson?: SortOrderInput | SortOrder
+    aiSummary?: SortOrderInput | SortOrder
+    refreshedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    athlete?: AthleteOrderByWithRelationInput
+    team?: TeamOrderByWithRelationInput
+  }
+
+  export type WorkoutAnalyticsSnapshotWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    athleteId?: string
+    AND?: WorkoutAnalyticsSnapshotWhereInput | WorkoutAnalyticsSnapshotWhereInput[]
+    OR?: WorkoutAnalyticsSnapshotWhereInput[]
+    NOT?: WorkoutAnalyticsSnapshotWhereInput | WorkoutAnalyticsSnapshotWhereInput[]
+    teamId?: StringFilter<"WorkoutAnalyticsSnapshot"> | string
+    plannedMetricCount?: IntFilter<"WorkoutAnalyticsSnapshot"> | number
+    aboveTargetCount?: IntFilter<"WorkoutAnalyticsSnapshot"> | number
+    onTargetCount?: IntFilter<"WorkoutAnalyticsSnapshot"> | number
+    belowTargetCount?: IntFilter<"WorkoutAnalyticsSnapshot"> | number
+    adherencePercent?: FloatNullableFilter<"WorkoutAnalyticsSnapshot"> | number | null
+    rolling7?: JsonNullableFilter<"WorkoutAnalyticsSnapshot">
+    rolling14?: JsonNullableFilter<"WorkoutAnalyticsSnapshot">
+    rolling30?: JsonNullableFilter<"WorkoutAnalyticsSnapshot">
+    recentProgression?: JsonNullableFilter<"WorkoutAnalyticsSnapshot">
+    summaryJson?: JsonNullableFilter<"WorkoutAnalyticsSnapshot">
+    aiSummary?: StringNullableFilter<"WorkoutAnalyticsSnapshot"> | string | null
+    refreshedAt?: DateTimeFilter<"WorkoutAnalyticsSnapshot"> | Date | string
+    createdAt?: DateTimeFilter<"WorkoutAnalyticsSnapshot"> | Date | string
+    updatedAt?: DateTimeFilter<"WorkoutAnalyticsSnapshot"> | Date | string
+    athlete?: XOR<AthleteScalarRelationFilter, AthleteWhereInput>
+    team?: XOR<TeamScalarRelationFilter, TeamWhereInput>
+  }, "id" | "athleteId">
+
+  export type WorkoutAnalyticsSnapshotOrderByWithAggregationInput = {
+    id?: SortOrder
+    athleteId?: SortOrder
+    teamId?: SortOrder
+    plannedMetricCount?: SortOrder
+    aboveTargetCount?: SortOrder
+    onTargetCount?: SortOrder
+    belowTargetCount?: SortOrder
+    adherencePercent?: SortOrderInput | SortOrder
+    rolling7?: SortOrderInput | SortOrder
+    rolling14?: SortOrderInput | SortOrder
+    rolling30?: SortOrderInput | SortOrder
+    recentProgression?: SortOrderInput | SortOrder
+    summaryJson?: SortOrderInput | SortOrder
+    aiSummary?: SortOrderInput | SortOrder
+    refreshedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WorkoutAnalyticsSnapshotCountOrderByAggregateInput
+    _avg?: WorkoutAnalyticsSnapshotAvgOrderByAggregateInput
+    _max?: WorkoutAnalyticsSnapshotMaxOrderByAggregateInput
+    _min?: WorkoutAnalyticsSnapshotMinOrderByAggregateInput
+    _sum?: WorkoutAnalyticsSnapshotSumOrderByAggregateInput
+  }
+
+  export type WorkoutAnalyticsSnapshotScalarWhereWithAggregatesInput = {
+    AND?: WorkoutAnalyticsSnapshotScalarWhereWithAggregatesInput | WorkoutAnalyticsSnapshotScalarWhereWithAggregatesInput[]
+    OR?: WorkoutAnalyticsSnapshotScalarWhereWithAggregatesInput[]
+    NOT?: WorkoutAnalyticsSnapshotScalarWhereWithAggregatesInput | WorkoutAnalyticsSnapshotScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"WorkoutAnalyticsSnapshot"> | string
+    athleteId?: StringWithAggregatesFilter<"WorkoutAnalyticsSnapshot"> | string
+    teamId?: StringWithAggregatesFilter<"WorkoutAnalyticsSnapshot"> | string
+    plannedMetricCount?: IntWithAggregatesFilter<"WorkoutAnalyticsSnapshot"> | number
+    aboveTargetCount?: IntWithAggregatesFilter<"WorkoutAnalyticsSnapshot"> | number
+    onTargetCount?: IntWithAggregatesFilter<"WorkoutAnalyticsSnapshot"> | number
+    belowTargetCount?: IntWithAggregatesFilter<"WorkoutAnalyticsSnapshot"> | number
+    adherencePercent?: FloatNullableWithAggregatesFilter<"WorkoutAnalyticsSnapshot"> | number | null
+    rolling7?: JsonNullableWithAggregatesFilter<"WorkoutAnalyticsSnapshot">
+    rolling14?: JsonNullableWithAggregatesFilter<"WorkoutAnalyticsSnapshot">
+    rolling30?: JsonNullableWithAggregatesFilter<"WorkoutAnalyticsSnapshot">
+    recentProgression?: JsonNullableWithAggregatesFilter<"WorkoutAnalyticsSnapshot">
+    summaryJson?: JsonNullableWithAggregatesFilter<"WorkoutAnalyticsSnapshot">
+    aiSummary?: StringNullableWithAggregatesFilter<"WorkoutAnalyticsSnapshot"> | string | null
+    refreshedAt?: DateTimeWithAggregatesFilter<"WorkoutAnalyticsSnapshot"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"WorkoutAnalyticsSnapshot"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"WorkoutAnalyticsSnapshot"> | Date | string
+  }
+
+  export type IntegrationRunWhereInput = {
+    AND?: IntegrationRunWhereInput | IntegrationRunWhereInput[]
+    OR?: IntegrationRunWhereInput[]
+    NOT?: IntegrationRunWhereInput | IntegrationRunWhereInput[]
+    id?: StringFilter<"IntegrationRun"> | string
+    provider?: StringFilter<"IntegrationRun"> | string
+    triggerType?: StringFilter<"IntegrationRun"> | string
+    status?: StringFilter<"IntegrationRun"> | string
+    startedAt?: DateTimeFilter<"IntegrationRun"> | Date | string
+    finishedAt?: DateTimeNullableFilter<"IntegrationRun"> | Date | string | null
+    triggeredByUserId?: StringNullableFilter<"IntegrationRun"> | string | null
+    scopeJson?: JsonNullableFilter<"IntegrationRun">
+    resultSummary?: JsonNullableFilter<"IntegrationRun">
+    errorMessage?: StringNullableFilter<"IntegrationRun"> | string | null
+    createdAt?: DateTimeFilter<"IntegrationRun"> | Date | string
+    updatedAt?: DateTimeFilter<"IntegrationRun"> | Date | string
+    triggeredBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }
+
+  export type IntegrationRunOrderByWithRelationInput = {
+    id?: SortOrder
+    provider?: SortOrder
+    triggerType?: SortOrder
+    status?: SortOrder
+    startedAt?: SortOrder
+    finishedAt?: SortOrderInput | SortOrder
+    triggeredByUserId?: SortOrderInput | SortOrder
+    scopeJson?: SortOrderInput | SortOrder
+    resultSummary?: SortOrderInput | SortOrder
+    errorMessage?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    triggeredBy?: UserOrderByWithRelationInput
+  }
+
+  export type IntegrationRunWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: IntegrationRunWhereInput | IntegrationRunWhereInput[]
+    OR?: IntegrationRunWhereInput[]
+    NOT?: IntegrationRunWhereInput | IntegrationRunWhereInput[]
+    provider?: StringFilter<"IntegrationRun"> | string
+    triggerType?: StringFilter<"IntegrationRun"> | string
+    status?: StringFilter<"IntegrationRun"> | string
+    startedAt?: DateTimeFilter<"IntegrationRun"> | Date | string
+    finishedAt?: DateTimeNullableFilter<"IntegrationRun"> | Date | string | null
+    triggeredByUserId?: StringNullableFilter<"IntegrationRun"> | string | null
+    scopeJson?: JsonNullableFilter<"IntegrationRun">
+    resultSummary?: JsonNullableFilter<"IntegrationRun">
+    errorMessage?: StringNullableFilter<"IntegrationRun"> | string | null
+    createdAt?: DateTimeFilter<"IntegrationRun"> | Date | string
+    updatedAt?: DateTimeFilter<"IntegrationRun"> | Date | string
+    triggeredBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }, "id">
+
+  export type IntegrationRunOrderByWithAggregationInput = {
+    id?: SortOrder
+    provider?: SortOrder
+    triggerType?: SortOrder
+    status?: SortOrder
+    startedAt?: SortOrder
+    finishedAt?: SortOrderInput | SortOrder
+    triggeredByUserId?: SortOrderInput | SortOrder
+    scopeJson?: SortOrderInput | SortOrder
+    resultSummary?: SortOrderInput | SortOrder
+    errorMessage?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: IntegrationRunCountOrderByAggregateInput
+    _max?: IntegrationRunMaxOrderByAggregateInput
+    _min?: IntegrationRunMinOrderByAggregateInput
+  }
+
+  export type IntegrationRunScalarWhereWithAggregatesInput = {
+    AND?: IntegrationRunScalarWhereWithAggregatesInput | IntegrationRunScalarWhereWithAggregatesInput[]
+    OR?: IntegrationRunScalarWhereWithAggregatesInput[]
+    NOT?: IntegrationRunScalarWhereWithAggregatesInput | IntegrationRunScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"IntegrationRun"> | string
+    provider?: StringWithAggregatesFilter<"IntegrationRun"> | string
+    triggerType?: StringWithAggregatesFilter<"IntegrationRun"> | string
+    status?: StringWithAggregatesFilter<"IntegrationRun"> | string
+    startedAt?: DateTimeWithAggregatesFilter<"IntegrationRun"> | Date | string
+    finishedAt?: DateTimeNullableWithAggregatesFilter<"IntegrationRun"> | Date | string | null
+    triggeredByUserId?: StringNullableWithAggregatesFilter<"IntegrationRun"> | string | null
+    scopeJson?: JsonNullableWithAggregatesFilter<"IntegrationRun">
+    resultSummary?: JsonNullableWithAggregatesFilter<"IntegrationRun">
+    errorMessage?: StringNullableWithAggregatesFilter<"IntegrationRun"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"IntegrationRun"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"IntegrationRun"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     email: string
@@ -23238,6 +32018,7 @@ export namespace Prisma {
     journals?: AthleteJournalCreateNestedManyWithoutAuthorInput
     notes?: NoteCreateNestedManyWithoutUserInput
     userSettings?: UserSettingsCreateNestedOneWithoutUserInput
+    integrationRuns?: IntegrationRunCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -23255,6 +32036,7 @@ export namespace Prisma {
     journals?: AthleteJournalUncheckedCreateNestedManyWithoutAuthorInput
     notes?: NoteUncheckedCreateNestedManyWithoutUserInput
     userSettings?: UserSettingsUncheckedCreateNestedOneWithoutUserInput
+    integrationRuns?: IntegrationRunUncheckedCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserUpdateInput = {
@@ -23272,6 +32054,7 @@ export namespace Prisma {
     journals?: AthleteJournalUpdateManyWithoutAuthorNestedInput
     notes?: NoteUpdateManyWithoutUserNestedInput
     userSettings?: UserSettingsUpdateOneWithoutUserNestedInput
+    integrationRuns?: IntegrationRunUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -23289,6 +32072,7 @@ export namespace Prisma {
     journals?: AthleteJournalUncheckedUpdateManyWithoutAuthorNestedInput
     notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
     userSettings?: UserSettingsUncheckedUpdateOneWithoutUserNestedInput
+    integrationRuns?: IntegrationRunUncheckedUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -23325,55 +32109,72 @@ export namespace Prisma {
     id?: string
     name: string
     sport: $Enums.Sport
-    institution?: string | null
     createdAt?: Date | string
+    institution?: InstitutionCreateNestedOneWithoutTeamsInput
+    season?: SeasonCreateNestedOneWithoutTeamsInput
     athletes?: AthleteCreateNestedManyWithoutTeamInput
     events?: EventCreateNestedManyWithoutTeamInput
     workoutTemplates?: WorkoutTemplateCreateNestedManyWithoutTeamInput
     meetEntries?: MeetEntryCreateNestedManyWithoutTeamInput
+    performanceSnapshots?: AthletePerformanceSnapshotCreateNestedManyWithoutTeamInput
+    eventPerformanceTrends?: EventPerformanceTrendCreateNestedManyWithoutTeamInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateInput = {
     id?: string
     name: string
     sport: $Enums.Sport
-    institution?: string | null
+    institutionId?: string | null
+    seasonId?: string | null
     createdAt?: Date | string
     athletes?: AthleteUncheckedCreateNestedManyWithoutTeamInput
     events?: EventUncheckedCreateNestedManyWithoutTeamInput
     workoutTemplates?: WorkoutTemplateUncheckedCreateNestedManyWithoutTeamInput
     meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutTeamInput
+    performanceSnapshots?: AthletePerformanceSnapshotUncheckedCreateNestedManyWithoutTeamInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedCreateNestedManyWithoutTeamInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
-    institution?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    institution?: InstitutionUpdateOneWithoutTeamsNestedInput
+    season?: SeasonUpdateOneWithoutTeamsNestedInput
     athletes?: AthleteUpdateManyWithoutTeamNestedInput
     events?: EventUpdateManyWithoutTeamNestedInput
     workoutTemplates?: WorkoutTemplateUpdateManyWithoutTeamNestedInput
     meetEntries?: MeetEntryUpdateManyWithoutTeamNestedInput
+    performanceSnapshots?: AthletePerformanceSnapshotUpdateManyWithoutTeamNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUpdateManyWithoutTeamNestedInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
-    institution?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionId?: NullableStringFieldUpdateOperationsInput | string | null
+    seasonId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     athletes?: AthleteUncheckedUpdateManyWithoutTeamNestedInput
     events?: EventUncheckedUpdateManyWithoutTeamNestedInput
     workoutTemplates?: WorkoutTemplateUncheckedUpdateManyWithoutTeamNestedInput
     meetEntries?: MeetEntryUncheckedUpdateManyWithoutTeamNestedInput
+    performanceSnapshots?: AthletePerformanceSnapshotUncheckedUpdateManyWithoutTeamNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedUpdateManyWithoutTeamNestedInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamCreateManyInput = {
     id?: string
     name: string
     sport: $Enums.Sport
-    institution?: string | null
+    institutionId?: string | null
+    seasonId?: string | null
     createdAt?: Date | string
   }
 
@@ -23381,7 +32182,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
-    institution?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -23389,8 +32189,160 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
-    institution?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionId?: NullableStringFieldUpdateOperationsInput | string | null
+    seasonId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InstitutionCreateInput = {
+    id?: string
+    name: string
+    type?: string | null
+    address?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    teams?: TeamCreateNestedManyWithoutInstitutionInput
+    seasons?: SeasonCreateNestedManyWithoutInstitutionInput
+  }
+
+  export type InstitutionUncheckedCreateInput = {
+    id?: string
+    name: string
+    type?: string | null
+    address?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    teams?: TeamUncheckedCreateNestedManyWithoutInstitutionInput
+    seasons?: SeasonUncheckedCreateNestedManyWithoutInstitutionInput
+  }
+
+  export type InstitutionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    teams?: TeamUpdateManyWithoutInstitutionNestedInput
+    seasons?: SeasonUpdateManyWithoutInstitutionNestedInput
+  }
+
+  export type InstitutionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    teams?: TeamUncheckedUpdateManyWithoutInstitutionNestedInput
+    seasons?: SeasonUncheckedUpdateManyWithoutInstitutionNestedInput
+  }
+
+  export type InstitutionCreateManyInput = {
+    id?: string
+    name: string
+    type?: string | null
+    address?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type InstitutionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InstitutionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SeasonCreateInput = {
+    id?: string
+    name: string
+    startDate: Date | string
+    endDate: Date | string
+    sport: $Enums.Sport
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    institution: InstitutionCreateNestedOneWithoutSeasonsInput
+    teams?: TeamCreateNestedManyWithoutSeasonInput
+  }
+
+  export type SeasonUncheckedCreateInput = {
+    id?: string
+    institutionId: string
+    name: string
+    startDate: Date | string
+    endDate: Date | string
+    sport: $Enums.Sport
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    teams?: TeamUncheckedCreateNestedManyWithoutSeasonInput
+  }
+
+  export type SeasonUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    institution?: InstitutionUpdateOneRequiredWithoutSeasonsNestedInput
+    teams?: TeamUpdateManyWithoutSeasonNestedInput
+  }
+
+  export type SeasonUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    institutionId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    teams?: TeamUncheckedUpdateManyWithoutSeasonNestedInput
+  }
+
+  export type SeasonCreateManyInput = {
+    id?: string
+    institutionId: string
+    name: string
+    startDate: Date | string
+    endDate: Date | string
+    sport: $Enums.Sport
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SeasonUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SeasonUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    institutionId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AthleteCreateInput = {
@@ -23423,6 +32375,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryCreateNestedManyWithoutAthleteInput
     journals?: AthleteJournalCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteUncheckedCreateInput = {
@@ -23455,6 +32410,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutAthleteInput
     journals?: AthleteJournalUncheckedCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteUpdateInput = {
@@ -23487,6 +32445,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUpdateManyWithoutAthleteNestedInput
     journals?: AthleteJournalUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUpdateOneWithoutAthleteNestedInput
   }
 
   export type AthleteUncheckedUpdateInput = {
@@ -23519,6 +32480,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUncheckedUpdateManyWithoutAthleteNestedInput
     journals?: AthleteJournalUncheckedUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
   }
 
   export type AthleteCreateManyInput = {
@@ -24622,6 +33586,503 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type AthletePerformanceSnapshotCreateInput = {
+    id?: string
+    trainingStatus: string
+    readinessScore?: number | null
+    readinessLabel?: string | null
+    riskLevel?: $Enums.RiskFlag | null
+    lastWorkoutAt?: Date | string | null
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    athlete: AthleteCreateNestedOneWithoutPerformanceSnapshotInput
+    team: TeamCreateNestedOneWithoutPerformanceSnapshotsInput
+  }
+
+  export type AthletePerformanceSnapshotUncheckedCreateInput = {
+    id?: string
+    athleteId: string
+    teamId: string
+    trainingStatus: string
+    readinessScore?: number | null
+    readinessLabel?: string | null
+    riskLevel?: $Enums.RiskFlag | null
+    lastWorkoutAt?: Date | string | null
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AthletePerformanceSnapshotUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    trainingStatus?: StringFieldUpdateOperationsInput | string
+    readinessScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    readinessLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    riskLevel?: NullableEnumRiskFlagFieldUpdateOperationsInput | $Enums.RiskFlag | null
+    lastWorkoutAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    athlete?: AthleteUpdateOneRequiredWithoutPerformanceSnapshotNestedInput
+    team?: TeamUpdateOneRequiredWithoutPerformanceSnapshotsNestedInput
+  }
+
+  export type AthletePerformanceSnapshotUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    athleteId?: StringFieldUpdateOperationsInput | string
+    teamId?: StringFieldUpdateOperationsInput | string
+    trainingStatus?: StringFieldUpdateOperationsInput | string
+    readinessScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    readinessLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    riskLevel?: NullableEnumRiskFlagFieldUpdateOperationsInput | $Enums.RiskFlag | null
+    lastWorkoutAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AthletePerformanceSnapshotCreateManyInput = {
+    id?: string
+    athleteId: string
+    teamId: string
+    trainingStatus: string
+    readinessScore?: number | null
+    readinessLabel?: string | null
+    riskLevel?: $Enums.RiskFlag | null
+    lastWorkoutAt?: Date | string | null
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AthletePerformanceSnapshotUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    trainingStatus?: StringFieldUpdateOperationsInput | string
+    readinessScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    readinessLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    riskLevel?: NullableEnumRiskFlagFieldUpdateOperationsInput | $Enums.RiskFlag | null
+    lastWorkoutAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AthletePerformanceSnapshotUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    athleteId?: StringFieldUpdateOperationsInput | string
+    teamId?: StringFieldUpdateOperationsInput | string
+    trainingStatus?: StringFieldUpdateOperationsInput | string
+    readinessScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    readinessLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    riskLevel?: NullableEnumRiskFlagFieldUpdateOperationsInput | $Enums.RiskFlag | null
+    lastWorkoutAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventPerformanceTrendCreateInput = {
+    id?: string
+    eventName: string
+    metricType: string
+    baseline?: number | null
+    recentAverage?: number | null
+    latestValue?: number | null
+    latestRank?: number | null
+    recentDelta?: number | null
+    slope?: number | null
+    confidenceLabel: string
+    sampleSize?: number
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    athlete: AthleteCreateNestedOneWithoutEventPerformanceTrendsInput
+    team: TeamCreateNestedOneWithoutEventPerformanceTrendsInput
+  }
+
+  export type EventPerformanceTrendUncheckedCreateInput = {
+    id?: string
+    athleteId: string
+    teamId: string
+    eventName: string
+    metricType: string
+    baseline?: number | null
+    recentAverage?: number | null
+    latestValue?: number | null
+    latestRank?: number | null
+    recentDelta?: number | null
+    slope?: number | null
+    confidenceLabel: string
+    sampleSize?: number
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EventPerformanceTrendUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventName?: StringFieldUpdateOperationsInput | string
+    metricType?: StringFieldUpdateOperationsInput | string
+    baseline?: NullableFloatFieldUpdateOperationsInput | number | null
+    recentAverage?: NullableFloatFieldUpdateOperationsInput | number | null
+    latestValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    latestRank?: NullableIntFieldUpdateOperationsInput | number | null
+    recentDelta?: NullableFloatFieldUpdateOperationsInput | number | null
+    slope?: NullableFloatFieldUpdateOperationsInput | number | null
+    confidenceLabel?: StringFieldUpdateOperationsInput | string
+    sampleSize?: IntFieldUpdateOperationsInput | number
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    athlete?: AthleteUpdateOneRequiredWithoutEventPerformanceTrendsNestedInput
+    team?: TeamUpdateOneRequiredWithoutEventPerformanceTrendsNestedInput
+  }
+
+  export type EventPerformanceTrendUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    athleteId?: StringFieldUpdateOperationsInput | string
+    teamId?: StringFieldUpdateOperationsInput | string
+    eventName?: StringFieldUpdateOperationsInput | string
+    metricType?: StringFieldUpdateOperationsInput | string
+    baseline?: NullableFloatFieldUpdateOperationsInput | number | null
+    recentAverage?: NullableFloatFieldUpdateOperationsInput | number | null
+    latestValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    latestRank?: NullableIntFieldUpdateOperationsInput | number | null
+    recentDelta?: NullableFloatFieldUpdateOperationsInput | number | null
+    slope?: NullableFloatFieldUpdateOperationsInput | number | null
+    confidenceLabel?: StringFieldUpdateOperationsInput | string
+    sampleSize?: IntFieldUpdateOperationsInput | number
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventPerformanceTrendCreateManyInput = {
+    id?: string
+    athleteId: string
+    teamId: string
+    eventName: string
+    metricType: string
+    baseline?: number | null
+    recentAverage?: number | null
+    latestValue?: number | null
+    latestRank?: number | null
+    recentDelta?: number | null
+    slope?: number | null
+    confidenceLabel: string
+    sampleSize?: number
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EventPerformanceTrendUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventName?: StringFieldUpdateOperationsInput | string
+    metricType?: StringFieldUpdateOperationsInput | string
+    baseline?: NullableFloatFieldUpdateOperationsInput | number | null
+    recentAverage?: NullableFloatFieldUpdateOperationsInput | number | null
+    latestValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    latestRank?: NullableIntFieldUpdateOperationsInput | number | null
+    recentDelta?: NullableFloatFieldUpdateOperationsInput | number | null
+    slope?: NullableFloatFieldUpdateOperationsInput | number | null
+    confidenceLabel?: StringFieldUpdateOperationsInput | string
+    sampleSize?: IntFieldUpdateOperationsInput | number
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventPerformanceTrendUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    athleteId?: StringFieldUpdateOperationsInput | string
+    teamId?: StringFieldUpdateOperationsInput | string
+    eventName?: StringFieldUpdateOperationsInput | string
+    metricType?: StringFieldUpdateOperationsInput | string
+    baseline?: NullableFloatFieldUpdateOperationsInput | number | null
+    recentAverage?: NullableFloatFieldUpdateOperationsInput | number | null
+    latestValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    latestRank?: NullableIntFieldUpdateOperationsInput | number | null
+    recentDelta?: NullableFloatFieldUpdateOperationsInput | number | null
+    slope?: NullableFloatFieldUpdateOperationsInput | number | null
+    confidenceLabel?: StringFieldUpdateOperationsInput | string
+    sampleSize?: IntFieldUpdateOperationsInput | number
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WorkoutAnalyticsSnapshotCreateInput = {
+    id?: string
+    plannedMetricCount?: number
+    aboveTargetCount?: number
+    onTargetCount?: number
+    belowTargetCount?: number
+    adherencePercent?: number | null
+    rolling7?: NullableJsonNullValueInput | InputJsonValue
+    rolling14?: NullableJsonNullValueInput | InputJsonValue
+    rolling30?: NullableJsonNullValueInput | InputJsonValue
+    recentProgression?: NullableJsonNullValueInput | InputJsonValue
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    athlete: AthleteCreateNestedOneWithoutWorkoutAnalyticsSnapshotInput
+    team: TeamCreateNestedOneWithoutWorkoutAnalyticsSnapshotsInput
+  }
+
+  export type WorkoutAnalyticsSnapshotUncheckedCreateInput = {
+    id?: string
+    athleteId: string
+    teamId: string
+    plannedMetricCount?: number
+    aboveTargetCount?: number
+    onTargetCount?: number
+    belowTargetCount?: number
+    adherencePercent?: number | null
+    rolling7?: NullableJsonNullValueInput | InputJsonValue
+    rolling14?: NullableJsonNullValueInput | InputJsonValue
+    rolling30?: NullableJsonNullValueInput | InputJsonValue
+    recentProgression?: NullableJsonNullValueInput | InputJsonValue
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WorkoutAnalyticsSnapshotUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    plannedMetricCount?: IntFieldUpdateOperationsInput | number
+    aboveTargetCount?: IntFieldUpdateOperationsInput | number
+    onTargetCount?: IntFieldUpdateOperationsInput | number
+    belowTargetCount?: IntFieldUpdateOperationsInput | number
+    adherencePercent?: NullableFloatFieldUpdateOperationsInput | number | null
+    rolling7?: NullableJsonNullValueInput | InputJsonValue
+    rolling14?: NullableJsonNullValueInput | InputJsonValue
+    rolling30?: NullableJsonNullValueInput | InputJsonValue
+    recentProgression?: NullableJsonNullValueInput | InputJsonValue
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    athlete?: AthleteUpdateOneRequiredWithoutWorkoutAnalyticsSnapshotNestedInput
+    team?: TeamUpdateOneRequiredWithoutWorkoutAnalyticsSnapshotsNestedInput
+  }
+
+  export type WorkoutAnalyticsSnapshotUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    athleteId?: StringFieldUpdateOperationsInput | string
+    teamId?: StringFieldUpdateOperationsInput | string
+    plannedMetricCount?: IntFieldUpdateOperationsInput | number
+    aboveTargetCount?: IntFieldUpdateOperationsInput | number
+    onTargetCount?: IntFieldUpdateOperationsInput | number
+    belowTargetCount?: IntFieldUpdateOperationsInput | number
+    adherencePercent?: NullableFloatFieldUpdateOperationsInput | number | null
+    rolling7?: NullableJsonNullValueInput | InputJsonValue
+    rolling14?: NullableJsonNullValueInput | InputJsonValue
+    rolling30?: NullableJsonNullValueInput | InputJsonValue
+    recentProgression?: NullableJsonNullValueInput | InputJsonValue
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WorkoutAnalyticsSnapshotCreateManyInput = {
+    id?: string
+    athleteId: string
+    teamId: string
+    plannedMetricCount?: number
+    aboveTargetCount?: number
+    onTargetCount?: number
+    belowTargetCount?: number
+    adherencePercent?: number | null
+    rolling7?: NullableJsonNullValueInput | InputJsonValue
+    rolling14?: NullableJsonNullValueInput | InputJsonValue
+    rolling30?: NullableJsonNullValueInput | InputJsonValue
+    recentProgression?: NullableJsonNullValueInput | InputJsonValue
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WorkoutAnalyticsSnapshotUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    plannedMetricCount?: IntFieldUpdateOperationsInput | number
+    aboveTargetCount?: IntFieldUpdateOperationsInput | number
+    onTargetCount?: IntFieldUpdateOperationsInput | number
+    belowTargetCount?: IntFieldUpdateOperationsInput | number
+    adherencePercent?: NullableFloatFieldUpdateOperationsInput | number | null
+    rolling7?: NullableJsonNullValueInput | InputJsonValue
+    rolling14?: NullableJsonNullValueInput | InputJsonValue
+    rolling30?: NullableJsonNullValueInput | InputJsonValue
+    recentProgression?: NullableJsonNullValueInput | InputJsonValue
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WorkoutAnalyticsSnapshotUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    athleteId?: StringFieldUpdateOperationsInput | string
+    teamId?: StringFieldUpdateOperationsInput | string
+    plannedMetricCount?: IntFieldUpdateOperationsInput | number
+    aboveTargetCount?: IntFieldUpdateOperationsInput | number
+    onTargetCount?: IntFieldUpdateOperationsInput | number
+    belowTargetCount?: IntFieldUpdateOperationsInput | number
+    adherencePercent?: NullableFloatFieldUpdateOperationsInput | number | null
+    rolling7?: NullableJsonNullValueInput | InputJsonValue
+    rolling14?: NullableJsonNullValueInput | InputJsonValue
+    rolling30?: NullableJsonNullValueInput | InputJsonValue
+    recentProgression?: NullableJsonNullValueInput | InputJsonValue
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IntegrationRunCreateInput = {
+    id?: string
+    provider: string
+    triggerType: string
+    status: string
+    startedAt?: Date | string
+    finishedAt?: Date | string | null
+    scopeJson?: NullableJsonNullValueInput | InputJsonValue
+    resultSummary?: NullableJsonNullValueInput | InputJsonValue
+    errorMessage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    triggeredBy?: UserCreateNestedOneWithoutIntegrationRunsInput
+  }
+
+  export type IntegrationRunUncheckedCreateInput = {
+    id?: string
+    provider: string
+    triggerType: string
+    status: string
+    startedAt?: Date | string
+    finishedAt?: Date | string | null
+    triggeredByUserId?: string | null
+    scopeJson?: NullableJsonNullValueInput | InputJsonValue
+    resultSummary?: NullableJsonNullValueInput | InputJsonValue
+    errorMessage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IntegrationRunUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    triggerType?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    scopeJson?: NullableJsonNullValueInput | InputJsonValue
+    resultSummary?: NullableJsonNullValueInput | InputJsonValue
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    triggeredBy?: UserUpdateOneWithoutIntegrationRunsNestedInput
+  }
+
+  export type IntegrationRunUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    triggerType?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    triggeredByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    scopeJson?: NullableJsonNullValueInput | InputJsonValue
+    resultSummary?: NullableJsonNullValueInput | InputJsonValue
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IntegrationRunCreateManyInput = {
+    id?: string
+    provider: string
+    triggerType: string
+    status: string
+    startedAt?: Date | string
+    finishedAt?: Date | string | null
+    triggeredByUserId?: string | null
+    scopeJson?: NullableJsonNullValueInput | InputJsonValue
+    resultSummary?: NullableJsonNullValueInput | InputJsonValue
+    errorMessage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IntegrationRunUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    triggerType?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    scopeJson?: NullableJsonNullValueInput | InputJsonValue
+    resultSummary?: NullableJsonNullValueInput | InputJsonValue
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IntegrationRunUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    triggerType?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    triggeredByUserId?: NullableStringFieldUpdateOperationsInput | string | null
+    scopeJson?: NullableJsonNullValueInput | InputJsonValue
+    resultSummary?: NullableJsonNullValueInput | InputJsonValue
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -24704,6 +34165,12 @@ export namespace Prisma {
     isNot?: UserSettingsWhereInput | null
   }
 
+  export type IntegrationRunListRelationFilter = {
+    every?: IntegrationRunWhereInput
+    some?: IntegrationRunWhereInput
+    none?: IntegrationRunWhereInput
+  }
+
   export type AthleteOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -24725,6 +34192,10 @@ export namespace Prisma {
   }
 
   export type NoteOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type IntegrationRunOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -24820,10 +34291,38 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type InstitutionNullableScalarRelationFilter = {
+    is?: InstitutionWhereInput | null
+    isNot?: InstitutionWhereInput | null
+  }
+
+  export type SeasonNullableScalarRelationFilter = {
+    is?: SeasonWhereInput | null
+    isNot?: SeasonWhereInput | null
+  }
+
   export type EventListRelationFilter = {
     every?: EventWhereInput
     some?: EventWhereInput
     none?: EventWhereInput
+  }
+
+  export type AthletePerformanceSnapshotListRelationFilter = {
+    every?: AthletePerformanceSnapshotWhereInput
+    some?: AthletePerformanceSnapshotWhereInput
+    none?: AthletePerformanceSnapshotWhereInput
+  }
+
+  export type EventPerformanceTrendListRelationFilter = {
+    every?: EventPerformanceTrendWhereInput
+    some?: EventPerformanceTrendWhereInput
+    none?: EventPerformanceTrendWhereInput
+  }
+
+  export type WorkoutAnalyticsSnapshotListRelationFilter = {
+    every?: WorkoutAnalyticsSnapshotWhereInput
+    some?: WorkoutAnalyticsSnapshotWhereInput
+    none?: WorkoutAnalyticsSnapshotWhereInput
   }
 
   export type SortOrderInput = {
@@ -24835,11 +34334,24 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type AthletePerformanceSnapshotOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type EventPerformanceTrendOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type WorkoutAnalyticsSnapshotOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type TeamCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     sport?: SortOrder
-    institution?: SortOrder
+    institutionId?: SortOrder
+    seasonId?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -24847,7 +34359,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     sport?: SortOrder
-    institution?: SortOrder
+    institutionId?: SortOrder
+    seasonId?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -24855,7 +34368,8 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     sport?: SortOrder
-    institution?: SortOrder
+    institutionId?: SortOrder
+    seasonId?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -24885,6 +34399,97 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type TeamListRelationFilter = {
+    every?: TeamWhereInput
+    some?: TeamWhereInput
+    none?: TeamWhereInput
+  }
+
+  export type SeasonListRelationFilter = {
+    every?: SeasonWhereInput
+    some?: SeasonWhereInput
+    none?: SeasonWhereInput
+  }
+
+  export type TeamOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SeasonOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type InstitutionCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    type?: SortOrder
+    address?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type InstitutionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    type?: SortOrder
+    address?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type InstitutionMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    type?: SortOrder
+    address?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type InstitutionScalarRelationFilter = {
+    is?: InstitutionWhereInput
+    isNot?: InstitutionWhereInput
+  }
+
+  export type SeasonInstitutionIdNameSportCompoundUniqueInput = {
+    institutionId: string
+    name: string
+    sport: $Enums.Sport
+  }
+
+  export type SeasonCountOrderByAggregateInput = {
+    id?: SortOrder
+    institutionId?: SortOrder
+    name?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    sport?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SeasonMaxOrderByAggregateInput = {
+    id?: SortOrder
+    institutionId?: SortOrder
+    name?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    sport?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SeasonMinOrderByAggregateInput = {
+    id?: SortOrder
+    institutionId?: SortOrder
+    name?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    sport?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type IntNullableFilter<$PrismaModel = never> = {
@@ -24991,6 +34596,16 @@ export namespace Prisma {
     every?: PersonalRecordWhereInput
     some?: PersonalRecordWhereInput
     none?: PersonalRecordWhereInput
+  }
+
+  export type AthletePerformanceSnapshotNullableScalarRelationFilter = {
+    is?: AthletePerformanceSnapshotWhereInput | null
+    isNot?: AthletePerformanceSnapshotWhereInput | null
+  }
+
+  export type WorkoutAnalyticsSnapshotNullableScalarRelationFilter = {
+    is?: WorkoutAnalyticsSnapshotWhereInput | null
+    isNot?: WorkoutAnalyticsSnapshotWhereInput | null
   }
 
   export type AcademicRecordOrderByRelationAggregateInput = {
@@ -25876,6 +35491,254 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type AthletePerformanceSnapshotCountOrderByAggregateInput = {
+    id?: SortOrder
+    athleteId?: SortOrder
+    teamId?: SortOrder
+    trainingStatus?: SortOrder
+    readinessScore?: SortOrder
+    readinessLabel?: SortOrder
+    riskLevel?: SortOrder
+    lastWorkoutAt?: SortOrder
+    summaryJson?: SortOrder
+    aiSummary?: SortOrder
+    refreshedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AthletePerformanceSnapshotAvgOrderByAggregateInput = {
+    readinessScore?: SortOrder
+  }
+
+  export type AthletePerformanceSnapshotMaxOrderByAggregateInput = {
+    id?: SortOrder
+    athleteId?: SortOrder
+    teamId?: SortOrder
+    trainingStatus?: SortOrder
+    readinessScore?: SortOrder
+    readinessLabel?: SortOrder
+    riskLevel?: SortOrder
+    lastWorkoutAt?: SortOrder
+    aiSummary?: SortOrder
+    refreshedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AthletePerformanceSnapshotMinOrderByAggregateInput = {
+    id?: SortOrder
+    athleteId?: SortOrder
+    teamId?: SortOrder
+    trainingStatus?: SortOrder
+    readinessScore?: SortOrder
+    readinessLabel?: SortOrder
+    riskLevel?: SortOrder
+    lastWorkoutAt?: SortOrder
+    aiSummary?: SortOrder
+    refreshedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AthletePerformanceSnapshotSumOrderByAggregateInput = {
+    readinessScore?: SortOrder
+  }
+
+  export type EventPerformanceTrendAthleteIdEventNameMetricTypeCompoundUniqueInput = {
+    athleteId: string
+    eventName: string
+    metricType: string
+  }
+
+  export type EventPerformanceTrendCountOrderByAggregateInput = {
+    id?: SortOrder
+    athleteId?: SortOrder
+    teamId?: SortOrder
+    eventName?: SortOrder
+    metricType?: SortOrder
+    baseline?: SortOrder
+    recentAverage?: SortOrder
+    latestValue?: SortOrder
+    latestRank?: SortOrder
+    recentDelta?: SortOrder
+    slope?: SortOrder
+    confidenceLabel?: SortOrder
+    sampleSize?: SortOrder
+    summaryJson?: SortOrder
+    aiSummary?: SortOrder
+    refreshedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EventPerformanceTrendAvgOrderByAggregateInput = {
+    baseline?: SortOrder
+    recentAverage?: SortOrder
+    latestValue?: SortOrder
+    latestRank?: SortOrder
+    recentDelta?: SortOrder
+    slope?: SortOrder
+    sampleSize?: SortOrder
+  }
+
+  export type EventPerformanceTrendMaxOrderByAggregateInput = {
+    id?: SortOrder
+    athleteId?: SortOrder
+    teamId?: SortOrder
+    eventName?: SortOrder
+    metricType?: SortOrder
+    baseline?: SortOrder
+    recentAverage?: SortOrder
+    latestValue?: SortOrder
+    latestRank?: SortOrder
+    recentDelta?: SortOrder
+    slope?: SortOrder
+    confidenceLabel?: SortOrder
+    sampleSize?: SortOrder
+    aiSummary?: SortOrder
+    refreshedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EventPerformanceTrendMinOrderByAggregateInput = {
+    id?: SortOrder
+    athleteId?: SortOrder
+    teamId?: SortOrder
+    eventName?: SortOrder
+    metricType?: SortOrder
+    baseline?: SortOrder
+    recentAverage?: SortOrder
+    latestValue?: SortOrder
+    latestRank?: SortOrder
+    recentDelta?: SortOrder
+    slope?: SortOrder
+    confidenceLabel?: SortOrder
+    sampleSize?: SortOrder
+    aiSummary?: SortOrder
+    refreshedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EventPerformanceTrendSumOrderByAggregateInput = {
+    baseline?: SortOrder
+    recentAverage?: SortOrder
+    latestValue?: SortOrder
+    latestRank?: SortOrder
+    recentDelta?: SortOrder
+    slope?: SortOrder
+    sampleSize?: SortOrder
+  }
+
+  export type WorkoutAnalyticsSnapshotCountOrderByAggregateInput = {
+    id?: SortOrder
+    athleteId?: SortOrder
+    teamId?: SortOrder
+    plannedMetricCount?: SortOrder
+    aboveTargetCount?: SortOrder
+    onTargetCount?: SortOrder
+    belowTargetCount?: SortOrder
+    adherencePercent?: SortOrder
+    rolling7?: SortOrder
+    rolling14?: SortOrder
+    rolling30?: SortOrder
+    recentProgression?: SortOrder
+    summaryJson?: SortOrder
+    aiSummary?: SortOrder
+    refreshedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WorkoutAnalyticsSnapshotAvgOrderByAggregateInput = {
+    plannedMetricCount?: SortOrder
+    aboveTargetCount?: SortOrder
+    onTargetCount?: SortOrder
+    belowTargetCount?: SortOrder
+    adherencePercent?: SortOrder
+  }
+
+  export type WorkoutAnalyticsSnapshotMaxOrderByAggregateInput = {
+    id?: SortOrder
+    athleteId?: SortOrder
+    teamId?: SortOrder
+    plannedMetricCount?: SortOrder
+    aboveTargetCount?: SortOrder
+    onTargetCount?: SortOrder
+    belowTargetCount?: SortOrder
+    adherencePercent?: SortOrder
+    aiSummary?: SortOrder
+    refreshedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WorkoutAnalyticsSnapshotMinOrderByAggregateInput = {
+    id?: SortOrder
+    athleteId?: SortOrder
+    teamId?: SortOrder
+    plannedMetricCount?: SortOrder
+    aboveTargetCount?: SortOrder
+    onTargetCount?: SortOrder
+    belowTargetCount?: SortOrder
+    adherencePercent?: SortOrder
+    aiSummary?: SortOrder
+    refreshedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WorkoutAnalyticsSnapshotSumOrderByAggregateInput = {
+    plannedMetricCount?: SortOrder
+    aboveTargetCount?: SortOrder
+    onTargetCount?: SortOrder
+    belowTargetCount?: SortOrder
+    adherencePercent?: SortOrder
+  }
+
+  export type IntegrationRunCountOrderByAggregateInput = {
+    id?: SortOrder
+    provider?: SortOrder
+    triggerType?: SortOrder
+    status?: SortOrder
+    startedAt?: SortOrder
+    finishedAt?: SortOrder
+    triggeredByUserId?: SortOrder
+    scopeJson?: SortOrder
+    resultSummary?: SortOrder
+    errorMessage?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type IntegrationRunMaxOrderByAggregateInput = {
+    id?: SortOrder
+    provider?: SortOrder
+    triggerType?: SortOrder
+    status?: SortOrder
+    startedAt?: SortOrder
+    finishedAt?: SortOrder
+    triggeredByUserId?: SortOrder
+    errorMessage?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type IntegrationRunMinOrderByAggregateInput = {
+    id?: SortOrder
+    provider?: SortOrder
+    triggerType?: SortOrder
+    status?: SortOrder
+    startedAt?: SortOrder
+    finishedAt?: SortOrder
+    triggeredByUserId?: SortOrder
+    errorMessage?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type UserCreateteamsInput = {
     set: string[]
   }
@@ -25928,6 +35791,13 @@ export namespace Prisma {
     connect?: UserSettingsWhereUniqueInput
   }
 
+  export type IntegrationRunCreateNestedManyWithoutTriggeredByInput = {
+    create?: XOR<IntegrationRunCreateWithoutTriggeredByInput, IntegrationRunUncheckedCreateWithoutTriggeredByInput> | IntegrationRunCreateWithoutTriggeredByInput[] | IntegrationRunUncheckedCreateWithoutTriggeredByInput[]
+    connectOrCreate?: IntegrationRunCreateOrConnectWithoutTriggeredByInput | IntegrationRunCreateOrConnectWithoutTriggeredByInput[]
+    createMany?: IntegrationRunCreateManyTriggeredByInputEnvelope
+    connect?: IntegrationRunWhereUniqueInput | IntegrationRunWhereUniqueInput[]
+  }
+
   export type AthleteUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AthleteCreateWithoutUserInput, AthleteUncheckedCreateWithoutUserInput> | AthleteCreateWithoutUserInput[] | AthleteUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AthleteCreateOrConnectWithoutUserInput | AthleteCreateOrConnectWithoutUserInput[]
@@ -25974,6 +35844,13 @@ export namespace Prisma {
     create?: XOR<UserSettingsCreateWithoutUserInput, UserSettingsUncheckedCreateWithoutUserInput>
     connectOrCreate?: UserSettingsCreateOrConnectWithoutUserInput
     connect?: UserSettingsWhereUniqueInput
+  }
+
+  export type IntegrationRunUncheckedCreateNestedManyWithoutTriggeredByInput = {
+    create?: XOR<IntegrationRunCreateWithoutTriggeredByInput, IntegrationRunUncheckedCreateWithoutTriggeredByInput> | IntegrationRunCreateWithoutTriggeredByInput[] | IntegrationRunUncheckedCreateWithoutTriggeredByInput[]
+    connectOrCreate?: IntegrationRunCreateOrConnectWithoutTriggeredByInput | IntegrationRunCreateOrConnectWithoutTriggeredByInput[]
+    createMany?: IntegrationRunCreateManyTriggeredByInputEnvelope
+    connect?: IntegrationRunWhereUniqueInput | IntegrationRunWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -26087,6 +35964,20 @@ export namespace Prisma {
     update?: XOR<XOR<UserSettingsUpdateToOneWithWhereWithoutUserInput, UserSettingsUpdateWithoutUserInput>, UserSettingsUncheckedUpdateWithoutUserInput>
   }
 
+  export type IntegrationRunUpdateManyWithoutTriggeredByNestedInput = {
+    create?: XOR<IntegrationRunCreateWithoutTriggeredByInput, IntegrationRunUncheckedCreateWithoutTriggeredByInput> | IntegrationRunCreateWithoutTriggeredByInput[] | IntegrationRunUncheckedCreateWithoutTriggeredByInput[]
+    connectOrCreate?: IntegrationRunCreateOrConnectWithoutTriggeredByInput | IntegrationRunCreateOrConnectWithoutTriggeredByInput[]
+    upsert?: IntegrationRunUpsertWithWhereUniqueWithoutTriggeredByInput | IntegrationRunUpsertWithWhereUniqueWithoutTriggeredByInput[]
+    createMany?: IntegrationRunCreateManyTriggeredByInputEnvelope
+    set?: IntegrationRunWhereUniqueInput | IntegrationRunWhereUniqueInput[]
+    disconnect?: IntegrationRunWhereUniqueInput | IntegrationRunWhereUniqueInput[]
+    delete?: IntegrationRunWhereUniqueInput | IntegrationRunWhereUniqueInput[]
+    connect?: IntegrationRunWhereUniqueInput | IntegrationRunWhereUniqueInput[]
+    update?: IntegrationRunUpdateWithWhereUniqueWithoutTriggeredByInput | IntegrationRunUpdateWithWhereUniqueWithoutTriggeredByInput[]
+    updateMany?: IntegrationRunUpdateManyWithWhereWithoutTriggeredByInput | IntegrationRunUpdateManyWithWhereWithoutTriggeredByInput[]
+    deleteMany?: IntegrationRunScalarWhereInput | IntegrationRunScalarWhereInput[]
+  }
+
   export type AthleteUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AthleteCreateWithoutUserInput, AthleteUncheckedCreateWithoutUserInput> | AthleteCreateWithoutUserInput[] | AthleteUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AthleteCreateOrConnectWithoutUserInput | AthleteCreateOrConnectWithoutUserInput[]
@@ -26181,6 +36072,32 @@ export namespace Prisma {
     update?: XOR<XOR<UserSettingsUpdateToOneWithWhereWithoutUserInput, UserSettingsUpdateWithoutUserInput>, UserSettingsUncheckedUpdateWithoutUserInput>
   }
 
+  export type IntegrationRunUncheckedUpdateManyWithoutTriggeredByNestedInput = {
+    create?: XOR<IntegrationRunCreateWithoutTriggeredByInput, IntegrationRunUncheckedCreateWithoutTriggeredByInput> | IntegrationRunCreateWithoutTriggeredByInput[] | IntegrationRunUncheckedCreateWithoutTriggeredByInput[]
+    connectOrCreate?: IntegrationRunCreateOrConnectWithoutTriggeredByInput | IntegrationRunCreateOrConnectWithoutTriggeredByInput[]
+    upsert?: IntegrationRunUpsertWithWhereUniqueWithoutTriggeredByInput | IntegrationRunUpsertWithWhereUniqueWithoutTriggeredByInput[]
+    createMany?: IntegrationRunCreateManyTriggeredByInputEnvelope
+    set?: IntegrationRunWhereUniqueInput | IntegrationRunWhereUniqueInput[]
+    disconnect?: IntegrationRunWhereUniqueInput | IntegrationRunWhereUniqueInput[]
+    delete?: IntegrationRunWhereUniqueInput | IntegrationRunWhereUniqueInput[]
+    connect?: IntegrationRunWhereUniqueInput | IntegrationRunWhereUniqueInput[]
+    update?: IntegrationRunUpdateWithWhereUniqueWithoutTriggeredByInput | IntegrationRunUpdateWithWhereUniqueWithoutTriggeredByInput[]
+    updateMany?: IntegrationRunUpdateManyWithWhereWithoutTriggeredByInput | IntegrationRunUpdateManyWithWhereWithoutTriggeredByInput[]
+    deleteMany?: IntegrationRunScalarWhereInput | IntegrationRunScalarWhereInput[]
+  }
+
+  export type InstitutionCreateNestedOneWithoutTeamsInput = {
+    create?: XOR<InstitutionCreateWithoutTeamsInput, InstitutionUncheckedCreateWithoutTeamsInput>
+    connectOrCreate?: InstitutionCreateOrConnectWithoutTeamsInput
+    connect?: InstitutionWhereUniqueInput
+  }
+
+  export type SeasonCreateNestedOneWithoutTeamsInput = {
+    create?: XOR<SeasonCreateWithoutTeamsInput, SeasonUncheckedCreateWithoutTeamsInput>
+    connectOrCreate?: SeasonCreateOrConnectWithoutTeamsInput
+    connect?: SeasonWhereUniqueInput
+  }
+
   export type AthleteCreateNestedManyWithoutTeamInput = {
     create?: XOR<AthleteCreateWithoutTeamInput, AthleteUncheckedCreateWithoutTeamInput> | AthleteCreateWithoutTeamInput[] | AthleteUncheckedCreateWithoutTeamInput[]
     connectOrCreate?: AthleteCreateOrConnectWithoutTeamInput | AthleteCreateOrConnectWithoutTeamInput[]
@@ -26207,6 +36124,27 @@ export namespace Prisma {
     connectOrCreate?: MeetEntryCreateOrConnectWithoutTeamInput | MeetEntryCreateOrConnectWithoutTeamInput[]
     createMany?: MeetEntryCreateManyTeamInputEnvelope
     connect?: MeetEntryWhereUniqueInput | MeetEntryWhereUniqueInput[]
+  }
+
+  export type AthletePerformanceSnapshotCreateNestedManyWithoutTeamInput = {
+    create?: XOR<AthletePerformanceSnapshotCreateWithoutTeamInput, AthletePerformanceSnapshotUncheckedCreateWithoutTeamInput> | AthletePerformanceSnapshotCreateWithoutTeamInput[] | AthletePerformanceSnapshotUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: AthletePerformanceSnapshotCreateOrConnectWithoutTeamInput | AthletePerformanceSnapshotCreateOrConnectWithoutTeamInput[]
+    createMany?: AthletePerformanceSnapshotCreateManyTeamInputEnvelope
+    connect?: AthletePerformanceSnapshotWhereUniqueInput | AthletePerformanceSnapshotWhereUniqueInput[]
+  }
+
+  export type EventPerformanceTrendCreateNestedManyWithoutTeamInput = {
+    create?: XOR<EventPerformanceTrendCreateWithoutTeamInput, EventPerformanceTrendUncheckedCreateWithoutTeamInput> | EventPerformanceTrendCreateWithoutTeamInput[] | EventPerformanceTrendUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: EventPerformanceTrendCreateOrConnectWithoutTeamInput | EventPerformanceTrendCreateOrConnectWithoutTeamInput[]
+    createMany?: EventPerformanceTrendCreateManyTeamInputEnvelope
+    connect?: EventPerformanceTrendWhereUniqueInput | EventPerformanceTrendWhereUniqueInput[]
+  }
+
+  export type WorkoutAnalyticsSnapshotCreateNestedManyWithoutTeamInput = {
+    create?: XOR<WorkoutAnalyticsSnapshotCreateWithoutTeamInput, WorkoutAnalyticsSnapshotUncheckedCreateWithoutTeamInput> | WorkoutAnalyticsSnapshotCreateWithoutTeamInput[] | WorkoutAnalyticsSnapshotUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: WorkoutAnalyticsSnapshotCreateOrConnectWithoutTeamInput | WorkoutAnalyticsSnapshotCreateOrConnectWithoutTeamInput[]
+    createMany?: WorkoutAnalyticsSnapshotCreateManyTeamInputEnvelope
+    connect?: WorkoutAnalyticsSnapshotWhereUniqueInput | WorkoutAnalyticsSnapshotWhereUniqueInput[]
   }
 
   export type AthleteUncheckedCreateNestedManyWithoutTeamInput = {
@@ -26237,12 +36175,49 @@ export namespace Prisma {
     connect?: MeetEntryWhereUniqueInput | MeetEntryWhereUniqueInput[]
   }
 
+  export type AthletePerformanceSnapshotUncheckedCreateNestedManyWithoutTeamInput = {
+    create?: XOR<AthletePerformanceSnapshotCreateWithoutTeamInput, AthletePerformanceSnapshotUncheckedCreateWithoutTeamInput> | AthletePerformanceSnapshotCreateWithoutTeamInput[] | AthletePerformanceSnapshotUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: AthletePerformanceSnapshotCreateOrConnectWithoutTeamInput | AthletePerformanceSnapshotCreateOrConnectWithoutTeamInput[]
+    createMany?: AthletePerformanceSnapshotCreateManyTeamInputEnvelope
+    connect?: AthletePerformanceSnapshotWhereUniqueInput | AthletePerformanceSnapshotWhereUniqueInput[]
+  }
+
+  export type EventPerformanceTrendUncheckedCreateNestedManyWithoutTeamInput = {
+    create?: XOR<EventPerformanceTrendCreateWithoutTeamInput, EventPerformanceTrendUncheckedCreateWithoutTeamInput> | EventPerformanceTrendCreateWithoutTeamInput[] | EventPerformanceTrendUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: EventPerformanceTrendCreateOrConnectWithoutTeamInput | EventPerformanceTrendCreateOrConnectWithoutTeamInput[]
+    createMany?: EventPerformanceTrendCreateManyTeamInputEnvelope
+    connect?: EventPerformanceTrendWhereUniqueInput | EventPerformanceTrendWhereUniqueInput[]
+  }
+
+  export type WorkoutAnalyticsSnapshotUncheckedCreateNestedManyWithoutTeamInput = {
+    create?: XOR<WorkoutAnalyticsSnapshotCreateWithoutTeamInput, WorkoutAnalyticsSnapshotUncheckedCreateWithoutTeamInput> | WorkoutAnalyticsSnapshotCreateWithoutTeamInput[] | WorkoutAnalyticsSnapshotUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: WorkoutAnalyticsSnapshotCreateOrConnectWithoutTeamInput | WorkoutAnalyticsSnapshotCreateOrConnectWithoutTeamInput[]
+    createMany?: WorkoutAnalyticsSnapshotCreateManyTeamInputEnvelope
+    connect?: WorkoutAnalyticsSnapshotWhereUniqueInput | WorkoutAnalyticsSnapshotWhereUniqueInput[]
+  }
+
   export type EnumSportFieldUpdateOperationsInput = {
     set?: $Enums.Sport
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
+  export type InstitutionUpdateOneWithoutTeamsNestedInput = {
+    create?: XOR<InstitutionCreateWithoutTeamsInput, InstitutionUncheckedCreateWithoutTeamsInput>
+    connectOrCreate?: InstitutionCreateOrConnectWithoutTeamsInput
+    upsert?: InstitutionUpsertWithoutTeamsInput
+    disconnect?: InstitutionWhereInput | boolean
+    delete?: InstitutionWhereInput | boolean
+    connect?: InstitutionWhereUniqueInput
+    update?: XOR<XOR<InstitutionUpdateToOneWithWhereWithoutTeamsInput, InstitutionUpdateWithoutTeamsInput>, InstitutionUncheckedUpdateWithoutTeamsInput>
+  }
+
+  export type SeasonUpdateOneWithoutTeamsNestedInput = {
+    create?: XOR<SeasonCreateWithoutTeamsInput, SeasonUncheckedCreateWithoutTeamsInput>
+    connectOrCreate?: SeasonCreateOrConnectWithoutTeamsInput
+    upsert?: SeasonUpsertWithoutTeamsInput
+    disconnect?: SeasonWhereInput | boolean
+    delete?: SeasonWhereInput | boolean
+    connect?: SeasonWhereUniqueInput
+    update?: XOR<XOR<SeasonUpdateToOneWithWhereWithoutTeamsInput, SeasonUpdateWithoutTeamsInput>, SeasonUncheckedUpdateWithoutTeamsInput>
   }
 
   export type AthleteUpdateManyWithoutTeamNestedInput = {
@@ -26301,6 +36276,52 @@ export namespace Prisma {
     deleteMany?: MeetEntryScalarWhereInput | MeetEntryScalarWhereInput[]
   }
 
+  export type AthletePerformanceSnapshotUpdateManyWithoutTeamNestedInput = {
+    create?: XOR<AthletePerformanceSnapshotCreateWithoutTeamInput, AthletePerformanceSnapshotUncheckedCreateWithoutTeamInput> | AthletePerformanceSnapshotCreateWithoutTeamInput[] | AthletePerformanceSnapshotUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: AthletePerformanceSnapshotCreateOrConnectWithoutTeamInput | AthletePerformanceSnapshotCreateOrConnectWithoutTeamInput[]
+    upsert?: AthletePerformanceSnapshotUpsertWithWhereUniqueWithoutTeamInput | AthletePerformanceSnapshotUpsertWithWhereUniqueWithoutTeamInput[]
+    createMany?: AthletePerformanceSnapshotCreateManyTeamInputEnvelope
+    set?: AthletePerformanceSnapshotWhereUniqueInput | AthletePerformanceSnapshotWhereUniqueInput[]
+    disconnect?: AthletePerformanceSnapshotWhereUniqueInput | AthletePerformanceSnapshotWhereUniqueInput[]
+    delete?: AthletePerformanceSnapshotWhereUniqueInput | AthletePerformanceSnapshotWhereUniqueInput[]
+    connect?: AthletePerformanceSnapshotWhereUniqueInput | AthletePerformanceSnapshotWhereUniqueInput[]
+    update?: AthletePerformanceSnapshotUpdateWithWhereUniqueWithoutTeamInput | AthletePerformanceSnapshotUpdateWithWhereUniqueWithoutTeamInput[]
+    updateMany?: AthletePerformanceSnapshotUpdateManyWithWhereWithoutTeamInput | AthletePerformanceSnapshotUpdateManyWithWhereWithoutTeamInput[]
+    deleteMany?: AthletePerformanceSnapshotScalarWhereInput | AthletePerformanceSnapshotScalarWhereInput[]
+  }
+
+  export type EventPerformanceTrendUpdateManyWithoutTeamNestedInput = {
+    create?: XOR<EventPerformanceTrendCreateWithoutTeamInput, EventPerformanceTrendUncheckedCreateWithoutTeamInput> | EventPerformanceTrendCreateWithoutTeamInput[] | EventPerformanceTrendUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: EventPerformanceTrendCreateOrConnectWithoutTeamInput | EventPerformanceTrendCreateOrConnectWithoutTeamInput[]
+    upsert?: EventPerformanceTrendUpsertWithWhereUniqueWithoutTeamInput | EventPerformanceTrendUpsertWithWhereUniqueWithoutTeamInput[]
+    createMany?: EventPerformanceTrendCreateManyTeamInputEnvelope
+    set?: EventPerformanceTrendWhereUniqueInput | EventPerformanceTrendWhereUniqueInput[]
+    disconnect?: EventPerformanceTrendWhereUniqueInput | EventPerformanceTrendWhereUniqueInput[]
+    delete?: EventPerformanceTrendWhereUniqueInput | EventPerformanceTrendWhereUniqueInput[]
+    connect?: EventPerformanceTrendWhereUniqueInput | EventPerformanceTrendWhereUniqueInput[]
+    update?: EventPerformanceTrendUpdateWithWhereUniqueWithoutTeamInput | EventPerformanceTrendUpdateWithWhereUniqueWithoutTeamInput[]
+    updateMany?: EventPerformanceTrendUpdateManyWithWhereWithoutTeamInput | EventPerformanceTrendUpdateManyWithWhereWithoutTeamInput[]
+    deleteMany?: EventPerformanceTrendScalarWhereInput | EventPerformanceTrendScalarWhereInput[]
+  }
+
+  export type WorkoutAnalyticsSnapshotUpdateManyWithoutTeamNestedInput = {
+    create?: XOR<WorkoutAnalyticsSnapshotCreateWithoutTeamInput, WorkoutAnalyticsSnapshotUncheckedCreateWithoutTeamInput> | WorkoutAnalyticsSnapshotCreateWithoutTeamInput[] | WorkoutAnalyticsSnapshotUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: WorkoutAnalyticsSnapshotCreateOrConnectWithoutTeamInput | WorkoutAnalyticsSnapshotCreateOrConnectWithoutTeamInput[]
+    upsert?: WorkoutAnalyticsSnapshotUpsertWithWhereUniqueWithoutTeamInput | WorkoutAnalyticsSnapshotUpsertWithWhereUniqueWithoutTeamInput[]
+    createMany?: WorkoutAnalyticsSnapshotCreateManyTeamInputEnvelope
+    set?: WorkoutAnalyticsSnapshotWhereUniqueInput | WorkoutAnalyticsSnapshotWhereUniqueInput[]
+    disconnect?: WorkoutAnalyticsSnapshotWhereUniqueInput | WorkoutAnalyticsSnapshotWhereUniqueInput[]
+    delete?: WorkoutAnalyticsSnapshotWhereUniqueInput | WorkoutAnalyticsSnapshotWhereUniqueInput[]
+    connect?: WorkoutAnalyticsSnapshotWhereUniqueInput | WorkoutAnalyticsSnapshotWhereUniqueInput[]
+    update?: WorkoutAnalyticsSnapshotUpdateWithWhereUniqueWithoutTeamInput | WorkoutAnalyticsSnapshotUpdateWithWhereUniqueWithoutTeamInput[]
+    updateMany?: WorkoutAnalyticsSnapshotUpdateManyWithWhereWithoutTeamInput | WorkoutAnalyticsSnapshotUpdateManyWithWhereWithoutTeamInput[]
+    deleteMany?: WorkoutAnalyticsSnapshotScalarWhereInput | WorkoutAnalyticsSnapshotScalarWhereInput[]
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type AthleteUncheckedUpdateManyWithoutTeamNestedInput = {
     create?: XOR<AthleteCreateWithoutTeamInput, AthleteUncheckedCreateWithoutTeamInput> | AthleteCreateWithoutTeamInput[] | AthleteUncheckedCreateWithoutTeamInput[]
     connectOrCreate?: AthleteCreateOrConnectWithoutTeamInput | AthleteCreateOrConnectWithoutTeamInput[]
@@ -26355,6 +36376,188 @@ export namespace Prisma {
     update?: MeetEntryUpdateWithWhereUniqueWithoutTeamInput | MeetEntryUpdateWithWhereUniqueWithoutTeamInput[]
     updateMany?: MeetEntryUpdateManyWithWhereWithoutTeamInput | MeetEntryUpdateManyWithWhereWithoutTeamInput[]
     deleteMany?: MeetEntryScalarWhereInput | MeetEntryScalarWhereInput[]
+  }
+
+  export type AthletePerformanceSnapshotUncheckedUpdateManyWithoutTeamNestedInput = {
+    create?: XOR<AthletePerformanceSnapshotCreateWithoutTeamInput, AthletePerformanceSnapshotUncheckedCreateWithoutTeamInput> | AthletePerformanceSnapshotCreateWithoutTeamInput[] | AthletePerformanceSnapshotUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: AthletePerformanceSnapshotCreateOrConnectWithoutTeamInput | AthletePerformanceSnapshotCreateOrConnectWithoutTeamInput[]
+    upsert?: AthletePerformanceSnapshotUpsertWithWhereUniqueWithoutTeamInput | AthletePerformanceSnapshotUpsertWithWhereUniqueWithoutTeamInput[]
+    createMany?: AthletePerformanceSnapshotCreateManyTeamInputEnvelope
+    set?: AthletePerformanceSnapshotWhereUniqueInput | AthletePerformanceSnapshotWhereUniqueInput[]
+    disconnect?: AthletePerformanceSnapshotWhereUniqueInput | AthletePerformanceSnapshotWhereUniqueInput[]
+    delete?: AthletePerformanceSnapshotWhereUniqueInput | AthletePerformanceSnapshotWhereUniqueInput[]
+    connect?: AthletePerformanceSnapshotWhereUniqueInput | AthletePerformanceSnapshotWhereUniqueInput[]
+    update?: AthletePerformanceSnapshotUpdateWithWhereUniqueWithoutTeamInput | AthletePerformanceSnapshotUpdateWithWhereUniqueWithoutTeamInput[]
+    updateMany?: AthletePerformanceSnapshotUpdateManyWithWhereWithoutTeamInput | AthletePerformanceSnapshotUpdateManyWithWhereWithoutTeamInput[]
+    deleteMany?: AthletePerformanceSnapshotScalarWhereInput | AthletePerformanceSnapshotScalarWhereInput[]
+  }
+
+  export type EventPerformanceTrendUncheckedUpdateManyWithoutTeamNestedInput = {
+    create?: XOR<EventPerformanceTrendCreateWithoutTeamInput, EventPerformanceTrendUncheckedCreateWithoutTeamInput> | EventPerformanceTrendCreateWithoutTeamInput[] | EventPerformanceTrendUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: EventPerformanceTrendCreateOrConnectWithoutTeamInput | EventPerformanceTrendCreateOrConnectWithoutTeamInput[]
+    upsert?: EventPerformanceTrendUpsertWithWhereUniqueWithoutTeamInput | EventPerformanceTrendUpsertWithWhereUniqueWithoutTeamInput[]
+    createMany?: EventPerformanceTrendCreateManyTeamInputEnvelope
+    set?: EventPerformanceTrendWhereUniqueInput | EventPerformanceTrendWhereUniqueInput[]
+    disconnect?: EventPerformanceTrendWhereUniqueInput | EventPerformanceTrendWhereUniqueInput[]
+    delete?: EventPerformanceTrendWhereUniqueInput | EventPerformanceTrendWhereUniqueInput[]
+    connect?: EventPerformanceTrendWhereUniqueInput | EventPerformanceTrendWhereUniqueInput[]
+    update?: EventPerformanceTrendUpdateWithWhereUniqueWithoutTeamInput | EventPerformanceTrendUpdateWithWhereUniqueWithoutTeamInput[]
+    updateMany?: EventPerformanceTrendUpdateManyWithWhereWithoutTeamInput | EventPerformanceTrendUpdateManyWithWhereWithoutTeamInput[]
+    deleteMany?: EventPerformanceTrendScalarWhereInput | EventPerformanceTrendScalarWhereInput[]
+  }
+
+  export type WorkoutAnalyticsSnapshotUncheckedUpdateManyWithoutTeamNestedInput = {
+    create?: XOR<WorkoutAnalyticsSnapshotCreateWithoutTeamInput, WorkoutAnalyticsSnapshotUncheckedCreateWithoutTeamInput> | WorkoutAnalyticsSnapshotCreateWithoutTeamInput[] | WorkoutAnalyticsSnapshotUncheckedCreateWithoutTeamInput[]
+    connectOrCreate?: WorkoutAnalyticsSnapshotCreateOrConnectWithoutTeamInput | WorkoutAnalyticsSnapshotCreateOrConnectWithoutTeamInput[]
+    upsert?: WorkoutAnalyticsSnapshotUpsertWithWhereUniqueWithoutTeamInput | WorkoutAnalyticsSnapshotUpsertWithWhereUniqueWithoutTeamInput[]
+    createMany?: WorkoutAnalyticsSnapshotCreateManyTeamInputEnvelope
+    set?: WorkoutAnalyticsSnapshotWhereUniqueInput | WorkoutAnalyticsSnapshotWhereUniqueInput[]
+    disconnect?: WorkoutAnalyticsSnapshotWhereUniqueInput | WorkoutAnalyticsSnapshotWhereUniqueInput[]
+    delete?: WorkoutAnalyticsSnapshotWhereUniqueInput | WorkoutAnalyticsSnapshotWhereUniqueInput[]
+    connect?: WorkoutAnalyticsSnapshotWhereUniqueInput | WorkoutAnalyticsSnapshotWhereUniqueInput[]
+    update?: WorkoutAnalyticsSnapshotUpdateWithWhereUniqueWithoutTeamInput | WorkoutAnalyticsSnapshotUpdateWithWhereUniqueWithoutTeamInput[]
+    updateMany?: WorkoutAnalyticsSnapshotUpdateManyWithWhereWithoutTeamInput | WorkoutAnalyticsSnapshotUpdateManyWithWhereWithoutTeamInput[]
+    deleteMany?: WorkoutAnalyticsSnapshotScalarWhereInput | WorkoutAnalyticsSnapshotScalarWhereInput[]
+  }
+
+  export type TeamCreateNestedManyWithoutInstitutionInput = {
+    create?: XOR<TeamCreateWithoutInstitutionInput, TeamUncheckedCreateWithoutInstitutionInput> | TeamCreateWithoutInstitutionInput[] | TeamUncheckedCreateWithoutInstitutionInput[]
+    connectOrCreate?: TeamCreateOrConnectWithoutInstitutionInput | TeamCreateOrConnectWithoutInstitutionInput[]
+    createMany?: TeamCreateManyInstitutionInputEnvelope
+    connect?: TeamWhereUniqueInput | TeamWhereUniqueInput[]
+  }
+
+  export type SeasonCreateNestedManyWithoutInstitutionInput = {
+    create?: XOR<SeasonCreateWithoutInstitutionInput, SeasonUncheckedCreateWithoutInstitutionInput> | SeasonCreateWithoutInstitutionInput[] | SeasonUncheckedCreateWithoutInstitutionInput[]
+    connectOrCreate?: SeasonCreateOrConnectWithoutInstitutionInput | SeasonCreateOrConnectWithoutInstitutionInput[]
+    createMany?: SeasonCreateManyInstitutionInputEnvelope
+    connect?: SeasonWhereUniqueInput | SeasonWhereUniqueInput[]
+  }
+
+  export type TeamUncheckedCreateNestedManyWithoutInstitutionInput = {
+    create?: XOR<TeamCreateWithoutInstitutionInput, TeamUncheckedCreateWithoutInstitutionInput> | TeamCreateWithoutInstitutionInput[] | TeamUncheckedCreateWithoutInstitutionInput[]
+    connectOrCreate?: TeamCreateOrConnectWithoutInstitutionInput | TeamCreateOrConnectWithoutInstitutionInput[]
+    createMany?: TeamCreateManyInstitutionInputEnvelope
+    connect?: TeamWhereUniqueInput | TeamWhereUniqueInput[]
+  }
+
+  export type SeasonUncheckedCreateNestedManyWithoutInstitutionInput = {
+    create?: XOR<SeasonCreateWithoutInstitutionInput, SeasonUncheckedCreateWithoutInstitutionInput> | SeasonCreateWithoutInstitutionInput[] | SeasonUncheckedCreateWithoutInstitutionInput[]
+    connectOrCreate?: SeasonCreateOrConnectWithoutInstitutionInput | SeasonCreateOrConnectWithoutInstitutionInput[]
+    createMany?: SeasonCreateManyInstitutionInputEnvelope
+    connect?: SeasonWhereUniqueInput | SeasonWhereUniqueInput[]
+  }
+
+  export type TeamUpdateManyWithoutInstitutionNestedInput = {
+    create?: XOR<TeamCreateWithoutInstitutionInput, TeamUncheckedCreateWithoutInstitutionInput> | TeamCreateWithoutInstitutionInput[] | TeamUncheckedCreateWithoutInstitutionInput[]
+    connectOrCreate?: TeamCreateOrConnectWithoutInstitutionInput | TeamCreateOrConnectWithoutInstitutionInput[]
+    upsert?: TeamUpsertWithWhereUniqueWithoutInstitutionInput | TeamUpsertWithWhereUniqueWithoutInstitutionInput[]
+    createMany?: TeamCreateManyInstitutionInputEnvelope
+    set?: TeamWhereUniqueInput | TeamWhereUniqueInput[]
+    disconnect?: TeamWhereUniqueInput | TeamWhereUniqueInput[]
+    delete?: TeamWhereUniqueInput | TeamWhereUniqueInput[]
+    connect?: TeamWhereUniqueInput | TeamWhereUniqueInput[]
+    update?: TeamUpdateWithWhereUniqueWithoutInstitutionInput | TeamUpdateWithWhereUniqueWithoutInstitutionInput[]
+    updateMany?: TeamUpdateManyWithWhereWithoutInstitutionInput | TeamUpdateManyWithWhereWithoutInstitutionInput[]
+    deleteMany?: TeamScalarWhereInput | TeamScalarWhereInput[]
+  }
+
+  export type SeasonUpdateManyWithoutInstitutionNestedInput = {
+    create?: XOR<SeasonCreateWithoutInstitutionInput, SeasonUncheckedCreateWithoutInstitutionInput> | SeasonCreateWithoutInstitutionInput[] | SeasonUncheckedCreateWithoutInstitutionInput[]
+    connectOrCreate?: SeasonCreateOrConnectWithoutInstitutionInput | SeasonCreateOrConnectWithoutInstitutionInput[]
+    upsert?: SeasonUpsertWithWhereUniqueWithoutInstitutionInput | SeasonUpsertWithWhereUniqueWithoutInstitutionInput[]
+    createMany?: SeasonCreateManyInstitutionInputEnvelope
+    set?: SeasonWhereUniqueInput | SeasonWhereUniqueInput[]
+    disconnect?: SeasonWhereUniqueInput | SeasonWhereUniqueInput[]
+    delete?: SeasonWhereUniqueInput | SeasonWhereUniqueInput[]
+    connect?: SeasonWhereUniqueInput | SeasonWhereUniqueInput[]
+    update?: SeasonUpdateWithWhereUniqueWithoutInstitutionInput | SeasonUpdateWithWhereUniqueWithoutInstitutionInput[]
+    updateMany?: SeasonUpdateManyWithWhereWithoutInstitutionInput | SeasonUpdateManyWithWhereWithoutInstitutionInput[]
+    deleteMany?: SeasonScalarWhereInput | SeasonScalarWhereInput[]
+  }
+
+  export type TeamUncheckedUpdateManyWithoutInstitutionNestedInput = {
+    create?: XOR<TeamCreateWithoutInstitutionInput, TeamUncheckedCreateWithoutInstitutionInput> | TeamCreateWithoutInstitutionInput[] | TeamUncheckedCreateWithoutInstitutionInput[]
+    connectOrCreate?: TeamCreateOrConnectWithoutInstitutionInput | TeamCreateOrConnectWithoutInstitutionInput[]
+    upsert?: TeamUpsertWithWhereUniqueWithoutInstitutionInput | TeamUpsertWithWhereUniqueWithoutInstitutionInput[]
+    createMany?: TeamCreateManyInstitutionInputEnvelope
+    set?: TeamWhereUniqueInput | TeamWhereUniqueInput[]
+    disconnect?: TeamWhereUniqueInput | TeamWhereUniqueInput[]
+    delete?: TeamWhereUniqueInput | TeamWhereUniqueInput[]
+    connect?: TeamWhereUniqueInput | TeamWhereUniqueInput[]
+    update?: TeamUpdateWithWhereUniqueWithoutInstitutionInput | TeamUpdateWithWhereUniqueWithoutInstitutionInput[]
+    updateMany?: TeamUpdateManyWithWhereWithoutInstitutionInput | TeamUpdateManyWithWhereWithoutInstitutionInput[]
+    deleteMany?: TeamScalarWhereInput | TeamScalarWhereInput[]
+  }
+
+  export type SeasonUncheckedUpdateManyWithoutInstitutionNestedInput = {
+    create?: XOR<SeasonCreateWithoutInstitutionInput, SeasonUncheckedCreateWithoutInstitutionInput> | SeasonCreateWithoutInstitutionInput[] | SeasonUncheckedCreateWithoutInstitutionInput[]
+    connectOrCreate?: SeasonCreateOrConnectWithoutInstitutionInput | SeasonCreateOrConnectWithoutInstitutionInput[]
+    upsert?: SeasonUpsertWithWhereUniqueWithoutInstitutionInput | SeasonUpsertWithWhereUniqueWithoutInstitutionInput[]
+    createMany?: SeasonCreateManyInstitutionInputEnvelope
+    set?: SeasonWhereUniqueInput | SeasonWhereUniqueInput[]
+    disconnect?: SeasonWhereUniqueInput | SeasonWhereUniqueInput[]
+    delete?: SeasonWhereUniqueInput | SeasonWhereUniqueInput[]
+    connect?: SeasonWhereUniqueInput | SeasonWhereUniqueInput[]
+    update?: SeasonUpdateWithWhereUniqueWithoutInstitutionInput | SeasonUpdateWithWhereUniqueWithoutInstitutionInput[]
+    updateMany?: SeasonUpdateManyWithWhereWithoutInstitutionInput | SeasonUpdateManyWithWhereWithoutInstitutionInput[]
+    deleteMany?: SeasonScalarWhereInput | SeasonScalarWhereInput[]
+  }
+
+  export type InstitutionCreateNestedOneWithoutSeasonsInput = {
+    create?: XOR<InstitutionCreateWithoutSeasonsInput, InstitutionUncheckedCreateWithoutSeasonsInput>
+    connectOrCreate?: InstitutionCreateOrConnectWithoutSeasonsInput
+    connect?: InstitutionWhereUniqueInput
+  }
+
+  export type TeamCreateNestedManyWithoutSeasonInput = {
+    create?: XOR<TeamCreateWithoutSeasonInput, TeamUncheckedCreateWithoutSeasonInput> | TeamCreateWithoutSeasonInput[] | TeamUncheckedCreateWithoutSeasonInput[]
+    connectOrCreate?: TeamCreateOrConnectWithoutSeasonInput | TeamCreateOrConnectWithoutSeasonInput[]
+    createMany?: TeamCreateManySeasonInputEnvelope
+    connect?: TeamWhereUniqueInput | TeamWhereUniqueInput[]
+  }
+
+  export type TeamUncheckedCreateNestedManyWithoutSeasonInput = {
+    create?: XOR<TeamCreateWithoutSeasonInput, TeamUncheckedCreateWithoutSeasonInput> | TeamCreateWithoutSeasonInput[] | TeamUncheckedCreateWithoutSeasonInput[]
+    connectOrCreate?: TeamCreateOrConnectWithoutSeasonInput | TeamCreateOrConnectWithoutSeasonInput[]
+    createMany?: TeamCreateManySeasonInputEnvelope
+    connect?: TeamWhereUniqueInput | TeamWhereUniqueInput[]
+  }
+
+  export type InstitutionUpdateOneRequiredWithoutSeasonsNestedInput = {
+    create?: XOR<InstitutionCreateWithoutSeasonsInput, InstitutionUncheckedCreateWithoutSeasonsInput>
+    connectOrCreate?: InstitutionCreateOrConnectWithoutSeasonsInput
+    upsert?: InstitutionUpsertWithoutSeasonsInput
+    connect?: InstitutionWhereUniqueInput
+    update?: XOR<XOR<InstitutionUpdateToOneWithWhereWithoutSeasonsInput, InstitutionUpdateWithoutSeasonsInput>, InstitutionUncheckedUpdateWithoutSeasonsInput>
+  }
+
+  export type TeamUpdateManyWithoutSeasonNestedInput = {
+    create?: XOR<TeamCreateWithoutSeasonInput, TeamUncheckedCreateWithoutSeasonInput> | TeamCreateWithoutSeasonInput[] | TeamUncheckedCreateWithoutSeasonInput[]
+    connectOrCreate?: TeamCreateOrConnectWithoutSeasonInput | TeamCreateOrConnectWithoutSeasonInput[]
+    upsert?: TeamUpsertWithWhereUniqueWithoutSeasonInput | TeamUpsertWithWhereUniqueWithoutSeasonInput[]
+    createMany?: TeamCreateManySeasonInputEnvelope
+    set?: TeamWhereUniqueInput | TeamWhereUniqueInput[]
+    disconnect?: TeamWhereUniqueInput | TeamWhereUniqueInput[]
+    delete?: TeamWhereUniqueInput | TeamWhereUniqueInput[]
+    connect?: TeamWhereUniqueInput | TeamWhereUniqueInput[]
+    update?: TeamUpdateWithWhereUniqueWithoutSeasonInput | TeamUpdateWithWhereUniqueWithoutSeasonInput[]
+    updateMany?: TeamUpdateManyWithWhereWithoutSeasonInput | TeamUpdateManyWithWhereWithoutSeasonInput[]
+    deleteMany?: TeamScalarWhereInput | TeamScalarWhereInput[]
+  }
+
+  export type TeamUncheckedUpdateManyWithoutSeasonNestedInput = {
+    create?: XOR<TeamCreateWithoutSeasonInput, TeamUncheckedCreateWithoutSeasonInput> | TeamCreateWithoutSeasonInput[] | TeamUncheckedCreateWithoutSeasonInput[]
+    connectOrCreate?: TeamCreateOrConnectWithoutSeasonInput | TeamCreateOrConnectWithoutSeasonInput[]
+    upsert?: TeamUpsertWithWhereUniqueWithoutSeasonInput | TeamUpsertWithWhereUniqueWithoutSeasonInput[]
+    createMany?: TeamCreateManySeasonInputEnvelope
+    set?: TeamWhereUniqueInput | TeamWhereUniqueInput[]
+    disconnect?: TeamWhereUniqueInput | TeamWhereUniqueInput[]
+    delete?: TeamWhereUniqueInput | TeamWhereUniqueInput[]
+    connect?: TeamWhereUniqueInput | TeamWhereUniqueInput[]
+    update?: TeamUpdateWithWhereUniqueWithoutSeasonInput | TeamUpdateWithWhereUniqueWithoutSeasonInput[]
+    updateMany?: TeamUpdateManyWithWhereWithoutSeasonInput | TeamUpdateManyWithWhereWithoutSeasonInput[]
+    deleteMany?: TeamScalarWhereInput | TeamScalarWhereInput[]
   }
 
   export type AthleteCreateeventsInput = {
@@ -26436,6 +36639,25 @@ export namespace Prisma {
     connect?: AthleteJournalWhereUniqueInput | AthleteJournalWhereUniqueInput[]
   }
 
+  export type AthletePerformanceSnapshotCreateNestedOneWithoutAthleteInput = {
+    create?: XOR<AthletePerformanceSnapshotCreateWithoutAthleteInput, AthletePerformanceSnapshotUncheckedCreateWithoutAthleteInput>
+    connectOrCreate?: AthletePerformanceSnapshotCreateOrConnectWithoutAthleteInput
+    connect?: AthletePerformanceSnapshotWhereUniqueInput
+  }
+
+  export type EventPerformanceTrendCreateNestedManyWithoutAthleteInput = {
+    create?: XOR<EventPerformanceTrendCreateWithoutAthleteInput, EventPerformanceTrendUncheckedCreateWithoutAthleteInput> | EventPerformanceTrendCreateWithoutAthleteInput[] | EventPerformanceTrendUncheckedCreateWithoutAthleteInput[]
+    connectOrCreate?: EventPerformanceTrendCreateOrConnectWithoutAthleteInput | EventPerformanceTrendCreateOrConnectWithoutAthleteInput[]
+    createMany?: EventPerformanceTrendCreateManyAthleteInputEnvelope
+    connect?: EventPerformanceTrendWhereUniqueInput | EventPerformanceTrendWhereUniqueInput[]
+  }
+
+  export type WorkoutAnalyticsSnapshotCreateNestedOneWithoutAthleteInput = {
+    create?: XOR<WorkoutAnalyticsSnapshotCreateWithoutAthleteInput, WorkoutAnalyticsSnapshotUncheckedCreateWithoutAthleteInput>
+    connectOrCreate?: WorkoutAnalyticsSnapshotCreateOrConnectWithoutAthleteInput
+    connect?: WorkoutAnalyticsSnapshotWhereUniqueInput
+  }
+
   export type AcademicRecordUncheckedCreateNestedManyWithoutAthleteInput = {
     create?: XOR<AcademicRecordCreateWithoutAthleteInput, AcademicRecordUncheckedCreateWithoutAthleteInput> | AcademicRecordCreateWithoutAthleteInput[] | AcademicRecordUncheckedCreateWithoutAthleteInput[]
     connectOrCreate?: AcademicRecordCreateOrConnectWithoutAthleteInput | AcademicRecordCreateOrConnectWithoutAthleteInput[]
@@ -26497,6 +36719,25 @@ export namespace Prisma {
     connectOrCreate?: AthleteJournalCreateOrConnectWithoutAthleteInput | AthleteJournalCreateOrConnectWithoutAthleteInput[]
     createMany?: AthleteJournalCreateManyAthleteInputEnvelope
     connect?: AthleteJournalWhereUniqueInput | AthleteJournalWhereUniqueInput[]
+  }
+
+  export type AthletePerformanceSnapshotUncheckedCreateNestedOneWithoutAthleteInput = {
+    create?: XOR<AthletePerformanceSnapshotCreateWithoutAthleteInput, AthletePerformanceSnapshotUncheckedCreateWithoutAthleteInput>
+    connectOrCreate?: AthletePerformanceSnapshotCreateOrConnectWithoutAthleteInput
+    connect?: AthletePerformanceSnapshotWhereUniqueInput
+  }
+
+  export type EventPerformanceTrendUncheckedCreateNestedManyWithoutAthleteInput = {
+    create?: XOR<EventPerformanceTrendCreateWithoutAthleteInput, EventPerformanceTrendUncheckedCreateWithoutAthleteInput> | EventPerformanceTrendCreateWithoutAthleteInput[] | EventPerformanceTrendUncheckedCreateWithoutAthleteInput[]
+    connectOrCreate?: EventPerformanceTrendCreateOrConnectWithoutAthleteInput | EventPerformanceTrendCreateOrConnectWithoutAthleteInput[]
+    createMany?: EventPerformanceTrendCreateManyAthleteInputEnvelope
+    connect?: EventPerformanceTrendWhereUniqueInput | EventPerformanceTrendWhereUniqueInput[]
+  }
+
+  export type WorkoutAnalyticsSnapshotUncheckedCreateNestedOneWithoutAthleteInput = {
+    create?: XOR<WorkoutAnalyticsSnapshotCreateWithoutAthleteInput, WorkoutAnalyticsSnapshotUncheckedCreateWithoutAthleteInput>
+    connectOrCreate?: WorkoutAnalyticsSnapshotCreateOrConnectWithoutAthleteInput
+    connect?: WorkoutAnalyticsSnapshotWhereUniqueInput
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -26680,6 +36921,40 @@ export namespace Prisma {
     deleteMany?: AthleteJournalScalarWhereInput | AthleteJournalScalarWhereInput[]
   }
 
+  export type AthletePerformanceSnapshotUpdateOneWithoutAthleteNestedInput = {
+    create?: XOR<AthletePerformanceSnapshotCreateWithoutAthleteInput, AthletePerformanceSnapshotUncheckedCreateWithoutAthleteInput>
+    connectOrCreate?: AthletePerformanceSnapshotCreateOrConnectWithoutAthleteInput
+    upsert?: AthletePerformanceSnapshotUpsertWithoutAthleteInput
+    disconnect?: AthletePerformanceSnapshotWhereInput | boolean
+    delete?: AthletePerformanceSnapshotWhereInput | boolean
+    connect?: AthletePerformanceSnapshotWhereUniqueInput
+    update?: XOR<XOR<AthletePerformanceSnapshotUpdateToOneWithWhereWithoutAthleteInput, AthletePerformanceSnapshotUpdateWithoutAthleteInput>, AthletePerformanceSnapshotUncheckedUpdateWithoutAthleteInput>
+  }
+
+  export type EventPerformanceTrendUpdateManyWithoutAthleteNestedInput = {
+    create?: XOR<EventPerformanceTrendCreateWithoutAthleteInput, EventPerformanceTrendUncheckedCreateWithoutAthleteInput> | EventPerformanceTrendCreateWithoutAthleteInput[] | EventPerformanceTrendUncheckedCreateWithoutAthleteInput[]
+    connectOrCreate?: EventPerformanceTrendCreateOrConnectWithoutAthleteInput | EventPerformanceTrendCreateOrConnectWithoutAthleteInput[]
+    upsert?: EventPerformanceTrendUpsertWithWhereUniqueWithoutAthleteInput | EventPerformanceTrendUpsertWithWhereUniqueWithoutAthleteInput[]
+    createMany?: EventPerformanceTrendCreateManyAthleteInputEnvelope
+    set?: EventPerformanceTrendWhereUniqueInput | EventPerformanceTrendWhereUniqueInput[]
+    disconnect?: EventPerformanceTrendWhereUniqueInput | EventPerformanceTrendWhereUniqueInput[]
+    delete?: EventPerformanceTrendWhereUniqueInput | EventPerformanceTrendWhereUniqueInput[]
+    connect?: EventPerformanceTrendWhereUniqueInput | EventPerformanceTrendWhereUniqueInput[]
+    update?: EventPerformanceTrendUpdateWithWhereUniqueWithoutAthleteInput | EventPerformanceTrendUpdateWithWhereUniqueWithoutAthleteInput[]
+    updateMany?: EventPerformanceTrendUpdateManyWithWhereWithoutAthleteInput | EventPerformanceTrendUpdateManyWithWhereWithoutAthleteInput[]
+    deleteMany?: EventPerformanceTrendScalarWhereInput | EventPerformanceTrendScalarWhereInput[]
+  }
+
+  export type WorkoutAnalyticsSnapshotUpdateOneWithoutAthleteNestedInput = {
+    create?: XOR<WorkoutAnalyticsSnapshotCreateWithoutAthleteInput, WorkoutAnalyticsSnapshotUncheckedCreateWithoutAthleteInput>
+    connectOrCreate?: WorkoutAnalyticsSnapshotCreateOrConnectWithoutAthleteInput
+    upsert?: WorkoutAnalyticsSnapshotUpsertWithoutAthleteInput
+    disconnect?: WorkoutAnalyticsSnapshotWhereInput | boolean
+    delete?: WorkoutAnalyticsSnapshotWhereInput | boolean
+    connect?: WorkoutAnalyticsSnapshotWhereUniqueInput
+    update?: XOR<XOR<WorkoutAnalyticsSnapshotUpdateToOneWithWhereWithoutAthleteInput, WorkoutAnalyticsSnapshotUpdateWithoutAthleteInput>, WorkoutAnalyticsSnapshotUncheckedUpdateWithoutAthleteInput>
+  }
+
   export type AcademicRecordUncheckedUpdateManyWithoutAthleteNestedInput = {
     create?: XOR<AcademicRecordCreateWithoutAthleteInput, AcademicRecordUncheckedCreateWithoutAthleteInput> | AcademicRecordCreateWithoutAthleteInput[] | AcademicRecordUncheckedCreateWithoutAthleteInput[]
     connectOrCreate?: AcademicRecordCreateOrConnectWithoutAthleteInput | AcademicRecordCreateOrConnectWithoutAthleteInput[]
@@ -26804,6 +37079,40 @@ export namespace Prisma {
     update?: AthleteJournalUpdateWithWhereUniqueWithoutAthleteInput | AthleteJournalUpdateWithWhereUniqueWithoutAthleteInput[]
     updateMany?: AthleteJournalUpdateManyWithWhereWithoutAthleteInput | AthleteJournalUpdateManyWithWhereWithoutAthleteInput[]
     deleteMany?: AthleteJournalScalarWhereInput | AthleteJournalScalarWhereInput[]
+  }
+
+  export type AthletePerformanceSnapshotUncheckedUpdateOneWithoutAthleteNestedInput = {
+    create?: XOR<AthletePerformanceSnapshotCreateWithoutAthleteInput, AthletePerformanceSnapshotUncheckedCreateWithoutAthleteInput>
+    connectOrCreate?: AthletePerformanceSnapshotCreateOrConnectWithoutAthleteInput
+    upsert?: AthletePerformanceSnapshotUpsertWithoutAthleteInput
+    disconnect?: AthletePerformanceSnapshotWhereInput | boolean
+    delete?: AthletePerformanceSnapshotWhereInput | boolean
+    connect?: AthletePerformanceSnapshotWhereUniqueInput
+    update?: XOR<XOR<AthletePerformanceSnapshotUpdateToOneWithWhereWithoutAthleteInput, AthletePerformanceSnapshotUpdateWithoutAthleteInput>, AthletePerformanceSnapshotUncheckedUpdateWithoutAthleteInput>
+  }
+
+  export type EventPerformanceTrendUncheckedUpdateManyWithoutAthleteNestedInput = {
+    create?: XOR<EventPerformanceTrendCreateWithoutAthleteInput, EventPerformanceTrendUncheckedCreateWithoutAthleteInput> | EventPerformanceTrendCreateWithoutAthleteInput[] | EventPerformanceTrendUncheckedCreateWithoutAthleteInput[]
+    connectOrCreate?: EventPerformanceTrendCreateOrConnectWithoutAthleteInput | EventPerformanceTrendCreateOrConnectWithoutAthleteInput[]
+    upsert?: EventPerformanceTrendUpsertWithWhereUniqueWithoutAthleteInput | EventPerformanceTrendUpsertWithWhereUniqueWithoutAthleteInput[]
+    createMany?: EventPerformanceTrendCreateManyAthleteInputEnvelope
+    set?: EventPerformanceTrendWhereUniqueInput | EventPerformanceTrendWhereUniqueInput[]
+    disconnect?: EventPerformanceTrendWhereUniqueInput | EventPerformanceTrendWhereUniqueInput[]
+    delete?: EventPerformanceTrendWhereUniqueInput | EventPerformanceTrendWhereUniqueInput[]
+    connect?: EventPerformanceTrendWhereUniqueInput | EventPerformanceTrendWhereUniqueInput[]
+    update?: EventPerformanceTrendUpdateWithWhereUniqueWithoutAthleteInput | EventPerformanceTrendUpdateWithWhereUniqueWithoutAthleteInput[]
+    updateMany?: EventPerformanceTrendUpdateManyWithWhereWithoutAthleteInput | EventPerformanceTrendUpdateManyWithWhereWithoutAthleteInput[]
+    deleteMany?: EventPerformanceTrendScalarWhereInput | EventPerformanceTrendScalarWhereInput[]
+  }
+
+  export type WorkoutAnalyticsSnapshotUncheckedUpdateOneWithoutAthleteNestedInput = {
+    create?: XOR<WorkoutAnalyticsSnapshotCreateWithoutAthleteInput, WorkoutAnalyticsSnapshotUncheckedCreateWithoutAthleteInput>
+    connectOrCreate?: WorkoutAnalyticsSnapshotCreateOrConnectWithoutAthleteInput
+    upsert?: WorkoutAnalyticsSnapshotUpsertWithoutAthleteInput
+    disconnect?: WorkoutAnalyticsSnapshotWhereInput | boolean
+    delete?: WorkoutAnalyticsSnapshotWhereInput | boolean
+    connect?: WorkoutAnalyticsSnapshotWhereUniqueInput
+    update?: XOR<XOR<WorkoutAnalyticsSnapshotUpdateToOneWithWhereWithoutAthleteInput, WorkoutAnalyticsSnapshotUpdateWithoutAthleteInput>, WorkoutAnalyticsSnapshotUncheckedUpdateWithoutAthleteInput>
   }
 
   export type AthleteCreateNestedOneWithoutAcademicRecordsInput = {
@@ -27278,6 +37587,106 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUserSettingsInput, UserUpdateWithoutUserSettingsInput>, UserUncheckedUpdateWithoutUserSettingsInput>
   }
 
+  export type AthleteCreateNestedOneWithoutPerformanceSnapshotInput = {
+    create?: XOR<AthleteCreateWithoutPerformanceSnapshotInput, AthleteUncheckedCreateWithoutPerformanceSnapshotInput>
+    connectOrCreate?: AthleteCreateOrConnectWithoutPerformanceSnapshotInput
+    connect?: AthleteWhereUniqueInput
+  }
+
+  export type TeamCreateNestedOneWithoutPerformanceSnapshotsInput = {
+    create?: XOR<TeamCreateWithoutPerformanceSnapshotsInput, TeamUncheckedCreateWithoutPerformanceSnapshotsInput>
+    connectOrCreate?: TeamCreateOrConnectWithoutPerformanceSnapshotsInput
+    connect?: TeamWhereUniqueInput
+  }
+
+  export type AthleteUpdateOneRequiredWithoutPerformanceSnapshotNestedInput = {
+    create?: XOR<AthleteCreateWithoutPerformanceSnapshotInput, AthleteUncheckedCreateWithoutPerformanceSnapshotInput>
+    connectOrCreate?: AthleteCreateOrConnectWithoutPerformanceSnapshotInput
+    upsert?: AthleteUpsertWithoutPerformanceSnapshotInput
+    connect?: AthleteWhereUniqueInput
+    update?: XOR<XOR<AthleteUpdateToOneWithWhereWithoutPerformanceSnapshotInput, AthleteUpdateWithoutPerformanceSnapshotInput>, AthleteUncheckedUpdateWithoutPerformanceSnapshotInput>
+  }
+
+  export type TeamUpdateOneRequiredWithoutPerformanceSnapshotsNestedInput = {
+    create?: XOR<TeamCreateWithoutPerformanceSnapshotsInput, TeamUncheckedCreateWithoutPerformanceSnapshotsInput>
+    connectOrCreate?: TeamCreateOrConnectWithoutPerformanceSnapshotsInput
+    upsert?: TeamUpsertWithoutPerformanceSnapshotsInput
+    connect?: TeamWhereUniqueInput
+    update?: XOR<XOR<TeamUpdateToOneWithWhereWithoutPerformanceSnapshotsInput, TeamUpdateWithoutPerformanceSnapshotsInput>, TeamUncheckedUpdateWithoutPerformanceSnapshotsInput>
+  }
+
+  export type AthleteCreateNestedOneWithoutEventPerformanceTrendsInput = {
+    create?: XOR<AthleteCreateWithoutEventPerformanceTrendsInput, AthleteUncheckedCreateWithoutEventPerformanceTrendsInput>
+    connectOrCreate?: AthleteCreateOrConnectWithoutEventPerformanceTrendsInput
+    connect?: AthleteWhereUniqueInput
+  }
+
+  export type TeamCreateNestedOneWithoutEventPerformanceTrendsInput = {
+    create?: XOR<TeamCreateWithoutEventPerformanceTrendsInput, TeamUncheckedCreateWithoutEventPerformanceTrendsInput>
+    connectOrCreate?: TeamCreateOrConnectWithoutEventPerformanceTrendsInput
+    connect?: TeamWhereUniqueInput
+  }
+
+  export type AthleteUpdateOneRequiredWithoutEventPerformanceTrendsNestedInput = {
+    create?: XOR<AthleteCreateWithoutEventPerformanceTrendsInput, AthleteUncheckedCreateWithoutEventPerformanceTrendsInput>
+    connectOrCreate?: AthleteCreateOrConnectWithoutEventPerformanceTrendsInput
+    upsert?: AthleteUpsertWithoutEventPerformanceTrendsInput
+    connect?: AthleteWhereUniqueInput
+    update?: XOR<XOR<AthleteUpdateToOneWithWhereWithoutEventPerformanceTrendsInput, AthleteUpdateWithoutEventPerformanceTrendsInput>, AthleteUncheckedUpdateWithoutEventPerformanceTrendsInput>
+  }
+
+  export type TeamUpdateOneRequiredWithoutEventPerformanceTrendsNestedInput = {
+    create?: XOR<TeamCreateWithoutEventPerformanceTrendsInput, TeamUncheckedCreateWithoutEventPerformanceTrendsInput>
+    connectOrCreate?: TeamCreateOrConnectWithoutEventPerformanceTrendsInput
+    upsert?: TeamUpsertWithoutEventPerformanceTrendsInput
+    connect?: TeamWhereUniqueInput
+    update?: XOR<XOR<TeamUpdateToOneWithWhereWithoutEventPerformanceTrendsInput, TeamUpdateWithoutEventPerformanceTrendsInput>, TeamUncheckedUpdateWithoutEventPerformanceTrendsInput>
+  }
+
+  export type AthleteCreateNestedOneWithoutWorkoutAnalyticsSnapshotInput = {
+    create?: XOR<AthleteCreateWithoutWorkoutAnalyticsSnapshotInput, AthleteUncheckedCreateWithoutWorkoutAnalyticsSnapshotInput>
+    connectOrCreate?: AthleteCreateOrConnectWithoutWorkoutAnalyticsSnapshotInput
+    connect?: AthleteWhereUniqueInput
+  }
+
+  export type TeamCreateNestedOneWithoutWorkoutAnalyticsSnapshotsInput = {
+    create?: XOR<TeamCreateWithoutWorkoutAnalyticsSnapshotsInput, TeamUncheckedCreateWithoutWorkoutAnalyticsSnapshotsInput>
+    connectOrCreate?: TeamCreateOrConnectWithoutWorkoutAnalyticsSnapshotsInput
+    connect?: TeamWhereUniqueInput
+  }
+
+  export type AthleteUpdateOneRequiredWithoutWorkoutAnalyticsSnapshotNestedInput = {
+    create?: XOR<AthleteCreateWithoutWorkoutAnalyticsSnapshotInput, AthleteUncheckedCreateWithoutWorkoutAnalyticsSnapshotInput>
+    connectOrCreate?: AthleteCreateOrConnectWithoutWorkoutAnalyticsSnapshotInput
+    upsert?: AthleteUpsertWithoutWorkoutAnalyticsSnapshotInput
+    connect?: AthleteWhereUniqueInput
+    update?: XOR<XOR<AthleteUpdateToOneWithWhereWithoutWorkoutAnalyticsSnapshotInput, AthleteUpdateWithoutWorkoutAnalyticsSnapshotInput>, AthleteUncheckedUpdateWithoutWorkoutAnalyticsSnapshotInput>
+  }
+
+  export type TeamUpdateOneRequiredWithoutWorkoutAnalyticsSnapshotsNestedInput = {
+    create?: XOR<TeamCreateWithoutWorkoutAnalyticsSnapshotsInput, TeamUncheckedCreateWithoutWorkoutAnalyticsSnapshotsInput>
+    connectOrCreate?: TeamCreateOrConnectWithoutWorkoutAnalyticsSnapshotsInput
+    upsert?: TeamUpsertWithoutWorkoutAnalyticsSnapshotsInput
+    connect?: TeamWhereUniqueInput
+    update?: XOR<XOR<TeamUpdateToOneWithWhereWithoutWorkoutAnalyticsSnapshotsInput, TeamUpdateWithoutWorkoutAnalyticsSnapshotsInput>, TeamUncheckedUpdateWithoutWorkoutAnalyticsSnapshotsInput>
+  }
+
+  export type UserCreateNestedOneWithoutIntegrationRunsInput = {
+    create?: XOR<UserCreateWithoutIntegrationRunsInput, UserUncheckedCreateWithoutIntegrationRunsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutIntegrationRunsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneWithoutIntegrationRunsNestedInput = {
+    create?: XOR<UserCreateWithoutIntegrationRunsInput, UserUncheckedCreateWithoutIntegrationRunsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutIntegrationRunsInput
+    upsert?: UserUpsertWithoutIntegrationRunsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutIntegrationRunsInput, UserUpdateWithoutIntegrationRunsInput>, UserUncheckedUpdateWithoutIntegrationRunsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -27736,6 +38145,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryCreateNestedManyWithoutAthleteInput
     journals?: AthleteJournalCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteUncheckedCreateWithoutUserInput = {
@@ -27767,6 +38179,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutAthleteInput
     journals?: AthleteJournalUncheckedCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteCreateOrConnectWithoutUserInput = {
@@ -27960,6 +38375,44 @@ export namespace Prisma {
   export type UserSettingsCreateOrConnectWithoutUserInput = {
     where: UserSettingsWhereUniqueInput
     create: XOR<UserSettingsCreateWithoutUserInput, UserSettingsUncheckedCreateWithoutUserInput>
+  }
+
+  export type IntegrationRunCreateWithoutTriggeredByInput = {
+    id?: string
+    provider: string
+    triggerType: string
+    status: string
+    startedAt?: Date | string
+    finishedAt?: Date | string | null
+    scopeJson?: NullableJsonNullValueInput | InputJsonValue
+    resultSummary?: NullableJsonNullValueInput | InputJsonValue
+    errorMessage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IntegrationRunUncheckedCreateWithoutTriggeredByInput = {
+    id?: string
+    provider: string
+    triggerType: string
+    status: string
+    startedAt?: Date | string
+    finishedAt?: Date | string | null
+    scopeJson?: NullableJsonNullValueInput | InputJsonValue
+    resultSummary?: NullableJsonNullValueInput | InputJsonValue
+    errorMessage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IntegrationRunCreateOrConnectWithoutTriggeredByInput = {
+    where: IntegrationRunWhereUniqueInput
+    create: XOR<IntegrationRunCreateWithoutTriggeredByInput, IntegrationRunUncheckedCreateWithoutTriggeredByInput>
+  }
+
+  export type IntegrationRunCreateManyTriggeredByInputEnvelope = {
+    data: IntegrationRunCreateManyTriggeredByInput | IntegrationRunCreateManyTriggeredByInput[]
+    skipDuplicates?: boolean
   }
 
   export type AthleteUpsertWithWhereUniqueWithoutUserInput = {
@@ -28186,6 +38639,92 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type IntegrationRunUpsertWithWhereUniqueWithoutTriggeredByInput = {
+    where: IntegrationRunWhereUniqueInput
+    update: XOR<IntegrationRunUpdateWithoutTriggeredByInput, IntegrationRunUncheckedUpdateWithoutTriggeredByInput>
+    create: XOR<IntegrationRunCreateWithoutTriggeredByInput, IntegrationRunUncheckedCreateWithoutTriggeredByInput>
+  }
+
+  export type IntegrationRunUpdateWithWhereUniqueWithoutTriggeredByInput = {
+    where: IntegrationRunWhereUniqueInput
+    data: XOR<IntegrationRunUpdateWithoutTriggeredByInput, IntegrationRunUncheckedUpdateWithoutTriggeredByInput>
+  }
+
+  export type IntegrationRunUpdateManyWithWhereWithoutTriggeredByInput = {
+    where: IntegrationRunScalarWhereInput
+    data: XOR<IntegrationRunUpdateManyMutationInput, IntegrationRunUncheckedUpdateManyWithoutTriggeredByInput>
+  }
+
+  export type IntegrationRunScalarWhereInput = {
+    AND?: IntegrationRunScalarWhereInput | IntegrationRunScalarWhereInput[]
+    OR?: IntegrationRunScalarWhereInput[]
+    NOT?: IntegrationRunScalarWhereInput | IntegrationRunScalarWhereInput[]
+    id?: StringFilter<"IntegrationRun"> | string
+    provider?: StringFilter<"IntegrationRun"> | string
+    triggerType?: StringFilter<"IntegrationRun"> | string
+    status?: StringFilter<"IntegrationRun"> | string
+    startedAt?: DateTimeFilter<"IntegrationRun"> | Date | string
+    finishedAt?: DateTimeNullableFilter<"IntegrationRun"> | Date | string | null
+    triggeredByUserId?: StringNullableFilter<"IntegrationRun"> | string | null
+    scopeJson?: JsonNullableFilter<"IntegrationRun">
+    resultSummary?: JsonNullableFilter<"IntegrationRun">
+    errorMessage?: StringNullableFilter<"IntegrationRun"> | string | null
+    createdAt?: DateTimeFilter<"IntegrationRun"> | Date | string
+    updatedAt?: DateTimeFilter<"IntegrationRun"> | Date | string
+  }
+
+  export type InstitutionCreateWithoutTeamsInput = {
+    id?: string
+    name: string
+    type?: string | null
+    address?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    seasons?: SeasonCreateNestedManyWithoutInstitutionInput
+  }
+
+  export type InstitutionUncheckedCreateWithoutTeamsInput = {
+    id?: string
+    name: string
+    type?: string | null
+    address?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    seasons?: SeasonUncheckedCreateNestedManyWithoutInstitutionInput
+  }
+
+  export type InstitutionCreateOrConnectWithoutTeamsInput = {
+    where: InstitutionWhereUniqueInput
+    create: XOR<InstitutionCreateWithoutTeamsInput, InstitutionUncheckedCreateWithoutTeamsInput>
+  }
+
+  export type SeasonCreateWithoutTeamsInput = {
+    id?: string
+    name: string
+    startDate: Date | string
+    endDate: Date | string
+    sport: $Enums.Sport
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    institution: InstitutionCreateNestedOneWithoutSeasonsInput
+  }
+
+  export type SeasonUncheckedCreateWithoutTeamsInput = {
+    id?: string
+    institutionId: string
+    name: string
+    startDate: Date | string
+    endDate: Date | string
+    sport: $Enums.Sport
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SeasonCreateOrConnectWithoutTeamsInput = {
+    where: SeasonWhereUniqueInput
+    create: XOR<SeasonCreateWithoutTeamsInput, SeasonUncheckedCreateWithoutTeamsInput>
+  }
+
   export type AthleteCreateWithoutTeamInput = {
     id?: string
     name: string
@@ -28215,6 +38754,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryCreateNestedManyWithoutAthleteInput
     journals?: AthleteJournalCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteUncheckedCreateWithoutTeamInput = {
@@ -28246,6 +38788,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutAthleteInput
     journals?: AthleteJournalUncheckedCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteCreateOrConnectWithoutTeamInput = {
@@ -28368,6 +38913,208 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type AthletePerformanceSnapshotCreateWithoutTeamInput = {
+    id?: string
+    trainingStatus: string
+    readinessScore?: number | null
+    readinessLabel?: string | null
+    riskLevel?: $Enums.RiskFlag | null
+    lastWorkoutAt?: Date | string | null
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    athlete: AthleteCreateNestedOneWithoutPerformanceSnapshotInput
+  }
+
+  export type AthletePerformanceSnapshotUncheckedCreateWithoutTeamInput = {
+    id?: string
+    athleteId: string
+    trainingStatus: string
+    readinessScore?: number | null
+    readinessLabel?: string | null
+    riskLevel?: $Enums.RiskFlag | null
+    lastWorkoutAt?: Date | string | null
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AthletePerformanceSnapshotCreateOrConnectWithoutTeamInput = {
+    where: AthletePerformanceSnapshotWhereUniqueInput
+    create: XOR<AthletePerformanceSnapshotCreateWithoutTeamInput, AthletePerformanceSnapshotUncheckedCreateWithoutTeamInput>
+  }
+
+  export type AthletePerformanceSnapshotCreateManyTeamInputEnvelope = {
+    data: AthletePerformanceSnapshotCreateManyTeamInput | AthletePerformanceSnapshotCreateManyTeamInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type EventPerformanceTrendCreateWithoutTeamInput = {
+    id?: string
+    eventName: string
+    metricType: string
+    baseline?: number | null
+    recentAverage?: number | null
+    latestValue?: number | null
+    latestRank?: number | null
+    recentDelta?: number | null
+    slope?: number | null
+    confidenceLabel: string
+    sampleSize?: number
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    athlete: AthleteCreateNestedOneWithoutEventPerformanceTrendsInput
+  }
+
+  export type EventPerformanceTrendUncheckedCreateWithoutTeamInput = {
+    id?: string
+    athleteId: string
+    eventName: string
+    metricType: string
+    baseline?: number | null
+    recentAverage?: number | null
+    latestValue?: number | null
+    latestRank?: number | null
+    recentDelta?: number | null
+    slope?: number | null
+    confidenceLabel: string
+    sampleSize?: number
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EventPerformanceTrendCreateOrConnectWithoutTeamInput = {
+    where: EventPerformanceTrendWhereUniqueInput
+    create: XOR<EventPerformanceTrendCreateWithoutTeamInput, EventPerformanceTrendUncheckedCreateWithoutTeamInput>
+  }
+
+  export type EventPerformanceTrendCreateManyTeamInputEnvelope = {
+    data: EventPerformanceTrendCreateManyTeamInput | EventPerformanceTrendCreateManyTeamInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type WorkoutAnalyticsSnapshotCreateWithoutTeamInput = {
+    id?: string
+    plannedMetricCount?: number
+    aboveTargetCount?: number
+    onTargetCount?: number
+    belowTargetCount?: number
+    adherencePercent?: number | null
+    rolling7?: NullableJsonNullValueInput | InputJsonValue
+    rolling14?: NullableJsonNullValueInput | InputJsonValue
+    rolling30?: NullableJsonNullValueInput | InputJsonValue
+    recentProgression?: NullableJsonNullValueInput | InputJsonValue
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    athlete: AthleteCreateNestedOneWithoutWorkoutAnalyticsSnapshotInput
+  }
+
+  export type WorkoutAnalyticsSnapshotUncheckedCreateWithoutTeamInput = {
+    id?: string
+    athleteId: string
+    plannedMetricCount?: number
+    aboveTargetCount?: number
+    onTargetCount?: number
+    belowTargetCount?: number
+    adherencePercent?: number | null
+    rolling7?: NullableJsonNullValueInput | InputJsonValue
+    rolling14?: NullableJsonNullValueInput | InputJsonValue
+    rolling30?: NullableJsonNullValueInput | InputJsonValue
+    recentProgression?: NullableJsonNullValueInput | InputJsonValue
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WorkoutAnalyticsSnapshotCreateOrConnectWithoutTeamInput = {
+    where: WorkoutAnalyticsSnapshotWhereUniqueInput
+    create: XOR<WorkoutAnalyticsSnapshotCreateWithoutTeamInput, WorkoutAnalyticsSnapshotUncheckedCreateWithoutTeamInput>
+  }
+
+  export type WorkoutAnalyticsSnapshotCreateManyTeamInputEnvelope = {
+    data: WorkoutAnalyticsSnapshotCreateManyTeamInput | WorkoutAnalyticsSnapshotCreateManyTeamInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type InstitutionUpsertWithoutTeamsInput = {
+    update: XOR<InstitutionUpdateWithoutTeamsInput, InstitutionUncheckedUpdateWithoutTeamsInput>
+    create: XOR<InstitutionCreateWithoutTeamsInput, InstitutionUncheckedCreateWithoutTeamsInput>
+    where?: InstitutionWhereInput
+  }
+
+  export type InstitutionUpdateToOneWithWhereWithoutTeamsInput = {
+    where?: InstitutionWhereInput
+    data: XOR<InstitutionUpdateWithoutTeamsInput, InstitutionUncheckedUpdateWithoutTeamsInput>
+  }
+
+  export type InstitutionUpdateWithoutTeamsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    seasons?: SeasonUpdateManyWithoutInstitutionNestedInput
+  }
+
+  export type InstitutionUncheckedUpdateWithoutTeamsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    seasons?: SeasonUncheckedUpdateManyWithoutInstitutionNestedInput
+  }
+
+  export type SeasonUpsertWithoutTeamsInput = {
+    update: XOR<SeasonUpdateWithoutTeamsInput, SeasonUncheckedUpdateWithoutTeamsInput>
+    create: XOR<SeasonCreateWithoutTeamsInput, SeasonUncheckedCreateWithoutTeamsInput>
+    where?: SeasonWhereInput
+  }
+
+  export type SeasonUpdateToOneWithWhereWithoutTeamsInput = {
+    where?: SeasonWhereInput
+    data: XOR<SeasonUpdateWithoutTeamsInput, SeasonUncheckedUpdateWithoutTeamsInput>
+  }
+
+  export type SeasonUpdateWithoutTeamsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    institution?: InstitutionUpdateOneRequiredWithoutSeasonsNestedInput
+  }
+
+  export type SeasonUncheckedUpdateWithoutTeamsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    institutionId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type AthleteUpsertWithWhereUniqueWithoutTeamInput = {
     where: AthleteWhereUniqueInput
     update: XOR<AthleteUpdateWithoutTeamInput, AthleteUncheckedUpdateWithoutTeamInput>
@@ -28451,6 +39198,362 @@ export namespace Prisma {
     data: XOR<MeetEntryUpdateManyMutationInput, MeetEntryUncheckedUpdateManyWithoutTeamInput>
   }
 
+  export type AthletePerformanceSnapshotUpsertWithWhereUniqueWithoutTeamInput = {
+    where: AthletePerformanceSnapshotWhereUniqueInput
+    update: XOR<AthletePerformanceSnapshotUpdateWithoutTeamInput, AthletePerformanceSnapshotUncheckedUpdateWithoutTeamInput>
+    create: XOR<AthletePerformanceSnapshotCreateWithoutTeamInput, AthletePerformanceSnapshotUncheckedCreateWithoutTeamInput>
+  }
+
+  export type AthletePerformanceSnapshotUpdateWithWhereUniqueWithoutTeamInput = {
+    where: AthletePerformanceSnapshotWhereUniqueInput
+    data: XOR<AthletePerformanceSnapshotUpdateWithoutTeamInput, AthletePerformanceSnapshotUncheckedUpdateWithoutTeamInput>
+  }
+
+  export type AthletePerformanceSnapshotUpdateManyWithWhereWithoutTeamInput = {
+    where: AthletePerformanceSnapshotScalarWhereInput
+    data: XOR<AthletePerformanceSnapshotUpdateManyMutationInput, AthletePerformanceSnapshotUncheckedUpdateManyWithoutTeamInput>
+  }
+
+  export type AthletePerformanceSnapshotScalarWhereInput = {
+    AND?: AthletePerformanceSnapshotScalarWhereInput | AthletePerformanceSnapshotScalarWhereInput[]
+    OR?: AthletePerformanceSnapshotScalarWhereInput[]
+    NOT?: AthletePerformanceSnapshotScalarWhereInput | AthletePerformanceSnapshotScalarWhereInput[]
+    id?: StringFilter<"AthletePerformanceSnapshot"> | string
+    athleteId?: StringFilter<"AthletePerformanceSnapshot"> | string
+    teamId?: StringFilter<"AthletePerformanceSnapshot"> | string
+    trainingStatus?: StringFilter<"AthletePerformanceSnapshot"> | string
+    readinessScore?: FloatNullableFilter<"AthletePerformanceSnapshot"> | number | null
+    readinessLabel?: StringNullableFilter<"AthletePerformanceSnapshot"> | string | null
+    riskLevel?: EnumRiskFlagNullableFilter<"AthletePerformanceSnapshot"> | $Enums.RiskFlag | null
+    lastWorkoutAt?: DateTimeNullableFilter<"AthletePerformanceSnapshot"> | Date | string | null
+    summaryJson?: JsonNullableFilter<"AthletePerformanceSnapshot">
+    aiSummary?: StringNullableFilter<"AthletePerformanceSnapshot"> | string | null
+    refreshedAt?: DateTimeFilter<"AthletePerformanceSnapshot"> | Date | string
+    createdAt?: DateTimeFilter<"AthletePerformanceSnapshot"> | Date | string
+    updatedAt?: DateTimeFilter<"AthletePerformanceSnapshot"> | Date | string
+  }
+
+  export type EventPerformanceTrendUpsertWithWhereUniqueWithoutTeamInput = {
+    where: EventPerformanceTrendWhereUniqueInput
+    update: XOR<EventPerformanceTrendUpdateWithoutTeamInput, EventPerformanceTrendUncheckedUpdateWithoutTeamInput>
+    create: XOR<EventPerformanceTrendCreateWithoutTeamInput, EventPerformanceTrendUncheckedCreateWithoutTeamInput>
+  }
+
+  export type EventPerformanceTrendUpdateWithWhereUniqueWithoutTeamInput = {
+    where: EventPerformanceTrendWhereUniqueInput
+    data: XOR<EventPerformanceTrendUpdateWithoutTeamInput, EventPerformanceTrendUncheckedUpdateWithoutTeamInput>
+  }
+
+  export type EventPerformanceTrendUpdateManyWithWhereWithoutTeamInput = {
+    where: EventPerformanceTrendScalarWhereInput
+    data: XOR<EventPerformanceTrendUpdateManyMutationInput, EventPerformanceTrendUncheckedUpdateManyWithoutTeamInput>
+  }
+
+  export type EventPerformanceTrendScalarWhereInput = {
+    AND?: EventPerformanceTrendScalarWhereInput | EventPerformanceTrendScalarWhereInput[]
+    OR?: EventPerformanceTrendScalarWhereInput[]
+    NOT?: EventPerformanceTrendScalarWhereInput | EventPerformanceTrendScalarWhereInput[]
+    id?: StringFilter<"EventPerformanceTrend"> | string
+    athleteId?: StringFilter<"EventPerformanceTrend"> | string
+    teamId?: StringFilter<"EventPerformanceTrend"> | string
+    eventName?: StringFilter<"EventPerformanceTrend"> | string
+    metricType?: StringFilter<"EventPerformanceTrend"> | string
+    baseline?: FloatNullableFilter<"EventPerformanceTrend"> | number | null
+    recentAverage?: FloatNullableFilter<"EventPerformanceTrend"> | number | null
+    latestValue?: FloatNullableFilter<"EventPerformanceTrend"> | number | null
+    latestRank?: IntNullableFilter<"EventPerformanceTrend"> | number | null
+    recentDelta?: FloatNullableFilter<"EventPerformanceTrend"> | number | null
+    slope?: FloatNullableFilter<"EventPerformanceTrend"> | number | null
+    confidenceLabel?: StringFilter<"EventPerformanceTrend"> | string
+    sampleSize?: IntFilter<"EventPerformanceTrend"> | number
+    summaryJson?: JsonNullableFilter<"EventPerformanceTrend">
+    aiSummary?: StringNullableFilter<"EventPerformanceTrend"> | string | null
+    refreshedAt?: DateTimeFilter<"EventPerformanceTrend"> | Date | string
+    createdAt?: DateTimeFilter<"EventPerformanceTrend"> | Date | string
+    updatedAt?: DateTimeFilter<"EventPerformanceTrend"> | Date | string
+  }
+
+  export type WorkoutAnalyticsSnapshotUpsertWithWhereUniqueWithoutTeamInput = {
+    where: WorkoutAnalyticsSnapshotWhereUniqueInput
+    update: XOR<WorkoutAnalyticsSnapshotUpdateWithoutTeamInput, WorkoutAnalyticsSnapshotUncheckedUpdateWithoutTeamInput>
+    create: XOR<WorkoutAnalyticsSnapshotCreateWithoutTeamInput, WorkoutAnalyticsSnapshotUncheckedCreateWithoutTeamInput>
+  }
+
+  export type WorkoutAnalyticsSnapshotUpdateWithWhereUniqueWithoutTeamInput = {
+    where: WorkoutAnalyticsSnapshotWhereUniqueInput
+    data: XOR<WorkoutAnalyticsSnapshotUpdateWithoutTeamInput, WorkoutAnalyticsSnapshotUncheckedUpdateWithoutTeamInput>
+  }
+
+  export type WorkoutAnalyticsSnapshotUpdateManyWithWhereWithoutTeamInput = {
+    where: WorkoutAnalyticsSnapshotScalarWhereInput
+    data: XOR<WorkoutAnalyticsSnapshotUpdateManyMutationInput, WorkoutAnalyticsSnapshotUncheckedUpdateManyWithoutTeamInput>
+  }
+
+  export type WorkoutAnalyticsSnapshotScalarWhereInput = {
+    AND?: WorkoutAnalyticsSnapshotScalarWhereInput | WorkoutAnalyticsSnapshotScalarWhereInput[]
+    OR?: WorkoutAnalyticsSnapshotScalarWhereInput[]
+    NOT?: WorkoutAnalyticsSnapshotScalarWhereInput | WorkoutAnalyticsSnapshotScalarWhereInput[]
+    id?: StringFilter<"WorkoutAnalyticsSnapshot"> | string
+    athleteId?: StringFilter<"WorkoutAnalyticsSnapshot"> | string
+    teamId?: StringFilter<"WorkoutAnalyticsSnapshot"> | string
+    plannedMetricCount?: IntFilter<"WorkoutAnalyticsSnapshot"> | number
+    aboveTargetCount?: IntFilter<"WorkoutAnalyticsSnapshot"> | number
+    onTargetCount?: IntFilter<"WorkoutAnalyticsSnapshot"> | number
+    belowTargetCount?: IntFilter<"WorkoutAnalyticsSnapshot"> | number
+    adherencePercent?: FloatNullableFilter<"WorkoutAnalyticsSnapshot"> | number | null
+    rolling7?: JsonNullableFilter<"WorkoutAnalyticsSnapshot">
+    rolling14?: JsonNullableFilter<"WorkoutAnalyticsSnapshot">
+    rolling30?: JsonNullableFilter<"WorkoutAnalyticsSnapshot">
+    recentProgression?: JsonNullableFilter<"WorkoutAnalyticsSnapshot">
+    summaryJson?: JsonNullableFilter<"WorkoutAnalyticsSnapshot">
+    aiSummary?: StringNullableFilter<"WorkoutAnalyticsSnapshot"> | string | null
+    refreshedAt?: DateTimeFilter<"WorkoutAnalyticsSnapshot"> | Date | string
+    createdAt?: DateTimeFilter<"WorkoutAnalyticsSnapshot"> | Date | string
+    updatedAt?: DateTimeFilter<"WorkoutAnalyticsSnapshot"> | Date | string
+  }
+
+  export type TeamCreateWithoutInstitutionInput = {
+    id?: string
+    name: string
+    sport: $Enums.Sport
+    createdAt?: Date | string
+    season?: SeasonCreateNestedOneWithoutTeamsInput
+    athletes?: AthleteCreateNestedManyWithoutTeamInput
+    events?: EventCreateNestedManyWithoutTeamInput
+    workoutTemplates?: WorkoutTemplateCreateNestedManyWithoutTeamInput
+    meetEntries?: MeetEntryCreateNestedManyWithoutTeamInput
+    performanceSnapshots?: AthletePerformanceSnapshotCreateNestedManyWithoutTeamInput
+    eventPerformanceTrends?: EventPerformanceTrendCreateNestedManyWithoutTeamInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotCreateNestedManyWithoutTeamInput
+  }
+
+  export type TeamUncheckedCreateWithoutInstitutionInput = {
+    id?: string
+    name: string
+    sport: $Enums.Sport
+    seasonId?: string | null
+    createdAt?: Date | string
+    athletes?: AthleteUncheckedCreateNestedManyWithoutTeamInput
+    events?: EventUncheckedCreateNestedManyWithoutTeamInput
+    workoutTemplates?: WorkoutTemplateUncheckedCreateNestedManyWithoutTeamInput
+    meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutTeamInput
+    performanceSnapshots?: AthletePerformanceSnapshotUncheckedCreateNestedManyWithoutTeamInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedCreateNestedManyWithoutTeamInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUncheckedCreateNestedManyWithoutTeamInput
+  }
+
+  export type TeamCreateOrConnectWithoutInstitutionInput = {
+    where: TeamWhereUniqueInput
+    create: XOR<TeamCreateWithoutInstitutionInput, TeamUncheckedCreateWithoutInstitutionInput>
+  }
+
+  export type TeamCreateManyInstitutionInputEnvelope = {
+    data: TeamCreateManyInstitutionInput | TeamCreateManyInstitutionInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SeasonCreateWithoutInstitutionInput = {
+    id?: string
+    name: string
+    startDate: Date | string
+    endDate: Date | string
+    sport: $Enums.Sport
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    teams?: TeamCreateNestedManyWithoutSeasonInput
+  }
+
+  export type SeasonUncheckedCreateWithoutInstitutionInput = {
+    id?: string
+    name: string
+    startDate: Date | string
+    endDate: Date | string
+    sport: $Enums.Sport
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    teams?: TeamUncheckedCreateNestedManyWithoutSeasonInput
+  }
+
+  export type SeasonCreateOrConnectWithoutInstitutionInput = {
+    where: SeasonWhereUniqueInput
+    create: XOR<SeasonCreateWithoutInstitutionInput, SeasonUncheckedCreateWithoutInstitutionInput>
+  }
+
+  export type SeasonCreateManyInstitutionInputEnvelope = {
+    data: SeasonCreateManyInstitutionInput | SeasonCreateManyInstitutionInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TeamUpsertWithWhereUniqueWithoutInstitutionInput = {
+    where: TeamWhereUniqueInput
+    update: XOR<TeamUpdateWithoutInstitutionInput, TeamUncheckedUpdateWithoutInstitutionInput>
+    create: XOR<TeamCreateWithoutInstitutionInput, TeamUncheckedCreateWithoutInstitutionInput>
+  }
+
+  export type TeamUpdateWithWhereUniqueWithoutInstitutionInput = {
+    where: TeamWhereUniqueInput
+    data: XOR<TeamUpdateWithoutInstitutionInput, TeamUncheckedUpdateWithoutInstitutionInput>
+  }
+
+  export type TeamUpdateManyWithWhereWithoutInstitutionInput = {
+    where: TeamScalarWhereInput
+    data: XOR<TeamUpdateManyMutationInput, TeamUncheckedUpdateManyWithoutInstitutionInput>
+  }
+
+  export type TeamScalarWhereInput = {
+    AND?: TeamScalarWhereInput | TeamScalarWhereInput[]
+    OR?: TeamScalarWhereInput[]
+    NOT?: TeamScalarWhereInput | TeamScalarWhereInput[]
+    id?: StringFilter<"Team"> | string
+    name?: StringFilter<"Team"> | string
+    sport?: EnumSportFilter<"Team"> | $Enums.Sport
+    institutionId?: StringNullableFilter<"Team"> | string | null
+    seasonId?: StringNullableFilter<"Team"> | string | null
+    createdAt?: DateTimeFilter<"Team"> | Date | string
+  }
+
+  export type SeasonUpsertWithWhereUniqueWithoutInstitutionInput = {
+    where: SeasonWhereUniqueInput
+    update: XOR<SeasonUpdateWithoutInstitutionInput, SeasonUncheckedUpdateWithoutInstitutionInput>
+    create: XOR<SeasonCreateWithoutInstitutionInput, SeasonUncheckedCreateWithoutInstitutionInput>
+  }
+
+  export type SeasonUpdateWithWhereUniqueWithoutInstitutionInput = {
+    where: SeasonWhereUniqueInput
+    data: XOR<SeasonUpdateWithoutInstitutionInput, SeasonUncheckedUpdateWithoutInstitutionInput>
+  }
+
+  export type SeasonUpdateManyWithWhereWithoutInstitutionInput = {
+    where: SeasonScalarWhereInput
+    data: XOR<SeasonUpdateManyMutationInput, SeasonUncheckedUpdateManyWithoutInstitutionInput>
+  }
+
+  export type SeasonScalarWhereInput = {
+    AND?: SeasonScalarWhereInput | SeasonScalarWhereInput[]
+    OR?: SeasonScalarWhereInput[]
+    NOT?: SeasonScalarWhereInput | SeasonScalarWhereInput[]
+    id?: StringFilter<"Season"> | string
+    institutionId?: StringFilter<"Season"> | string
+    name?: StringFilter<"Season"> | string
+    startDate?: DateTimeFilter<"Season"> | Date | string
+    endDate?: DateTimeFilter<"Season"> | Date | string
+    sport?: EnumSportFilter<"Season"> | $Enums.Sport
+    createdAt?: DateTimeFilter<"Season"> | Date | string
+    updatedAt?: DateTimeFilter<"Season"> | Date | string
+  }
+
+  export type InstitutionCreateWithoutSeasonsInput = {
+    id?: string
+    name: string
+    type?: string | null
+    address?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    teams?: TeamCreateNestedManyWithoutInstitutionInput
+  }
+
+  export type InstitutionUncheckedCreateWithoutSeasonsInput = {
+    id?: string
+    name: string
+    type?: string | null
+    address?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    teams?: TeamUncheckedCreateNestedManyWithoutInstitutionInput
+  }
+
+  export type InstitutionCreateOrConnectWithoutSeasonsInput = {
+    where: InstitutionWhereUniqueInput
+    create: XOR<InstitutionCreateWithoutSeasonsInput, InstitutionUncheckedCreateWithoutSeasonsInput>
+  }
+
+  export type TeamCreateWithoutSeasonInput = {
+    id?: string
+    name: string
+    sport: $Enums.Sport
+    createdAt?: Date | string
+    institution?: InstitutionCreateNestedOneWithoutTeamsInput
+    athletes?: AthleteCreateNestedManyWithoutTeamInput
+    events?: EventCreateNestedManyWithoutTeamInput
+    workoutTemplates?: WorkoutTemplateCreateNestedManyWithoutTeamInput
+    meetEntries?: MeetEntryCreateNestedManyWithoutTeamInput
+    performanceSnapshots?: AthletePerformanceSnapshotCreateNestedManyWithoutTeamInput
+    eventPerformanceTrends?: EventPerformanceTrendCreateNestedManyWithoutTeamInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotCreateNestedManyWithoutTeamInput
+  }
+
+  export type TeamUncheckedCreateWithoutSeasonInput = {
+    id?: string
+    name: string
+    sport: $Enums.Sport
+    institutionId?: string | null
+    createdAt?: Date | string
+    athletes?: AthleteUncheckedCreateNestedManyWithoutTeamInput
+    events?: EventUncheckedCreateNestedManyWithoutTeamInput
+    workoutTemplates?: WorkoutTemplateUncheckedCreateNestedManyWithoutTeamInput
+    meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutTeamInput
+    performanceSnapshots?: AthletePerformanceSnapshotUncheckedCreateNestedManyWithoutTeamInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedCreateNestedManyWithoutTeamInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUncheckedCreateNestedManyWithoutTeamInput
+  }
+
+  export type TeamCreateOrConnectWithoutSeasonInput = {
+    where: TeamWhereUniqueInput
+    create: XOR<TeamCreateWithoutSeasonInput, TeamUncheckedCreateWithoutSeasonInput>
+  }
+
+  export type TeamCreateManySeasonInputEnvelope = {
+    data: TeamCreateManySeasonInput | TeamCreateManySeasonInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type InstitutionUpsertWithoutSeasonsInput = {
+    update: XOR<InstitutionUpdateWithoutSeasonsInput, InstitutionUncheckedUpdateWithoutSeasonsInput>
+    create: XOR<InstitutionCreateWithoutSeasonsInput, InstitutionUncheckedCreateWithoutSeasonsInput>
+    where?: InstitutionWhereInput
+  }
+
+  export type InstitutionUpdateToOneWithWhereWithoutSeasonsInput = {
+    where?: InstitutionWhereInput
+    data: XOR<InstitutionUpdateWithoutSeasonsInput, InstitutionUncheckedUpdateWithoutSeasonsInput>
+  }
+
+  export type InstitutionUpdateWithoutSeasonsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    teams?: TeamUpdateManyWithoutInstitutionNestedInput
+  }
+
+  export type InstitutionUncheckedUpdateWithoutSeasonsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    type?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    teams?: TeamUncheckedUpdateManyWithoutInstitutionNestedInput
+  }
+
+  export type TeamUpsertWithWhereUniqueWithoutSeasonInput = {
+    where: TeamWhereUniqueInput
+    update: XOR<TeamUpdateWithoutSeasonInput, TeamUncheckedUpdateWithoutSeasonInput>
+    create: XOR<TeamCreateWithoutSeasonInput, TeamUncheckedCreateWithoutSeasonInput>
+  }
+
+  export type TeamUpdateWithWhereUniqueWithoutSeasonInput = {
+    where: TeamWhereUniqueInput
+    data: XOR<TeamUpdateWithoutSeasonInput, TeamUncheckedUpdateWithoutSeasonInput>
+  }
+
+  export type TeamUpdateManyWithWhereWithoutSeasonInput = {
+    where: TeamScalarWhereInput
+    data: XOR<TeamUpdateManyMutationInput, TeamUncheckedUpdateManyWithoutSeasonInput>
+  }
+
   export type UserCreateWithoutAthletesInput = {
     id?: string
     email: string
@@ -28465,6 +39568,7 @@ export namespace Prisma {
     journals?: AthleteJournalCreateNestedManyWithoutAuthorInput
     notes?: NoteCreateNestedManyWithoutUserInput
     userSettings?: UserSettingsCreateNestedOneWithoutUserInput
+    integrationRuns?: IntegrationRunCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserUncheckedCreateWithoutAthletesInput = {
@@ -28481,6 +39585,7 @@ export namespace Prisma {
     journals?: AthleteJournalUncheckedCreateNestedManyWithoutAuthorInput
     notes?: NoteUncheckedCreateNestedManyWithoutUserInput
     userSettings?: UserSettingsUncheckedCreateNestedOneWithoutUserInput
+    integrationRuns?: IntegrationRunUncheckedCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserCreateOrConnectWithoutAthletesInput = {
@@ -28492,22 +39597,30 @@ export namespace Prisma {
     id?: string
     name: string
     sport: $Enums.Sport
-    institution?: string | null
     createdAt?: Date | string
+    institution?: InstitutionCreateNestedOneWithoutTeamsInput
+    season?: SeasonCreateNestedOneWithoutTeamsInput
     events?: EventCreateNestedManyWithoutTeamInput
     workoutTemplates?: WorkoutTemplateCreateNestedManyWithoutTeamInput
     meetEntries?: MeetEntryCreateNestedManyWithoutTeamInput
+    performanceSnapshots?: AthletePerformanceSnapshotCreateNestedManyWithoutTeamInput
+    eventPerformanceTrends?: EventPerformanceTrendCreateNestedManyWithoutTeamInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateWithoutAthletesInput = {
     id?: string
     name: string
     sport: $Enums.Sport
-    institution?: string | null
+    institutionId?: string | null
+    seasonId?: string | null
     createdAt?: Date | string
     events?: EventUncheckedCreateNestedManyWithoutTeamInput
     workoutTemplates?: WorkoutTemplateUncheckedCreateNestedManyWithoutTeamInput
     meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutTeamInput
+    performanceSnapshots?: AthletePerformanceSnapshotUncheckedCreateNestedManyWithoutTeamInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedCreateNestedManyWithoutTeamInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamCreateOrConnectWithoutAthletesInput = {
@@ -28805,6 +39918,134 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type AthletePerformanceSnapshotCreateWithoutAthleteInput = {
+    id?: string
+    trainingStatus: string
+    readinessScore?: number | null
+    readinessLabel?: string | null
+    riskLevel?: $Enums.RiskFlag | null
+    lastWorkoutAt?: Date | string | null
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    team: TeamCreateNestedOneWithoutPerformanceSnapshotsInput
+  }
+
+  export type AthletePerformanceSnapshotUncheckedCreateWithoutAthleteInput = {
+    id?: string
+    teamId: string
+    trainingStatus: string
+    readinessScore?: number | null
+    readinessLabel?: string | null
+    riskLevel?: $Enums.RiskFlag | null
+    lastWorkoutAt?: Date | string | null
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AthletePerformanceSnapshotCreateOrConnectWithoutAthleteInput = {
+    where: AthletePerformanceSnapshotWhereUniqueInput
+    create: XOR<AthletePerformanceSnapshotCreateWithoutAthleteInput, AthletePerformanceSnapshotUncheckedCreateWithoutAthleteInput>
+  }
+
+  export type EventPerformanceTrendCreateWithoutAthleteInput = {
+    id?: string
+    eventName: string
+    metricType: string
+    baseline?: number | null
+    recentAverage?: number | null
+    latestValue?: number | null
+    latestRank?: number | null
+    recentDelta?: number | null
+    slope?: number | null
+    confidenceLabel: string
+    sampleSize?: number
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    team: TeamCreateNestedOneWithoutEventPerformanceTrendsInput
+  }
+
+  export type EventPerformanceTrendUncheckedCreateWithoutAthleteInput = {
+    id?: string
+    teamId: string
+    eventName: string
+    metricType: string
+    baseline?: number | null
+    recentAverage?: number | null
+    latestValue?: number | null
+    latestRank?: number | null
+    recentDelta?: number | null
+    slope?: number | null
+    confidenceLabel: string
+    sampleSize?: number
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EventPerformanceTrendCreateOrConnectWithoutAthleteInput = {
+    where: EventPerformanceTrendWhereUniqueInput
+    create: XOR<EventPerformanceTrendCreateWithoutAthleteInput, EventPerformanceTrendUncheckedCreateWithoutAthleteInput>
+  }
+
+  export type EventPerformanceTrendCreateManyAthleteInputEnvelope = {
+    data: EventPerformanceTrendCreateManyAthleteInput | EventPerformanceTrendCreateManyAthleteInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type WorkoutAnalyticsSnapshotCreateWithoutAthleteInput = {
+    id?: string
+    plannedMetricCount?: number
+    aboveTargetCount?: number
+    onTargetCount?: number
+    belowTargetCount?: number
+    adherencePercent?: number | null
+    rolling7?: NullableJsonNullValueInput | InputJsonValue
+    rolling14?: NullableJsonNullValueInput | InputJsonValue
+    rolling30?: NullableJsonNullValueInput | InputJsonValue
+    recentProgression?: NullableJsonNullValueInput | InputJsonValue
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    team: TeamCreateNestedOneWithoutWorkoutAnalyticsSnapshotsInput
+  }
+
+  export type WorkoutAnalyticsSnapshotUncheckedCreateWithoutAthleteInput = {
+    id?: string
+    teamId: string
+    plannedMetricCount?: number
+    aboveTargetCount?: number
+    onTargetCount?: number
+    belowTargetCount?: number
+    adherencePercent?: number | null
+    rolling7?: NullableJsonNullValueInput | InputJsonValue
+    rolling14?: NullableJsonNullValueInput | InputJsonValue
+    rolling30?: NullableJsonNullValueInput | InputJsonValue
+    recentProgression?: NullableJsonNullValueInput | InputJsonValue
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WorkoutAnalyticsSnapshotCreateOrConnectWithoutAthleteInput = {
+    where: WorkoutAnalyticsSnapshotWhereUniqueInput
+    create: XOR<WorkoutAnalyticsSnapshotCreateWithoutAthleteInput, WorkoutAnalyticsSnapshotUncheckedCreateWithoutAthleteInput>
+  }
+
   export type UserUpsertWithoutAthletesInput = {
     update: XOR<UserUpdateWithoutAthletesInput, UserUncheckedUpdateWithoutAthletesInput>
     create: XOR<UserCreateWithoutAthletesInput, UserUncheckedCreateWithoutAthletesInput>
@@ -28830,6 +40071,7 @@ export namespace Prisma {
     journals?: AthleteJournalUpdateManyWithoutAuthorNestedInput
     notes?: NoteUpdateManyWithoutUserNestedInput
     userSettings?: UserSettingsUpdateOneWithoutUserNestedInput
+    integrationRuns?: IntegrationRunUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAthletesInput = {
@@ -28846,6 +40088,7 @@ export namespace Prisma {
     journals?: AthleteJournalUncheckedUpdateManyWithoutAuthorNestedInput
     notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
     userSettings?: UserSettingsUncheckedUpdateOneWithoutUserNestedInput
+    integrationRuns?: IntegrationRunUncheckedUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type TeamUpsertWithoutAthletesInput = {
@@ -28863,22 +40106,30 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
-    institution?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    institution?: InstitutionUpdateOneWithoutTeamsNestedInput
+    season?: SeasonUpdateOneWithoutTeamsNestedInput
     events?: EventUpdateManyWithoutTeamNestedInput
     workoutTemplates?: WorkoutTemplateUpdateManyWithoutTeamNestedInput
     meetEntries?: MeetEntryUpdateManyWithoutTeamNestedInput
+    performanceSnapshots?: AthletePerformanceSnapshotUpdateManyWithoutTeamNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUpdateManyWithoutTeamNestedInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateWithoutAthletesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
-    institution?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionId?: NullableStringFieldUpdateOperationsInput | string | null
+    seasonId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     events?: EventUncheckedUpdateManyWithoutTeamNestedInput
     workoutTemplates?: WorkoutTemplateUncheckedUpdateManyWithoutTeamNestedInput
     meetEntries?: MeetEntryUncheckedUpdateManyWithoutTeamNestedInput
+    performanceSnapshots?: AthletePerformanceSnapshotUncheckedUpdateManyWithoutTeamNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedUpdateManyWithoutTeamNestedInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type AcademicRecordUpsertWithWhereUniqueWithoutAthleteInput = {
@@ -29084,6 +40335,112 @@ export namespace Prisma {
     data: XOR<AthleteJournalUpdateManyMutationInput, AthleteJournalUncheckedUpdateManyWithoutAthleteInput>
   }
 
+  export type AthletePerformanceSnapshotUpsertWithoutAthleteInput = {
+    update: XOR<AthletePerformanceSnapshotUpdateWithoutAthleteInput, AthletePerformanceSnapshotUncheckedUpdateWithoutAthleteInput>
+    create: XOR<AthletePerformanceSnapshotCreateWithoutAthleteInput, AthletePerformanceSnapshotUncheckedCreateWithoutAthleteInput>
+    where?: AthletePerformanceSnapshotWhereInput
+  }
+
+  export type AthletePerformanceSnapshotUpdateToOneWithWhereWithoutAthleteInput = {
+    where?: AthletePerformanceSnapshotWhereInput
+    data: XOR<AthletePerformanceSnapshotUpdateWithoutAthleteInput, AthletePerformanceSnapshotUncheckedUpdateWithoutAthleteInput>
+  }
+
+  export type AthletePerformanceSnapshotUpdateWithoutAthleteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    trainingStatus?: StringFieldUpdateOperationsInput | string
+    readinessScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    readinessLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    riskLevel?: NullableEnumRiskFlagFieldUpdateOperationsInput | $Enums.RiskFlag | null
+    lastWorkoutAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    team?: TeamUpdateOneRequiredWithoutPerformanceSnapshotsNestedInput
+  }
+
+  export type AthletePerformanceSnapshotUncheckedUpdateWithoutAthleteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    teamId?: StringFieldUpdateOperationsInput | string
+    trainingStatus?: StringFieldUpdateOperationsInput | string
+    readinessScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    readinessLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    riskLevel?: NullableEnumRiskFlagFieldUpdateOperationsInput | $Enums.RiskFlag | null
+    lastWorkoutAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventPerformanceTrendUpsertWithWhereUniqueWithoutAthleteInput = {
+    where: EventPerformanceTrendWhereUniqueInput
+    update: XOR<EventPerformanceTrendUpdateWithoutAthleteInput, EventPerformanceTrendUncheckedUpdateWithoutAthleteInput>
+    create: XOR<EventPerformanceTrendCreateWithoutAthleteInput, EventPerformanceTrendUncheckedCreateWithoutAthleteInput>
+  }
+
+  export type EventPerformanceTrendUpdateWithWhereUniqueWithoutAthleteInput = {
+    where: EventPerformanceTrendWhereUniqueInput
+    data: XOR<EventPerformanceTrendUpdateWithoutAthleteInput, EventPerformanceTrendUncheckedUpdateWithoutAthleteInput>
+  }
+
+  export type EventPerformanceTrendUpdateManyWithWhereWithoutAthleteInput = {
+    where: EventPerformanceTrendScalarWhereInput
+    data: XOR<EventPerformanceTrendUpdateManyMutationInput, EventPerformanceTrendUncheckedUpdateManyWithoutAthleteInput>
+  }
+
+  export type WorkoutAnalyticsSnapshotUpsertWithoutAthleteInput = {
+    update: XOR<WorkoutAnalyticsSnapshotUpdateWithoutAthleteInput, WorkoutAnalyticsSnapshotUncheckedUpdateWithoutAthleteInput>
+    create: XOR<WorkoutAnalyticsSnapshotCreateWithoutAthleteInput, WorkoutAnalyticsSnapshotUncheckedCreateWithoutAthleteInput>
+    where?: WorkoutAnalyticsSnapshotWhereInput
+  }
+
+  export type WorkoutAnalyticsSnapshotUpdateToOneWithWhereWithoutAthleteInput = {
+    where?: WorkoutAnalyticsSnapshotWhereInput
+    data: XOR<WorkoutAnalyticsSnapshotUpdateWithoutAthleteInput, WorkoutAnalyticsSnapshotUncheckedUpdateWithoutAthleteInput>
+  }
+
+  export type WorkoutAnalyticsSnapshotUpdateWithoutAthleteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    plannedMetricCount?: IntFieldUpdateOperationsInput | number
+    aboveTargetCount?: IntFieldUpdateOperationsInput | number
+    onTargetCount?: IntFieldUpdateOperationsInput | number
+    belowTargetCount?: IntFieldUpdateOperationsInput | number
+    adherencePercent?: NullableFloatFieldUpdateOperationsInput | number | null
+    rolling7?: NullableJsonNullValueInput | InputJsonValue
+    rolling14?: NullableJsonNullValueInput | InputJsonValue
+    rolling30?: NullableJsonNullValueInput | InputJsonValue
+    recentProgression?: NullableJsonNullValueInput | InputJsonValue
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    team?: TeamUpdateOneRequiredWithoutWorkoutAnalyticsSnapshotsNestedInput
+  }
+
+  export type WorkoutAnalyticsSnapshotUncheckedUpdateWithoutAthleteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    teamId?: StringFieldUpdateOperationsInput | string
+    plannedMetricCount?: IntFieldUpdateOperationsInput | number
+    aboveTargetCount?: IntFieldUpdateOperationsInput | number
+    onTargetCount?: IntFieldUpdateOperationsInput | number
+    belowTargetCount?: IntFieldUpdateOperationsInput | number
+    adherencePercent?: NullableFloatFieldUpdateOperationsInput | number | null
+    rolling7?: NullableJsonNullValueInput | InputJsonValue
+    rolling14?: NullableJsonNullValueInput | InputJsonValue
+    rolling30?: NullableJsonNullValueInput | InputJsonValue
+    recentProgression?: NullableJsonNullValueInput | InputJsonValue
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type AthleteCreateWithoutAcademicRecordsInput = {
     id?: string
     name: string
@@ -29113,6 +40470,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryCreateNestedManyWithoutAthleteInput
     journals?: AthleteJournalCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteUncheckedCreateWithoutAcademicRecordsInput = {
@@ -29144,6 +40504,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutAthleteInput
     journals?: AthleteJournalUncheckedCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteCreateOrConnectWithoutAcademicRecordsInput = {
@@ -29191,6 +40554,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUpdateManyWithoutAthleteNestedInput
     journals?: AthleteJournalUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUpdateOneWithoutAthleteNestedInput
   }
 
   export type AthleteUncheckedUpdateWithoutAcademicRecordsInput = {
@@ -29222,6 +40588,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUncheckedUpdateManyWithoutAthleteNestedInput
     journals?: AthleteJournalUncheckedUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
   }
 
   export type AthleteCreateWithoutHealthRecordsInput = {
@@ -29253,6 +40622,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryCreateNestedManyWithoutAthleteInput
     journals?: AthleteJournalCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteUncheckedCreateWithoutHealthRecordsInput = {
@@ -29284,6 +40656,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutAthleteInput
     journals?: AthleteJournalUncheckedCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteCreateOrConnectWithoutHealthRecordsInput = {
@@ -29331,6 +40706,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUpdateManyWithoutAthleteNestedInput
     journals?: AthleteJournalUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUpdateOneWithoutAthleteNestedInput
   }
 
   export type AthleteUncheckedUpdateWithoutHealthRecordsInput = {
@@ -29362,28 +40740,39 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUncheckedUpdateManyWithoutAthleteNestedInput
     journals?: AthleteJournalUncheckedUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
   }
 
   export type TeamCreateWithoutEventsInput = {
     id?: string
     name: string
     sport: $Enums.Sport
-    institution?: string | null
     createdAt?: Date | string
+    institution?: InstitutionCreateNestedOneWithoutTeamsInput
+    season?: SeasonCreateNestedOneWithoutTeamsInput
     athletes?: AthleteCreateNestedManyWithoutTeamInput
     workoutTemplates?: WorkoutTemplateCreateNestedManyWithoutTeamInput
     meetEntries?: MeetEntryCreateNestedManyWithoutTeamInput
+    performanceSnapshots?: AthletePerformanceSnapshotCreateNestedManyWithoutTeamInput
+    eventPerformanceTrends?: EventPerformanceTrendCreateNestedManyWithoutTeamInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateWithoutEventsInput = {
     id?: string
     name: string
     sport: $Enums.Sport
-    institution?: string | null
+    institutionId?: string | null
+    seasonId?: string | null
     createdAt?: Date | string
     athletes?: AthleteUncheckedCreateNestedManyWithoutTeamInput
     workoutTemplates?: WorkoutTemplateUncheckedCreateNestedManyWithoutTeamInput
     meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutTeamInput
+    performanceSnapshots?: AthletePerformanceSnapshotUncheckedCreateNestedManyWithoutTeamInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedCreateNestedManyWithoutTeamInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamCreateOrConnectWithoutEventsInput = {
@@ -29420,6 +40809,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryCreateNestedManyWithoutAthleteInput
     journals?: AthleteJournalCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteUncheckedCreateWithoutCalendarEntriesInput = {
@@ -29451,6 +40843,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutAthleteInput
     journals?: AthleteJournalUncheckedCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteCreateOrConnectWithoutCalendarEntriesInput = {
@@ -29473,22 +40868,30 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
-    institution?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    institution?: InstitutionUpdateOneWithoutTeamsNestedInput
+    season?: SeasonUpdateOneWithoutTeamsNestedInput
     athletes?: AthleteUpdateManyWithoutTeamNestedInput
     workoutTemplates?: WorkoutTemplateUpdateManyWithoutTeamNestedInput
     meetEntries?: MeetEntryUpdateManyWithoutTeamNestedInput
+    performanceSnapshots?: AthletePerformanceSnapshotUpdateManyWithoutTeamNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUpdateManyWithoutTeamNestedInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateWithoutEventsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
-    institution?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionId?: NullableStringFieldUpdateOperationsInput | string | null
+    seasonId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     athletes?: AthleteUncheckedUpdateManyWithoutTeamNestedInput
     workoutTemplates?: WorkoutTemplateUncheckedUpdateManyWithoutTeamNestedInput
     meetEntries?: MeetEntryUncheckedUpdateManyWithoutTeamNestedInput
+    performanceSnapshots?: AthletePerformanceSnapshotUncheckedUpdateManyWithoutTeamNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedUpdateManyWithoutTeamNestedInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type AthleteUpsertWithoutCalendarEntriesInput = {
@@ -29531,6 +40934,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUpdateManyWithoutAthleteNestedInput
     journals?: AthleteJournalUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUpdateOneWithoutAthleteNestedInput
   }
 
   export type AthleteUncheckedUpdateWithoutCalendarEntriesInput = {
@@ -29562,6 +40968,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUncheckedUpdateManyWithoutAthleteNestedInput
     journals?: AthleteJournalUncheckedUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
   }
 
   export type AthleteCreateWithoutNotesInput = {
@@ -29593,6 +41002,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryCreateNestedManyWithoutAthleteInput
     journals?: AthleteJournalCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteUncheckedCreateWithoutNotesInput = {
@@ -29624,6 +41036,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutAthleteInput
     journals?: AthleteJournalUncheckedCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteCreateOrConnectWithoutNotesInput = {
@@ -29645,6 +41060,7 @@ export namespace Prisma {
     createdMeetEntries?: MeetEntryCreateNestedManyWithoutCreatedByInput
     journals?: AthleteJournalCreateNestedManyWithoutAuthorInput
     userSettings?: UserSettingsCreateNestedOneWithoutUserInput
+    integrationRuns?: IntegrationRunCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserUncheckedCreateWithoutNotesInput = {
@@ -29661,6 +41077,7 @@ export namespace Prisma {
     createdMeetEntries?: MeetEntryUncheckedCreateNestedManyWithoutCreatedByInput
     journals?: AthleteJournalUncheckedCreateNestedManyWithoutAuthorInput
     userSettings?: UserSettingsUncheckedCreateNestedOneWithoutUserInput
+    integrationRuns?: IntegrationRunUncheckedCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserCreateOrConnectWithoutNotesInput = {
@@ -29708,6 +41125,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUpdateManyWithoutAthleteNestedInput
     journals?: AthleteJournalUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUpdateOneWithoutAthleteNestedInput
   }
 
   export type AthleteUncheckedUpdateWithoutNotesInput = {
@@ -29739,6 +41159,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUncheckedUpdateManyWithoutAthleteNestedInput
     journals?: AthleteJournalUncheckedUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
   }
 
   export type UserUpsertWithoutNotesInput = {
@@ -29766,6 +41189,7 @@ export namespace Prisma {
     createdMeetEntries?: MeetEntryUpdateManyWithoutCreatedByNestedInput
     journals?: AthleteJournalUpdateManyWithoutAuthorNestedInput
     userSettings?: UserSettingsUpdateOneWithoutUserNestedInput
+    integrationRuns?: IntegrationRunUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotesInput = {
@@ -29782,28 +41206,37 @@ export namespace Prisma {
     createdMeetEntries?: MeetEntryUncheckedUpdateManyWithoutCreatedByNestedInput
     journals?: AthleteJournalUncheckedUpdateManyWithoutAuthorNestedInput
     userSettings?: UserSettingsUncheckedUpdateOneWithoutUserNestedInput
+    integrationRuns?: IntegrationRunUncheckedUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type TeamCreateWithoutWorkoutTemplatesInput = {
     id?: string
     name: string
     sport: $Enums.Sport
-    institution?: string | null
     createdAt?: Date | string
+    institution?: InstitutionCreateNestedOneWithoutTeamsInput
+    season?: SeasonCreateNestedOneWithoutTeamsInput
     athletes?: AthleteCreateNestedManyWithoutTeamInput
     events?: EventCreateNestedManyWithoutTeamInput
     meetEntries?: MeetEntryCreateNestedManyWithoutTeamInput
+    performanceSnapshots?: AthletePerformanceSnapshotCreateNestedManyWithoutTeamInput
+    eventPerformanceTrends?: EventPerformanceTrendCreateNestedManyWithoutTeamInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateWithoutWorkoutTemplatesInput = {
     id?: string
     name: string
     sport: $Enums.Sport
-    institution?: string | null
+    institutionId?: string | null
+    seasonId?: string | null
     createdAt?: Date | string
     athletes?: AthleteUncheckedCreateNestedManyWithoutTeamInput
     events?: EventUncheckedCreateNestedManyWithoutTeamInput
     meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutTeamInput
+    performanceSnapshots?: AthletePerformanceSnapshotUncheckedCreateNestedManyWithoutTeamInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedCreateNestedManyWithoutTeamInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamCreateOrConnectWithoutWorkoutTemplatesInput = {
@@ -29825,6 +41258,7 @@ export namespace Prisma {
     journals?: AthleteJournalCreateNestedManyWithoutAuthorInput
     notes?: NoteCreateNestedManyWithoutUserInput
     userSettings?: UserSettingsCreateNestedOneWithoutUserInput
+    integrationRuns?: IntegrationRunCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserUncheckedCreateWithoutCreatedWorkoutTemplatesInput = {
@@ -29841,6 +41275,7 @@ export namespace Prisma {
     journals?: AthleteJournalUncheckedCreateNestedManyWithoutAuthorInput
     notes?: NoteUncheckedCreateNestedManyWithoutUserInput
     userSettings?: UserSettingsUncheckedCreateNestedOneWithoutUserInput
+    integrationRuns?: IntegrationRunUncheckedCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserCreateOrConnectWithoutCreatedWorkoutTemplatesInput = {
@@ -29923,22 +41358,30 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
-    institution?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    institution?: InstitutionUpdateOneWithoutTeamsNestedInput
+    season?: SeasonUpdateOneWithoutTeamsNestedInput
     athletes?: AthleteUpdateManyWithoutTeamNestedInput
     events?: EventUpdateManyWithoutTeamNestedInput
     meetEntries?: MeetEntryUpdateManyWithoutTeamNestedInput
+    performanceSnapshots?: AthletePerformanceSnapshotUpdateManyWithoutTeamNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUpdateManyWithoutTeamNestedInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateWithoutWorkoutTemplatesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
-    institution?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionId?: NullableStringFieldUpdateOperationsInput | string | null
+    seasonId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     athletes?: AthleteUncheckedUpdateManyWithoutTeamNestedInput
     events?: EventUncheckedUpdateManyWithoutTeamNestedInput
     meetEntries?: MeetEntryUncheckedUpdateManyWithoutTeamNestedInput
+    performanceSnapshots?: AthletePerformanceSnapshotUncheckedUpdateManyWithoutTeamNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedUpdateManyWithoutTeamNestedInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type UserUpsertWithoutCreatedWorkoutTemplatesInput = {
@@ -29966,6 +41409,7 @@ export namespace Prisma {
     journals?: AthleteJournalUpdateManyWithoutAuthorNestedInput
     notes?: NoteUpdateManyWithoutUserNestedInput
     userSettings?: UserSettingsUpdateOneWithoutUserNestedInput
+    integrationRuns?: IntegrationRunUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedWorkoutTemplatesInput = {
@@ -29982,6 +41426,7 @@ export namespace Prisma {
     journals?: AthleteJournalUncheckedUpdateManyWithoutAuthorNestedInput
     notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
     userSettings?: UserSettingsUncheckedUpdateOneWithoutUserNestedInput
+    integrationRuns?: IntegrationRunUncheckedUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type WorkoutMetricUpsertWithWhereUniqueWithoutWorkoutTemplateInput = {
@@ -30157,6 +41602,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryCreateNestedManyWithoutAthleteInput
     journals?: AthleteJournalCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteUncheckedCreateWithoutWorkoutInstancesInput = {
@@ -30188,6 +41636,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutAthleteInput
     journals?: AthleteJournalUncheckedCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteCreateOrConnectWithoutWorkoutInstancesInput = {
@@ -30209,6 +41660,7 @@ export namespace Prisma {
     journals?: AthleteJournalCreateNestedManyWithoutAuthorInput
     notes?: NoteCreateNestedManyWithoutUserInput
     userSettings?: UserSettingsCreateNestedOneWithoutUserInput
+    integrationRuns?: IntegrationRunCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserUncheckedCreateWithoutCreatedWorkoutInstancesInput = {
@@ -30225,6 +41677,7 @@ export namespace Prisma {
     journals?: AthleteJournalUncheckedCreateNestedManyWithoutAuthorInput
     notes?: NoteUncheckedCreateNestedManyWithoutUserInput
     userSettings?: UserSettingsUncheckedCreateNestedOneWithoutUserInput
+    integrationRuns?: IntegrationRunUncheckedCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserCreateOrConnectWithoutCreatedWorkoutInstancesInput = {
@@ -30309,6 +41762,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUpdateManyWithoutAthleteNestedInput
     journals?: AthleteJournalUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUpdateOneWithoutAthleteNestedInput
   }
 
   export type AthleteUncheckedUpdateWithoutWorkoutInstancesInput = {
@@ -30340,6 +41796,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUncheckedUpdateManyWithoutAthleteNestedInput
     journals?: AthleteJournalUncheckedUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
   }
 
   export type UserUpsertWithoutCreatedWorkoutInstancesInput = {
@@ -30367,6 +41826,7 @@ export namespace Prisma {
     journals?: AthleteJournalUpdateManyWithoutAuthorNestedInput
     notes?: NoteUpdateManyWithoutUserNestedInput
     userSettings?: UserSettingsUpdateOneWithoutUserNestedInput
+    integrationRuns?: IntegrationRunUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedWorkoutInstancesInput = {
@@ -30383,6 +41843,7 @@ export namespace Prisma {
     journals?: AthleteJournalUncheckedUpdateManyWithoutAuthorNestedInput
     notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
     userSettings?: UserSettingsUncheckedUpdateOneWithoutUserNestedInput
+    integrationRuns?: IntegrationRunUncheckedUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type EventRankingCreateWithoutRankingSourceInput = {
@@ -30460,6 +41921,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryCreateNestedManyWithoutAthleteInput
     journals?: AthleteJournalCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteUncheckedCreateWithoutEventRankingsInput = {
@@ -30491,6 +41955,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutAthleteInput
     journals?: AthleteJournalUncheckedCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteCreateOrConnectWithoutEventRankingsInput = {
@@ -30559,6 +42026,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUpdateManyWithoutAthleteNestedInput
     journals?: AthleteJournalUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUpdateOneWithoutAthleteNestedInput
   }
 
   export type AthleteUncheckedUpdateWithoutEventRankingsInput = {
@@ -30590,6 +42060,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUncheckedUpdateManyWithoutAthleteNestedInput
     journals?: AthleteJournalUncheckedUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
   }
 
   export type RankingSourceUpsertWithoutEventRankingsInput = {
@@ -30648,6 +42121,9 @@ export namespace Prisma {
     eventRankings?: EventRankingCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryCreateNestedManyWithoutAthleteInput
     journals?: AthleteJournalCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteUncheckedCreateWithoutPersonalRecordsInput = {
@@ -30679,6 +42155,9 @@ export namespace Prisma {
     eventRankings?: EventRankingUncheckedCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutAthleteInput
     journals?: AthleteJournalUncheckedCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteCreateOrConnectWithoutPersonalRecordsInput = {
@@ -30726,6 +42205,9 @@ export namespace Prisma {
     eventRankings?: EventRankingUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUpdateManyWithoutAthleteNestedInput
     journals?: AthleteJournalUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUpdateOneWithoutAthleteNestedInput
   }
 
   export type AthleteUncheckedUpdateWithoutPersonalRecordsInput = {
@@ -30757,6 +42239,9 @@ export namespace Prisma {
     eventRankings?: EventRankingUncheckedUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUncheckedUpdateManyWithoutAthleteNestedInput
     journals?: AthleteJournalUncheckedUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
   }
 
   export type AthleteCreateWithoutMeetEntriesInput = {
@@ -30788,6 +42273,9 @@ export namespace Prisma {
     eventRankings?: EventRankingCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
     journals?: AthleteJournalCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteUncheckedCreateWithoutMeetEntriesInput = {
@@ -30819,6 +42307,9 @@ export namespace Prisma {
     eventRankings?: EventRankingUncheckedCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
     journals?: AthleteJournalUncheckedCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteCreateOrConnectWithoutMeetEntriesInput = {
@@ -30830,22 +42321,30 @@ export namespace Prisma {
     id?: string
     name: string
     sport: $Enums.Sport
-    institution?: string | null
     createdAt?: Date | string
+    institution?: InstitutionCreateNestedOneWithoutTeamsInput
+    season?: SeasonCreateNestedOneWithoutTeamsInput
     athletes?: AthleteCreateNestedManyWithoutTeamInput
     events?: EventCreateNestedManyWithoutTeamInput
     workoutTemplates?: WorkoutTemplateCreateNestedManyWithoutTeamInput
+    performanceSnapshots?: AthletePerformanceSnapshotCreateNestedManyWithoutTeamInput
+    eventPerformanceTrends?: EventPerformanceTrendCreateNestedManyWithoutTeamInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotCreateNestedManyWithoutTeamInput
   }
 
   export type TeamUncheckedCreateWithoutMeetEntriesInput = {
     id?: string
     name: string
     sport: $Enums.Sport
-    institution?: string | null
+    institutionId?: string | null
+    seasonId?: string | null
     createdAt?: Date | string
     athletes?: AthleteUncheckedCreateNestedManyWithoutTeamInput
     events?: EventUncheckedCreateNestedManyWithoutTeamInput
     workoutTemplates?: WorkoutTemplateUncheckedCreateNestedManyWithoutTeamInput
+    performanceSnapshots?: AthletePerformanceSnapshotUncheckedCreateNestedManyWithoutTeamInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedCreateNestedManyWithoutTeamInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUncheckedCreateNestedManyWithoutTeamInput
   }
 
   export type TeamCreateOrConnectWithoutMeetEntriesInput = {
@@ -30867,6 +42366,7 @@ export namespace Prisma {
     journals?: AthleteJournalCreateNestedManyWithoutAuthorInput
     notes?: NoteCreateNestedManyWithoutUserInput
     userSettings?: UserSettingsCreateNestedOneWithoutUserInput
+    integrationRuns?: IntegrationRunCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserUncheckedCreateWithoutCreatedMeetEntriesInput = {
@@ -30883,6 +42383,7 @@ export namespace Prisma {
     journals?: AthleteJournalUncheckedCreateNestedManyWithoutAuthorInput
     notes?: NoteUncheckedCreateNestedManyWithoutUserInput
     userSettings?: UserSettingsUncheckedCreateNestedOneWithoutUserInput
+    integrationRuns?: IntegrationRunUncheckedCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserCreateOrConnectWithoutCreatedMeetEntriesInput = {
@@ -30930,6 +42431,9 @@ export namespace Prisma {
     eventRankings?: EventRankingUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
     journals?: AthleteJournalUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUpdateOneWithoutAthleteNestedInput
   }
 
   export type AthleteUncheckedUpdateWithoutMeetEntriesInput = {
@@ -30961,6 +42465,9 @@ export namespace Prisma {
     eventRankings?: EventRankingUncheckedUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
     journals?: AthleteJournalUncheckedUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
   }
 
   export type TeamUpsertWithoutMeetEntriesInput = {
@@ -30978,22 +42485,30 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
-    institution?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    institution?: InstitutionUpdateOneWithoutTeamsNestedInput
+    season?: SeasonUpdateOneWithoutTeamsNestedInput
     athletes?: AthleteUpdateManyWithoutTeamNestedInput
     events?: EventUpdateManyWithoutTeamNestedInput
     workoutTemplates?: WorkoutTemplateUpdateManyWithoutTeamNestedInput
+    performanceSnapshots?: AthletePerformanceSnapshotUpdateManyWithoutTeamNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUpdateManyWithoutTeamNestedInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUpdateManyWithoutTeamNestedInput
   }
 
   export type TeamUncheckedUpdateWithoutMeetEntriesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
-    institution?: NullableStringFieldUpdateOperationsInput | string | null
+    institutionId?: NullableStringFieldUpdateOperationsInput | string | null
+    seasonId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     athletes?: AthleteUncheckedUpdateManyWithoutTeamNestedInput
     events?: EventUncheckedUpdateManyWithoutTeamNestedInput
     workoutTemplates?: WorkoutTemplateUncheckedUpdateManyWithoutTeamNestedInput
+    performanceSnapshots?: AthletePerformanceSnapshotUncheckedUpdateManyWithoutTeamNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedUpdateManyWithoutTeamNestedInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUncheckedUpdateManyWithoutTeamNestedInput
   }
 
   export type UserUpsertWithoutCreatedMeetEntriesInput = {
@@ -31021,6 +42536,7 @@ export namespace Prisma {
     journals?: AthleteJournalUpdateManyWithoutAuthorNestedInput
     notes?: NoteUpdateManyWithoutUserNestedInput
     userSettings?: UserSettingsUpdateOneWithoutUserNestedInput
+    integrationRuns?: IntegrationRunUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedMeetEntriesInput = {
@@ -31037,6 +42553,7 @@ export namespace Prisma {
     journals?: AthleteJournalUncheckedUpdateManyWithoutAuthorNestedInput
     notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
     userSettings?: UserSettingsUncheckedUpdateOneWithoutUserNestedInput
+    integrationRuns?: IntegrationRunUncheckedUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type AthleteCreateWithoutJournalsInput = {
@@ -31068,6 +42585,9 @@ export namespace Prisma {
     eventRankings?: EventRankingCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteUncheckedCreateWithoutJournalsInput = {
@@ -31099,6 +42619,9 @@ export namespace Prisma {
     eventRankings?: EventRankingUncheckedCreateNestedManyWithoutAthleteInput
     personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
     meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedCreateNestedOneWithoutAthleteInput
   }
 
   export type AthleteCreateOrConnectWithoutJournalsInput = {
@@ -31120,6 +42643,7 @@ export namespace Prisma {
     createdMeetEntries?: MeetEntryCreateNestedManyWithoutCreatedByInput
     notes?: NoteCreateNestedManyWithoutUserInput
     userSettings?: UserSettingsCreateNestedOneWithoutUserInput
+    integrationRuns?: IntegrationRunCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserUncheckedCreateWithoutJournalsInput = {
@@ -31136,6 +42660,7 @@ export namespace Prisma {
     createdMeetEntries?: MeetEntryUncheckedCreateNestedManyWithoutCreatedByInput
     notes?: NoteUncheckedCreateNestedManyWithoutUserInput
     userSettings?: UserSettingsUncheckedCreateNestedOneWithoutUserInput
+    integrationRuns?: IntegrationRunUncheckedCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserCreateOrConnectWithoutJournalsInput = {
@@ -31183,6 +42708,9 @@ export namespace Prisma {
     eventRankings?: EventRankingUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUpdateOneWithoutAthleteNestedInput
   }
 
   export type AthleteUncheckedUpdateWithoutJournalsInput = {
@@ -31214,6 +42742,9 @@ export namespace Prisma {
     eventRankings?: EventRankingUncheckedUpdateManyWithoutAthleteNestedInput
     personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUncheckedUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
   }
 
   export type UserUpsertWithoutJournalsInput = {
@@ -31241,6 +42772,7 @@ export namespace Prisma {
     createdMeetEntries?: MeetEntryUpdateManyWithoutCreatedByNestedInput
     notes?: NoteUpdateManyWithoutUserNestedInput
     userSettings?: UserSettingsUpdateOneWithoutUserNestedInput
+    integrationRuns?: IntegrationRunUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutJournalsInput = {
@@ -31257,6 +42789,7 @@ export namespace Prisma {
     createdMeetEntries?: MeetEntryUncheckedUpdateManyWithoutCreatedByNestedInput
     notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
     userSettings?: UserSettingsUncheckedUpdateOneWithoutUserNestedInput
+    integrationRuns?: IntegrationRunUncheckedUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type UserCreateWithoutUserSettingsInput = {
@@ -31273,6 +42806,7 @@ export namespace Prisma {
     createdMeetEntries?: MeetEntryCreateNestedManyWithoutCreatedByInput
     journals?: AthleteJournalCreateNestedManyWithoutAuthorInput
     notes?: NoteCreateNestedManyWithoutUserInput
+    integrationRuns?: IntegrationRunCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserUncheckedCreateWithoutUserSettingsInput = {
@@ -31289,6 +42823,7 @@ export namespace Prisma {
     createdMeetEntries?: MeetEntryUncheckedCreateNestedManyWithoutCreatedByInput
     journals?: AthleteJournalUncheckedCreateNestedManyWithoutAuthorInput
     notes?: NoteUncheckedCreateNestedManyWithoutUserInput
+    integrationRuns?: IntegrationRunUncheckedCreateNestedManyWithoutTriggeredByInput
   }
 
   export type UserCreateOrConnectWithoutUserSettingsInput = {
@@ -31321,6 +42856,7 @@ export namespace Prisma {
     createdMeetEntries?: MeetEntryUpdateManyWithoutCreatedByNestedInput
     journals?: AthleteJournalUpdateManyWithoutAuthorNestedInput
     notes?: NoteUpdateManyWithoutUserNestedInput
+    integrationRuns?: IntegrationRunUpdateManyWithoutTriggeredByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUserSettingsInput = {
@@ -31337,6 +42873,775 @@ export namespace Prisma {
     createdMeetEntries?: MeetEntryUncheckedUpdateManyWithoutCreatedByNestedInput
     journals?: AthleteJournalUncheckedUpdateManyWithoutAuthorNestedInput
     notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
+    integrationRuns?: IntegrationRunUncheckedUpdateManyWithoutTriggeredByNestedInput
+  }
+
+  export type AthleteCreateWithoutPerformanceSnapshotInput = {
+    id?: string
+    name: string
+    jerseyNumber?: number | null
+    height?: number | null
+    weight?: number | null
+    classYear?: string | null
+    sport?: string | null
+    events?: AthleteCreateeventsInput | string[]
+    eventRecords?: NullableJsonNullValueInput | InputJsonValue
+    gpa?: number | null
+    academicStanding?: $Enums.AcademicStanding | null
+    eligibilityYearsLeft?: number | null
+    recruitingStatus?: string | null
+    contactInfo?: string | null
+    transferProbability?: number | null
+    medicalStatus?: $Enums.MedicalStatus | null
+    complianceStatus?: $Enums.ComplianceStatus | null
+    riskFlag?: $Enums.RiskFlag | null
+    user?: UserCreateNestedOneWithoutAthletesInput
+    team: TeamCreateNestedOneWithoutAthletesInput
+    academicRecords?: AcademicRecordCreateNestedManyWithoutAthleteInput
+    healthRecords?: HealthRecordCreateNestedManyWithoutAthleteInput
+    notes?: NoteCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventCreateNestedManyWithoutAthleteInput
+    workoutInstances?: WorkoutInstanceCreateNestedManyWithoutAthleteInput
+    eventRankings?: EventRankingCreateNestedManyWithoutAthleteInput
+    personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
+    meetEntries?: MeetEntryCreateNestedManyWithoutAthleteInput
+    journals?: AthleteJournalCreateNestedManyWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotCreateNestedOneWithoutAthleteInput
+  }
+
+  export type AthleteUncheckedCreateWithoutPerformanceSnapshotInput = {
+    id?: string
+    teamId: string
+    name: string
+    jerseyNumber?: number | null
+    height?: number | null
+    weight?: number | null
+    classYear?: string | null
+    sport?: string | null
+    userId?: string | null
+    events?: AthleteCreateeventsInput | string[]
+    eventRecords?: NullableJsonNullValueInput | InputJsonValue
+    gpa?: number | null
+    academicStanding?: $Enums.AcademicStanding | null
+    eligibilityYearsLeft?: number | null
+    recruitingStatus?: string | null
+    contactInfo?: string | null
+    transferProbability?: number | null
+    medicalStatus?: $Enums.MedicalStatus | null
+    complianceStatus?: $Enums.ComplianceStatus | null
+    riskFlag?: $Enums.RiskFlag | null
+    academicRecords?: AcademicRecordUncheckedCreateNestedManyWithoutAthleteInput
+    healthRecords?: HealthRecordUncheckedCreateNestedManyWithoutAthleteInput
+    notes?: NoteUncheckedCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventUncheckedCreateNestedManyWithoutAthleteInput
+    workoutInstances?: WorkoutInstanceUncheckedCreateNestedManyWithoutAthleteInput
+    eventRankings?: EventRankingUncheckedCreateNestedManyWithoutAthleteInput
+    personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
+    meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutAthleteInput
+    journals?: AthleteJournalUncheckedCreateNestedManyWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedCreateNestedManyWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedCreateNestedOneWithoutAthleteInput
+  }
+
+  export type AthleteCreateOrConnectWithoutPerformanceSnapshotInput = {
+    where: AthleteWhereUniqueInput
+    create: XOR<AthleteCreateWithoutPerformanceSnapshotInput, AthleteUncheckedCreateWithoutPerformanceSnapshotInput>
+  }
+
+  export type TeamCreateWithoutPerformanceSnapshotsInput = {
+    id?: string
+    name: string
+    sport: $Enums.Sport
+    createdAt?: Date | string
+    institution?: InstitutionCreateNestedOneWithoutTeamsInput
+    season?: SeasonCreateNestedOneWithoutTeamsInput
+    athletes?: AthleteCreateNestedManyWithoutTeamInput
+    events?: EventCreateNestedManyWithoutTeamInput
+    workoutTemplates?: WorkoutTemplateCreateNestedManyWithoutTeamInput
+    meetEntries?: MeetEntryCreateNestedManyWithoutTeamInput
+    eventPerformanceTrends?: EventPerformanceTrendCreateNestedManyWithoutTeamInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotCreateNestedManyWithoutTeamInput
+  }
+
+  export type TeamUncheckedCreateWithoutPerformanceSnapshotsInput = {
+    id?: string
+    name: string
+    sport: $Enums.Sport
+    institutionId?: string | null
+    seasonId?: string | null
+    createdAt?: Date | string
+    athletes?: AthleteUncheckedCreateNestedManyWithoutTeamInput
+    events?: EventUncheckedCreateNestedManyWithoutTeamInput
+    workoutTemplates?: WorkoutTemplateUncheckedCreateNestedManyWithoutTeamInput
+    meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutTeamInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedCreateNestedManyWithoutTeamInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUncheckedCreateNestedManyWithoutTeamInput
+  }
+
+  export type TeamCreateOrConnectWithoutPerformanceSnapshotsInput = {
+    where: TeamWhereUniqueInput
+    create: XOR<TeamCreateWithoutPerformanceSnapshotsInput, TeamUncheckedCreateWithoutPerformanceSnapshotsInput>
+  }
+
+  export type AthleteUpsertWithoutPerformanceSnapshotInput = {
+    update: XOR<AthleteUpdateWithoutPerformanceSnapshotInput, AthleteUncheckedUpdateWithoutPerformanceSnapshotInput>
+    create: XOR<AthleteCreateWithoutPerformanceSnapshotInput, AthleteUncheckedCreateWithoutPerformanceSnapshotInput>
+    where?: AthleteWhereInput
+  }
+
+  export type AthleteUpdateToOneWithWhereWithoutPerformanceSnapshotInput = {
+    where?: AthleteWhereInput
+    data: XOR<AthleteUpdateWithoutPerformanceSnapshotInput, AthleteUncheckedUpdateWithoutPerformanceSnapshotInput>
+  }
+
+  export type AthleteUpdateWithoutPerformanceSnapshotInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    jerseyNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    classYear?: NullableStringFieldUpdateOperationsInput | string | null
+    sport?: NullableStringFieldUpdateOperationsInput | string | null
+    events?: AthleteUpdateeventsInput | string[]
+    eventRecords?: NullableJsonNullValueInput | InputJsonValue
+    gpa?: NullableFloatFieldUpdateOperationsInput | number | null
+    academicStanding?: NullableEnumAcademicStandingFieldUpdateOperationsInput | $Enums.AcademicStanding | null
+    eligibilityYearsLeft?: NullableFloatFieldUpdateOperationsInput | number | null
+    recruitingStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    transferProbability?: NullableFloatFieldUpdateOperationsInput | number | null
+    medicalStatus?: NullableEnumMedicalStatusFieldUpdateOperationsInput | $Enums.MedicalStatus | null
+    complianceStatus?: NullableEnumComplianceStatusFieldUpdateOperationsInput | $Enums.ComplianceStatus | null
+    riskFlag?: NullableEnumRiskFlagFieldUpdateOperationsInput | $Enums.RiskFlag | null
+    user?: UserUpdateOneWithoutAthletesNestedInput
+    team?: TeamUpdateOneRequiredWithoutAthletesNestedInput
+    academicRecords?: AcademicRecordUpdateManyWithoutAthleteNestedInput
+    healthRecords?: HealthRecordUpdateManyWithoutAthleteNestedInput
+    notes?: NoteUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUpdateManyWithoutAthleteNestedInput
+    workoutInstances?: WorkoutInstanceUpdateManyWithoutAthleteNestedInput
+    eventRankings?: EventRankingUpdateManyWithoutAthleteNestedInput
+    personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
+    meetEntries?: MeetEntryUpdateManyWithoutAthleteNestedInput
+    journals?: AthleteJournalUpdateManyWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUpdateOneWithoutAthleteNestedInput
+  }
+
+  export type AthleteUncheckedUpdateWithoutPerformanceSnapshotInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    teamId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    jerseyNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    classYear?: NullableStringFieldUpdateOperationsInput | string | null
+    sport?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    events?: AthleteUpdateeventsInput | string[]
+    eventRecords?: NullableJsonNullValueInput | InputJsonValue
+    gpa?: NullableFloatFieldUpdateOperationsInput | number | null
+    academicStanding?: NullableEnumAcademicStandingFieldUpdateOperationsInput | $Enums.AcademicStanding | null
+    eligibilityYearsLeft?: NullableFloatFieldUpdateOperationsInput | number | null
+    recruitingStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    transferProbability?: NullableFloatFieldUpdateOperationsInput | number | null
+    medicalStatus?: NullableEnumMedicalStatusFieldUpdateOperationsInput | $Enums.MedicalStatus | null
+    complianceStatus?: NullableEnumComplianceStatusFieldUpdateOperationsInput | $Enums.ComplianceStatus | null
+    riskFlag?: NullableEnumRiskFlagFieldUpdateOperationsInput | $Enums.RiskFlag | null
+    academicRecords?: AcademicRecordUncheckedUpdateManyWithoutAthleteNestedInput
+    healthRecords?: HealthRecordUncheckedUpdateManyWithoutAthleteNestedInput
+    notes?: NoteUncheckedUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUncheckedUpdateManyWithoutAthleteNestedInput
+    workoutInstances?: WorkoutInstanceUncheckedUpdateManyWithoutAthleteNestedInput
+    eventRankings?: EventRankingUncheckedUpdateManyWithoutAthleteNestedInput
+    personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
+    meetEntries?: MeetEntryUncheckedUpdateManyWithoutAthleteNestedInput
+    journals?: AthleteJournalUncheckedUpdateManyWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
+  }
+
+  export type TeamUpsertWithoutPerformanceSnapshotsInput = {
+    update: XOR<TeamUpdateWithoutPerformanceSnapshotsInput, TeamUncheckedUpdateWithoutPerformanceSnapshotsInput>
+    create: XOR<TeamCreateWithoutPerformanceSnapshotsInput, TeamUncheckedCreateWithoutPerformanceSnapshotsInput>
+    where?: TeamWhereInput
+  }
+
+  export type TeamUpdateToOneWithWhereWithoutPerformanceSnapshotsInput = {
+    where?: TeamWhereInput
+    data: XOR<TeamUpdateWithoutPerformanceSnapshotsInput, TeamUncheckedUpdateWithoutPerformanceSnapshotsInput>
+  }
+
+  export type TeamUpdateWithoutPerformanceSnapshotsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    institution?: InstitutionUpdateOneWithoutTeamsNestedInput
+    season?: SeasonUpdateOneWithoutTeamsNestedInput
+    athletes?: AthleteUpdateManyWithoutTeamNestedInput
+    events?: EventUpdateManyWithoutTeamNestedInput
+    workoutTemplates?: WorkoutTemplateUpdateManyWithoutTeamNestedInput
+    meetEntries?: MeetEntryUpdateManyWithoutTeamNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUpdateManyWithoutTeamNestedInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUpdateManyWithoutTeamNestedInput
+  }
+
+  export type TeamUncheckedUpdateWithoutPerformanceSnapshotsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
+    institutionId?: NullableStringFieldUpdateOperationsInput | string | null
+    seasonId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    athletes?: AthleteUncheckedUpdateManyWithoutTeamNestedInput
+    events?: EventUncheckedUpdateManyWithoutTeamNestedInput
+    workoutTemplates?: WorkoutTemplateUncheckedUpdateManyWithoutTeamNestedInput
+    meetEntries?: MeetEntryUncheckedUpdateManyWithoutTeamNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedUpdateManyWithoutTeamNestedInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUncheckedUpdateManyWithoutTeamNestedInput
+  }
+
+  export type AthleteCreateWithoutEventPerformanceTrendsInput = {
+    id?: string
+    name: string
+    jerseyNumber?: number | null
+    height?: number | null
+    weight?: number | null
+    classYear?: string | null
+    sport?: string | null
+    events?: AthleteCreateeventsInput | string[]
+    eventRecords?: NullableJsonNullValueInput | InputJsonValue
+    gpa?: number | null
+    academicStanding?: $Enums.AcademicStanding | null
+    eligibilityYearsLeft?: number | null
+    recruitingStatus?: string | null
+    contactInfo?: string | null
+    transferProbability?: number | null
+    medicalStatus?: $Enums.MedicalStatus | null
+    complianceStatus?: $Enums.ComplianceStatus | null
+    riskFlag?: $Enums.RiskFlag | null
+    user?: UserCreateNestedOneWithoutAthletesInput
+    team: TeamCreateNestedOneWithoutAthletesInput
+    academicRecords?: AcademicRecordCreateNestedManyWithoutAthleteInput
+    healthRecords?: HealthRecordCreateNestedManyWithoutAthleteInput
+    notes?: NoteCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventCreateNestedManyWithoutAthleteInput
+    workoutInstances?: WorkoutInstanceCreateNestedManyWithoutAthleteInput
+    eventRankings?: EventRankingCreateNestedManyWithoutAthleteInput
+    personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
+    meetEntries?: MeetEntryCreateNestedManyWithoutAthleteInput
+    journals?: AthleteJournalCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotCreateNestedOneWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotCreateNestedOneWithoutAthleteInput
+  }
+
+  export type AthleteUncheckedCreateWithoutEventPerformanceTrendsInput = {
+    id?: string
+    teamId: string
+    name: string
+    jerseyNumber?: number | null
+    height?: number | null
+    weight?: number | null
+    classYear?: string | null
+    sport?: string | null
+    userId?: string | null
+    events?: AthleteCreateeventsInput | string[]
+    eventRecords?: NullableJsonNullValueInput | InputJsonValue
+    gpa?: number | null
+    academicStanding?: $Enums.AcademicStanding | null
+    eligibilityYearsLeft?: number | null
+    recruitingStatus?: string | null
+    contactInfo?: string | null
+    transferProbability?: number | null
+    medicalStatus?: $Enums.MedicalStatus | null
+    complianceStatus?: $Enums.ComplianceStatus | null
+    riskFlag?: $Enums.RiskFlag | null
+    academicRecords?: AcademicRecordUncheckedCreateNestedManyWithoutAthleteInput
+    healthRecords?: HealthRecordUncheckedCreateNestedManyWithoutAthleteInput
+    notes?: NoteUncheckedCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventUncheckedCreateNestedManyWithoutAthleteInput
+    workoutInstances?: WorkoutInstanceUncheckedCreateNestedManyWithoutAthleteInput
+    eventRankings?: EventRankingUncheckedCreateNestedManyWithoutAthleteInput
+    personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
+    meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutAthleteInput
+    journals?: AthleteJournalUncheckedCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedCreateNestedOneWithoutAthleteInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedCreateNestedOneWithoutAthleteInput
+  }
+
+  export type AthleteCreateOrConnectWithoutEventPerformanceTrendsInput = {
+    where: AthleteWhereUniqueInput
+    create: XOR<AthleteCreateWithoutEventPerformanceTrendsInput, AthleteUncheckedCreateWithoutEventPerformanceTrendsInput>
+  }
+
+  export type TeamCreateWithoutEventPerformanceTrendsInput = {
+    id?: string
+    name: string
+    sport: $Enums.Sport
+    createdAt?: Date | string
+    institution?: InstitutionCreateNestedOneWithoutTeamsInput
+    season?: SeasonCreateNestedOneWithoutTeamsInput
+    athletes?: AthleteCreateNestedManyWithoutTeamInput
+    events?: EventCreateNestedManyWithoutTeamInput
+    workoutTemplates?: WorkoutTemplateCreateNestedManyWithoutTeamInput
+    meetEntries?: MeetEntryCreateNestedManyWithoutTeamInput
+    performanceSnapshots?: AthletePerformanceSnapshotCreateNestedManyWithoutTeamInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotCreateNestedManyWithoutTeamInput
+  }
+
+  export type TeamUncheckedCreateWithoutEventPerformanceTrendsInput = {
+    id?: string
+    name: string
+    sport: $Enums.Sport
+    institutionId?: string | null
+    seasonId?: string | null
+    createdAt?: Date | string
+    athletes?: AthleteUncheckedCreateNestedManyWithoutTeamInput
+    events?: EventUncheckedCreateNestedManyWithoutTeamInput
+    workoutTemplates?: WorkoutTemplateUncheckedCreateNestedManyWithoutTeamInput
+    meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutTeamInput
+    performanceSnapshots?: AthletePerformanceSnapshotUncheckedCreateNestedManyWithoutTeamInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUncheckedCreateNestedManyWithoutTeamInput
+  }
+
+  export type TeamCreateOrConnectWithoutEventPerformanceTrendsInput = {
+    where: TeamWhereUniqueInput
+    create: XOR<TeamCreateWithoutEventPerformanceTrendsInput, TeamUncheckedCreateWithoutEventPerformanceTrendsInput>
+  }
+
+  export type AthleteUpsertWithoutEventPerformanceTrendsInput = {
+    update: XOR<AthleteUpdateWithoutEventPerformanceTrendsInput, AthleteUncheckedUpdateWithoutEventPerformanceTrendsInput>
+    create: XOR<AthleteCreateWithoutEventPerformanceTrendsInput, AthleteUncheckedCreateWithoutEventPerformanceTrendsInput>
+    where?: AthleteWhereInput
+  }
+
+  export type AthleteUpdateToOneWithWhereWithoutEventPerformanceTrendsInput = {
+    where?: AthleteWhereInput
+    data: XOR<AthleteUpdateWithoutEventPerformanceTrendsInput, AthleteUncheckedUpdateWithoutEventPerformanceTrendsInput>
+  }
+
+  export type AthleteUpdateWithoutEventPerformanceTrendsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    jerseyNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    classYear?: NullableStringFieldUpdateOperationsInput | string | null
+    sport?: NullableStringFieldUpdateOperationsInput | string | null
+    events?: AthleteUpdateeventsInput | string[]
+    eventRecords?: NullableJsonNullValueInput | InputJsonValue
+    gpa?: NullableFloatFieldUpdateOperationsInput | number | null
+    academicStanding?: NullableEnumAcademicStandingFieldUpdateOperationsInput | $Enums.AcademicStanding | null
+    eligibilityYearsLeft?: NullableFloatFieldUpdateOperationsInput | number | null
+    recruitingStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    transferProbability?: NullableFloatFieldUpdateOperationsInput | number | null
+    medicalStatus?: NullableEnumMedicalStatusFieldUpdateOperationsInput | $Enums.MedicalStatus | null
+    complianceStatus?: NullableEnumComplianceStatusFieldUpdateOperationsInput | $Enums.ComplianceStatus | null
+    riskFlag?: NullableEnumRiskFlagFieldUpdateOperationsInput | $Enums.RiskFlag | null
+    user?: UserUpdateOneWithoutAthletesNestedInput
+    team?: TeamUpdateOneRequiredWithoutAthletesNestedInput
+    academicRecords?: AcademicRecordUpdateManyWithoutAthleteNestedInput
+    healthRecords?: HealthRecordUpdateManyWithoutAthleteNestedInput
+    notes?: NoteUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUpdateManyWithoutAthleteNestedInput
+    workoutInstances?: WorkoutInstanceUpdateManyWithoutAthleteNestedInput
+    eventRankings?: EventRankingUpdateManyWithoutAthleteNestedInput
+    personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
+    meetEntries?: MeetEntryUpdateManyWithoutAthleteNestedInput
+    journals?: AthleteJournalUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUpdateOneWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUpdateOneWithoutAthleteNestedInput
+  }
+
+  export type AthleteUncheckedUpdateWithoutEventPerformanceTrendsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    teamId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    jerseyNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    classYear?: NullableStringFieldUpdateOperationsInput | string | null
+    sport?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    events?: AthleteUpdateeventsInput | string[]
+    eventRecords?: NullableJsonNullValueInput | InputJsonValue
+    gpa?: NullableFloatFieldUpdateOperationsInput | number | null
+    academicStanding?: NullableEnumAcademicStandingFieldUpdateOperationsInput | $Enums.AcademicStanding | null
+    eligibilityYearsLeft?: NullableFloatFieldUpdateOperationsInput | number | null
+    recruitingStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    transferProbability?: NullableFloatFieldUpdateOperationsInput | number | null
+    medicalStatus?: NullableEnumMedicalStatusFieldUpdateOperationsInput | $Enums.MedicalStatus | null
+    complianceStatus?: NullableEnumComplianceStatusFieldUpdateOperationsInput | $Enums.ComplianceStatus | null
+    riskFlag?: NullableEnumRiskFlagFieldUpdateOperationsInput | $Enums.RiskFlag | null
+    academicRecords?: AcademicRecordUncheckedUpdateManyWithoutAthleteNestedInput
+    healthRecords?: HealthRecordUncheckedUpdateManyWithoutAthleteNestedInput
+    notes?: NoteUncheckedUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUncheckedUpdateManyWithoutAthleteNestedInput
+    workoutInstances?: WorkoutInstanceUncheckedUpdateManyWithoutAthleteNestedInput
+    eventRankings?: EventRankingUncheckedUpdateManyWithoutAthleteNestedInput
+    personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
+    meetEntries?: MeetEntryUncheckedUpdateManyWithoutAthleteNestedInput
+    journals?: AthleteJournalUncheckedUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
+  }
+
+  export type TeamUpsertWithoutEventPerformanceTrendsInput = {
+    update: XOR<TeamUpdateWithoutEventPerformanceTrendsInput, TeamUncheckedUpdateWithoutEventPerformanceTrendsInput>
+    create: XOR<TeamCreateWithoutEventPerformanceTrendsInput, TeamUncheckedCreateWithoutEventPerformanceTrendsInput>
+    where?: TeamWhereInput
+  }
+
+  export type TeamUpdateToOneWithWhereWithoutEventPerformanceTrendsInput = {
+    where?: TeamWhereInput
+    data: XOR<TeamUpdateWithoutEventPerformanceTrendsInput, TeamUncheckedUpdateWithoutEventPerformanceTrendsInput>
+  }
+
+  export type TeamUpdateWithoutEventPerformanceTrendsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    institution?: InstitutionUpdateOneWithoutTeamsNestedInput
+    season?: SeasonUpdateOneWithoutTeamsNestedInput
+    athletes?: AthleteUpdateManyWithoutTeamNestedInput
+    events?: EventUpdateManyWithoutTeamNestedInput
+    workoutTemplates?: WorkoutTemplateUpdateManyWithoutTeamNestedInput
+    meetEntries?: MeetEntryUpdateManyWithoutTeamNestedInput
+    performanceSnapshots?: AthletePerformanceSnapshotUpdateManyWithoutTeamNestedInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUpdateManyWithoutTeamNestedInput
+  }
+
+  export type TeamUncheckedUpdateWithoutEventPerformanceTrendsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
+    institutionId?: NullableStringFieldUpdateOperationsInput | string | null
+    seasonId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    athletes?: AthleteUncheckedUpdateManyWithoutTeamNestedInput
+    events?: EventUncheckedUpdateManyWithoutTeamNestedInput
+    workoutTemplates?: WorkoutTemplateUncheckedUpdateManyWithoutTeamNestedInput
+    meetEntries?: MeetEntryUncheckedUpdateManyWithoutTeamNestedInput
+    performanceSnapshots?: AthletePerformanceSnapshotUncheckedUpdateManyWithoutTeamNestedInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUncheckedUpdateManyWithoutTeamNestedInput
+  }
+
+  export type AthleteCreateWithoutWorkoutAnalyticsSnapshotInput = {
+    id?: string
+    name: string
+    jerseyNumber?: number | null
+    height?: number | null
+    weight?: number | null
+    classYear?: string | null
+    sport?: string | null
+    events?: AthleteCreateeventsInput | string[]
+    eventRecords?: NullableJsonNullValueInput | InputJsonValue
+    gpa?: number | null
+    academicStanding?: $Enums.AcademicStanding | null
+    eligibilityYearsLeft?: number | null
+    recruitingStatus?: string | null
+    contactInfo?: string | null
+    transferProbability?: number | null
+    medicalStatus?: $Enums.MedicalStatus | null
+    complianceStatus?: $Enums.ComplianceStatus | null
+    riskFlag?: $Enums.RiskFlag | null
+    user?: UserCreateNestedOneWithoutAthletesInput
+    team: TeamCreateNestedOneWithoutAthletesInput
+    academicRecords?: AcademicRecordCreateNestedManyWithoutAthleteInput
+    healthRecords?: HealthRecordCreateNestedManyWithoutAthleteInput
+    notes?: NoteCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventCreateNestedManyWithoutAthleteInput
+    workoutInstances?: WorkoutInstanceCreateNestedManyWithoutAthleteInput
+    eventRankings?: EventRankingCreateNestedManyWithoutAthleteInput
+    personalRecords?: PersonalRecordCreateNestedManyWithoutAthleteInput
+    meetEntries?: MeetEntryCreateNestedManyWithoutAthleteInput
+    journals?: AthleteJournalCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendCreateNestedManyWithoutAthleteInput
+  }
+
+  export type AthleteUncheckedCreateWithoutWorkoutAnalyticsSnapshotInput = {
+    id?: string
+    teamId: string
+    name: string
+    jerseyNumber?: number | null
+    height?: number | null
+    weight?: number | null
+    classYear?: string | null
+    sport?: string | null
+    userId?: string | null
+    events?: AthleteCreateeventsInput | string[]
+    eventRecords?: NullableJsonNullValueInput | InputJsonValue
+    gpa?: number | null
+    academicStanding?: $Enums.AcademicStanding | null
+    eligibilityYearsLeft?: number | null
+    recruitingStatus?: string | null
+    contactInfo?: string | null
+    transferProbability?: number | null
+    medicalStatus?: $Enums.MedicalStatus | null
+    complianceStatus?: $Enums.ComplianceStatus | null
+    riskFlag?: $Enums.RiskFlag | null
+    academicRecords?: AcademicRecordUncheckedCreateNestedManyWithoutAthleteInput
+    healthRecords?: HealthRecordUncheckedCreateNestedManyWithoutAthleteInput
+    notes?: NoteUncheckedCreateNestedManyWithoutAthleteInput
+    calendarEntries?: EventUncheckedCreateNestedManyWithoutAthleteInput
+    workoutInstances?: WorkoutInstanceUncheckedCreateNestedManyWithoutAthleteInput
+    eventRankings?: EventRankingUncheckedCreateNestedManyWithoutAthleteInput
+    personalRecords?: PersonalRecordUncheckedCreateNestedManyWithoutAthleteInput
+    meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutAthleteInput
+    journals?: AthleteJournalUncheckedCreateNestedManyWithoutAthleteInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedCreateNestedOneWithoutAthleteInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedCreateNestedManyWithoutAthleteInput
+  }
+
+  export type AthleteCreateOrConnectWithoutWorkoutAnalyticsSnapshotInput = {
+    where: AthleteWhereUniqueInput
+    create: XOR<AthleteCreateWithoutWorkoutAnalyticsSnapshotInput, AthleteUncheckedCreateWithoutWorkoutAnalyticsSnapshotInput>
+  }
+
+  export type TeamCreateWithoutWorkoutAnalyticsSnapshotsInput = {
+    id?: string
+    name: string
+    sport: $Enums.Sport
+    createdAt?: Date | string
+    institution?: InstitutionCreateNestedOneWithoutTeamsInput
+    season?: SeasonCreateNestedOneWithoutTeamsInput
+    athletes?: AthleteCreateNestedManyWithoutTeamInput
+    events?: EventCreateNestedManyWithoutTeamInput
+    workoutTemplates?: WorkoutTemplateCreateNestedManyWithoutTeamInput
+    meetEntries?: MeetEntryCreateNestedManyWithoutTeamInput
+    performanceSnapshots?: AthletePerformanceSnapshotCreateNestedManyWithoutTeamInput
+    eventPerformanceTrends?: EventPerformanceTrendCreateNestedManyWithoutTeamInput
+  }
+
+  export type TeamUncheckedCreateWithoutWorkoutAnalyticsSnapshotsInput = {
+    id?: string
+    name: string
+    sport: $Enums.Sport
+    institutionId?: string | null
+    seasonId?: string | null
+    createdAt?: Date | string
+    athletes?: AthleteUncheckedCreateNestedManyWithoutTeamInput
+    events?: EventUncheckedCreateNestedManyWithoutTeamInput
+    workoutTemplates?: WorkoutTemplateUncheckedCreateNestedManyWithoutTeamInput
+    meetEntries?: MeetEntryUncheckedCreateNestedManyWithoutTeamInput
+    performanceSnapshots?: AthletePerformanceSnapshotUncheckedCreateNestedManyWithoutTeamInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedCreateNestedManyWithoutTeamInput
+  }
+
+  export type TeamCreateOrConnectWithoutWorkoutAnalyticsSnapshotsInput = {
+    where: TeamWhereUniqueInput
+    create: XOR<TeamCreateWithoutWorkoutAnalyticsSnapshotsInput, TeamUncheckedCreateWithoutWorkoutAnalyticsSnapshotsInput>
+  }
+
+  export type AthleteUpsertWithoutWorkoutAnalyticsSnapshotInput = {
+    update: XOR<AthleteUpdateWithoutWorkoutAnalyticsSnapshotInput, AthleteUncheckedUpdateWithoutWorkoutAnalyticsSnapshotInput>
+    create: XOR<AthleteCreateWithoutWorkoutAnalyticsSnapshotInput, AthleteUncheckedCreateWithoutWorkoutAnalyticsSnapshotInput>
+    where?: AthleteWhereInput
+  }
+
+  export type AthleteUpdateToOneWithWhereWithoutWorkoutAnalyticsSnapshotInput = {
+    where?: AthleteWhereInput
+    data: XOR<AthleteUpdateWithoutWorkoutAnalyticsSnapshotInput, AthleteUncheckedUpdateWithoutWorkoutAnalyticsSnapshotInput>
+  }
+
+  export type AthleteUpdateWithoutWorkoutAnalyticsSnapshotInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    jerseyNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    classYear?: NullableStringFieldUpdateOperationsInput | string | null
+    sport?: NullableStringFieldUpdateOperationsInput | string | null
+    events?: AthleteUpdateeventsInput | string[]
+    eventRecords?: NullableJsonNullValueInput | InputJsonValue
+    gpa?: NullableFloatFieldUpdateOperationsInput | number | null
+    academicStanding?: NullableEnumAcademicStandingFieldUpdateOperationsInput | $Enums.AcademicStanding | null
+    eligibilityYearsLeft?: NullableFloatFieldUpdateOperationsInput | number | null
+    recruitingStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    transferProbability?: NullableFloatFieldUpdateOperationsInput | number | null
+    medicalStatus?: NullableEnumMedicalStatusFieldUpdateOperationsInput | $Enums.MedicalStatus | null
+    complianceStatus?: NullableEnumComplianceStatusFieldUpdateOperationsInput | $Enums.ComplianceStatus | null
+    riskFlag?: NullableEnumRiskFlagFieldUpdateOperationsInput | $Enums.RiskFlag | null
+    user?: UserUpdateOneWithoutAthletesNestedInput
+    team?: TeamUpdateOneRequiredWithoutAthletesNestedInput
+    academicRecords?: AcademicRecordUpdateManyWithoutAthleteNestedInput
+    healthRecords?: HealthRecordUpdateManyWithoutAthleteNestedInput
+    notes?: NoteUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUpdateManyWithoutAthleteNestedInput
+    workoutInstances?: WorkoutInstanceUpdateManyWithoutAthleteNestedInput
+    eventRankings?: EventRankingUpdateManyWithoutAthleteNestedInput
+    personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
+    meetEntries?: MeetEntryUpdateManyWithoutAthleteNestedInput
+    journals?: AthleteJournalUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUpdateManyWithoutAthleteNestedInput
+  }
+
+  export type AthleteUncheckedUpdateWithoutWorkoutAnalyticsSnapshotInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    teamId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    jerseyNumber?: NullableIntFieldUpdateOperationsInput | number | null
+    height?: NullableFloatFieldUpdateOperationsInput | number | null
+    weight?: NullableFloatFieldUpdateOperationsInput | number | null
+    classYear?: NullableStringFieldUpdateOperationsInput | string | null
+    sport?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    events?: AthleteUpdateeventsInput | string[]
+    eventRecords?: NullableJsonNullValueInput | InputJsonValue
+    gpa?: NullableFloatFieldUpdateOperationsInput | number | null
+    academicStanding?: NullableEnumAcademicStandingFieldUpdateOperationsInput | $Enums.AcademicStanding | null
+    eligibilityYearsLeft?: NullableFloatFieldUpdateOperationsInput | number | null
+    recruitingStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    transferProbability?: NullableFloatFieldUpdateOperationsInput | number | null
+    medicalStatus?: NullableEnumMedicalStatusFieldUpdateOperationsInput | $Enums.MedicalStatus | null
+    complianceStatus?: NullableEnumComplianceStatusFieldUpdateOperationsInput | $Enums.ComplianceStatus | null
+    riskFlag?: NullableEnumRiskFlagFieldUpdateOperationsInput | $Enums.RiskFlag | null
+    academicRecords?: AcademicRecordUncheckedUpdateManyWithoutAthleteNestedInput
+    healthRecords?: HealthRecordUncheckedUpdateManyWithoutAthleteNestedInput
+    notes?: NoteUncheckedUpdateManyWithoutAthleteNestedInput
+    calendarEntries?: EventUncheckedUpdateManyWithoutAthleteNestedInput
+    workoutInstances?: WorkoutInstanceUncheckedUpdateManyWithoutAthleteNestedInput
+    eventRankings?: EventRankingUncheckedUpdateManyWithoutAthleteNestedInput
+    personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
+    meetEntries?: MeetEntryUncheckedUpdateManyWithoutAthleteNestedInput
+    journals?: AthleteJournalUncheckedUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedUpdateManyWithoutAthleteNestedInput
+  }
+
+  export type TeamUpsertWithoutWorkoutAnalyticsSnapshotsInput = {
+    update: XOR<TeamUpdateWithoutWorkoutAnalyticsSnapshotsInput, TeamUncheckedUpdateWithoutWorkoutAnalyticsSnapshotsInput>
+    create: XOR<TeamCreateWithoutWorkoutAnalyticsSnapshotsInput, TeamUncheckedCreateWithoutWorkoutAnalyticsSnapshotsInput>
+    where?: TeamWhereInput
+  }
+
+  export type TeamUpdateToOneWithWhereWithoutWorkoutAnalyticsSnapshotsInput = {
+    where?: TeamWhereInput
+    data: XOR<TeamUpdateWithoutWorkoutAnalyticsSnapshotsInput, TeamUncheckedUpdateWithoutWorkoutAnalyticsSnapshotsInput>
+  }
+
+  export type TeamUpdateWithoutWorkoutAnalyticsSnapshotsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    institution?: InstitutionUpdateOneWithoutTeamsNestedInput
+    season?: SeasonUpdateOneWithoutTeamsNestedInput
+    athletes?: AthleteUpdateManyWithoutTeamNestedInput
+    events?: EventUpdateManyWithoutTeamNestedInput
+    workoutTemplates?: WorkoutTemplateUpdateManyWithoutTeamNestedInput
+    meetEntries?: MeetEntryUpdateManyWithoutTeamNestedInput
+    performanceSnapshots?: AthletePerformanceSnapshotUpdateManyWithoutTeamNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUpdateManyWithoutTeamNestedInput
+  }
+
+  export type TeamUncheckedUpdateWithoutWorkoutAnalyticsSnapshotsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
+    institutionId?: NullableStringFieldUpdateOperationsInput | string | null
+    seasonId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    athletes?: AthleteUncheckedUpdateManyWithoutTeamNestedInput
+    events?: EventUncheckedUpdateManyWithoutTeamNestedInput
+    workoutTemplates?: WorkoutTemplateUncheckedUpdateManyWithoutTeamNestedInput
+    meetEntries?: MeetEntryUncheckedUpdateManyWithoutTeamNestedInput
+    performanceSnapshots?: AthletePerformanceSnapshotUncheckedUpdateManyWithoutTeamNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedUpdateManyWithoutTeamNestedInput
+  }
+
+  export type UserCreateWithoutIntegrationRunsInput = {
+    id?: string
+    email: string
+    passwordHash: string
+    role: $Enums.UserRole
+    teams?: UserCreateteamsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    athletes?: AthleteCreateNestedManyWithoutUserInput
+    createdWorkoutTemplates?: WorkoutTemplateCreateNestedManyWithoutCreatedByInput
+    createdWorkoutInstances?: WorkoutInstanceCreateNestedManyWithoutCreatedByInput
+    createdMeetEntries?: MeetEntryCreateNestedManyWithoutCreatedByInput
+    journals?: AthleteJournalCreateNestedManyWithoutAuthorInput
+    notes?: NoteCreateNestedManyWithoutUserInput
+    userSettings?: UserSettingsCreateNestedOneWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutIntegrationRunsInput = {
+    id?: string
+    email: string
+    passwordHash: string
+    role: $Enums.UserRole
+    teams?: UserCreateteamsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    athletes?: AthleteUncheckedCreateNestedManyWithoutUserInput
+    createdWorkoutTemplates?: WorkoutTemplateUncheckedCreateNestedManyWithoutCreatedByInput
+    createdWorkoutInstances?: WorkoutInstanceUncheckedCreateNestedManyWithoutCreatedByInput
+    createdMeetEntries?: MeetEntryUncheckedCreateNestedManyWithoutCreatedByInput
+    journals?: AthleteJournalUncheckedCreateNestedManyWithoutAuthorInput
+    notes?: NoteUncheckedCreateNestedManyWithoutUserInput
+    userSettings?: UserSettingsUncheckedCreateNestedOneWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutIntegrationRunsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutIntegrationRunsInput, UserUncheckedCreateWithoutIntegrationRunsInput>
+  }
+
+  export type UserUpsertWithoutIntegrationRunsInput = {
+    update: XOR<UserUpdateWithoutIntegrationRunsInput, UserUncheckedUpdateWithoutIntegrationRunsInput>
+    create: XOR<UserCreateWithoutIntegrationRunsInput, UserUncheckedCreateWithoutIntegrationRunsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutIntegrationRunsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutIntegrationRunsInput, UserUncheckedUpdateWithoutIntegrationRunsInput>
+  }
+
+  export type UserUpdateWithoutIntegrationRunsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    teams?: UserUpdateteamsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    athletes?: AthleteUpdateManyWithoutUserNestedInput
+    createdWorkoutTemplates?: WorkoutTemplateUpdateManyWithoutCreatedByNestedInput
+    createdWorkoutInstances?: WorkoutInstanceUpdateManyWithoutCreatedByNestedInput
+    createdMeetEntries?: MeetEntryUpdateManyWithoutCreatedByNestedInput
+    journals?: AthleteJournalUpdateManyWithoutAuthorNestedInput
+    notes?: NoteUpdateManyWithoutUserNestedInput
+    userSettings?: UserSettingsUpdateOneWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutIntegrationRunsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    teams?: UserUpdateteamsInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    athletes?: AthleteUncheckedUpdateManyWithoutUserNestedInput
+    createdWorkoutTemplates?: WorkoutTemplateUncheckedUpdateManyWithoutCreatedByNestedInput
+    createdWorkoutInstances?: WorkoutInstanceUncheckedUpdateManyWithoutCreatedByNestedInput
+    createdMeetEntries?: MeetEntryUncheckedUpdateManyWithoutCreatedByNestedInput
+    journals?: AthleteJournalUncheckedUpdateManyWithoutAuthorNestedInput
+    notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
+    userSettings?: UserSettingsUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type AthleteCreateManyUserInput = {
@@ -31414,6 +43719,20 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type IntegrationRunCreateManyTriggeredByInput = {
+    id?: string
+    provider: string
+    triggerType: string
+    status: string
+    startedAt?: Date | string
+    finishedAt?: Date | string | null
+    scopeJson?: NullableJsonNullValueInput | InputJsonValue
+    resultSummary?: NullableJsonNullValueInput | InputJsonValue
+    errorMessage?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type AthleteUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -31443,6 +43762,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUpdateManyWithoutAthleteNestedInput
     journals?: AthleteJournalUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUpdateOneWithoutAthleteNestedInput
   }
 
   export type AthleteUncheckedUpdateWithoutUserInput = {
@@ -31474,6 +43796,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUncheckedUpdateManyWithoutAthleteNestedInput
     journals?: AthleteJournalUncheckedUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
   }
 
   export type AthleteUncheckedUpdateManyWithoutUserInput = {
@@ -31661,6 +43986,48 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type IntegrationRunUpdateWithoutTriggeredByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    triggerType?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    scopeJson?: NullableJsonNullValueInput | InputJsonValue
+    resultSummary?: NullableJsonNullValueInput | InputJsonValue
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IntegrationRunUncheckedUpdateWithoutTriggeredByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    triggerType?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    scopeJson?: NullableJsonNullValueInput | InputJsonValue
+    resultSummary?: NullableJsonNullValueInput | InputJsonValue
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IntegrationRunUncheckedUpdateManyWithoutTriggeredByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    triggerType?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    scopeJson?: NullableJsonNullValueInput | InputJsonValue
+    resultSummary?: NullableJsonNullValueInput | InputJsonValue
+    errorMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type AthleteCreateManyTeamInput = {
     id?: string
     name: string
@@ -31721,6 +44088,60 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type AthletePerformanceSnapshotCreateManyTeamInput = {
+    id?: string
+    athleteId: string
+    trainingStatus: string
+    readinessScore?: number | null
+    readinessLabel?: string | null
+    riskLevel?: $Enums.RiskFlag | null
+    lastWorkoutAt?: Date | string | null
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EventPerformanceTrendCreateManyTeamInput = {
+    id?: string
+    athleteId: string
+    eventName: string
+    metricType: string
+    baseline?: number | null
+    recentAverage?: number | null
+    latestValue?: number | null
+    latestRank?: number | null
+    recentDelta?: number | null
+    slope?: number | null
+    confidenceLabel: string
+    sampleSize?: number
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WorkoutAnalyticsSnapshotCreateManyTeamInput = {
+    id?: string
+    athleteId: string
+    plannedMetricCount?: number
+    aboveTargetCount?: number
+    onTargetCount?: number
+    belowTargetCount?: number
+    adherencePercent?: number | null
+    rolling7?: NullableJsonNullValueInput | InputJsonValue
+    rolling14?: NullableJsonNullValueInput | InputJsonValue
+    rolling30?: NullableJsonNullValueInput | InputJsonValue
+    recentProgression?: NullableJsonNullValueInput | InputJsonValue
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type AthleteUpdateWithoutTeamInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -31750,6 +44171,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUpdateManyWithoutAthleteNestedInput
     journals?: AthleteJournalUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUpdateOneWithoutAthleteNestedInput
   }
 
   export type AthleteUncheckedUpdateWithoutTeamInput = {
@@ -31781,6 +44205,9 @@ export namespace Prisma {
     personalRecords?: PersonalRecordUncheckedUpdateManyWithoutAthleteNestedInput
     meetEntries?: MeetEntryUncheckedUpdateManyWithoutAthleteNestedInput
     journals?: AthleteJournalUncheckedUpdateManyWithoutAthleteNestedInput
+    performanceSnapshot?: AthletePerformanceSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedUpdateManyWithoutAthleteNestedInput
+    workoutAnalyticsSnapshot?: WorkoutAnalyticsSnapshotUncheckedUpdateOneWithoutAthleteNestedInput
   }
 
   export type AthleteUncheckedUpdateManyWithoutTeamInput = {
@@ -31923,6 +44350,302 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type AthletePerformanceSnapshotUpdateWithoutTeamInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    trainingStatus?: StringFieldUpdateOperationsInput | string
+    readinessScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    readinessLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    riskLevel?: NullableEnumRiskFlagFieldUpdateOperationsInput | $Enums.RiskFlag | null
+    lastWorkoutAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    athlete?: AthleteUpdateOneRequiredWithoutPerformanceSnapshotNestedInput
+  }
+
+  export type AthletePerformanceSnapshotUncheckedUpdateWithoutTeamInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    athleteId?: StringFieldUpdateOperationsInput | string
+    trainingStatus?: StringFieldUpdateOperationsInput | string
+    readinessScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    readinessLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    riskLevel?: NullableEnumRiskFlagFieldUpdateOperationsInput | $Enums.RiskFlag | null
+    lastWorkoutAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AthletePerformanceSnapshotUncheckedUpdateManyWithoutTeamInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    athleteId?: StringFieldUpdateOperationsInput | string
+    trainingStatus?: StringFieldUpdateOperationsInput | string
+    readinessScore?: NullableFloatFieldUpdateOperationsInput | number | null
+    readinessLabel?: NullableStringFieldUpdateOperationsInput | string | null
+    riskLevel?: NullableEnumRiskFlagFieldUpdateOperationsInput | $Enums.RiskFlag | null
+    lastWorkoutAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventPerformanceTrendUpdateWithoutTeamInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventName?: StringFieldUpdateOperationsInput | string
+    metricType?: StringFieldUpdateOperationsInput | string
+    baseline?: NullableFloatFieldUpdateOperationsInput | number | null
+    recentAverage?: NullableFloatFieldUpdateOperationsInput | number | null
+    latestValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    latestRank?: NullableIntFieldUpdateOperationsInput | number | null
+    recentDelta?: NullableFloatFieldUpdateOperationsInput | number | null
+    slope?: NullableFloatFieldUpdateOperationsInput | number | null
+    confidenceLabel?: StringFieldUpdateOperationsInput | string
+    sampleSize?: IntFieldUpdateOperationsInput | number
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    athlete?: AthleteUpdateOneRequiredWithoutEventPerformanceTrendsNestedInput
+  }
+
+  export type EventPerformanceTrendUncheckedUpdateWithoutTeamInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    athleteId?: StringFieldUpdateOperationsInput | string
+    eventName?: StringFieldUpdateOperationsInput | string
+    metricType?: StringFieldUpdateOperationsInput | string
+    baseline?: NullableFloatFieldUpdateOperationsInput | number | null
+    recentAverage?: NullableFloatFieldUpdateOperationsInput | number | null
+    latestValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    latestRank?: NullableIntFieldUpdateOperationsInput | number | null
+    recentDelta?: NullableFloatFieldUpdateOperationsInput | number | null
+    slope?: NullableFloatFieldUpdateOperationsInput | number | null
+    confidenceLabel?: StringFieldUpdateOperationsInput | string
+    sampleSize?: IntFieldUpdateOperationsInput | number
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventPerformanceTrendUncheckedUpdateManyWithoutTeamInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    athleteId?: StringFieldUpdateOperationsInput | string
+    eventName?: StringFieldUpdateOperationsInput | string
+    metricType?: StringFieldUpdateOperationsInput | string
+    baseline?: NullableFloatFieldUpdateOperationsInput | number | null
+    recentAverage?: NullableFloatFieldUpdateOperationsInput | number | null
+    latestValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    latestRank?: NullableIntFieldUpdateOperationsInput | number | null
+    recentDelta?: NullableFloatFieldUpdateOperationsInput | number | null
+    slope?: NullableFloatFieldUpdateOperationsInput | number | null
+    confidenceLabel?: StringFieldUpdateOperationsInput | string
+    sampleSize?: IntFieldUpdateOperationsInput | number
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WorkoutAnalyticsSnapshotUpdateWithoutTeamInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    plannedMetricCount?: IntFieldUpdateOperationsInput | number
+    aboveTargetCount?: IntFieldUpdateOperationsInput | number
+    onTargetCount?: IntFieldUpdateOperationsInput | number
+    belowTargetCount?: IntFieldUpdateOperationsInput | number
+    adherencePercent?: NullableFloatFieldUpdateOperationsInput | number | null
+    rolling7?: NullableJsonNullValueInput | InputJsonValue
+    rolling14?: NullableJsonNullValueInput | InputJsonValue
+    rolling30?: NullableJsonNullValueInput | InputJsonValue
+    recentProgression?: NullableJsonNullValueInput | InputJsonValue
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    athlete?: AthleteUpdateOneRequiredWithoutWorkoutAnalyticsSnapshotNestedInput
+  }
+
+  export type WorkoutAnalyticsSnapshotUncheckedUpdateWithoutTeamInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    athleteId?: StringFieldUpdateOperationsInput | string
+    plannedMetricCount?: IntFieldUpdateOperationsInput | number
+    aboveTargetCount?: IntFieldUpdateOperationsInput | number
+    onTargetCount?: IntFieldUpdateOperationsInput | number
+    belowTargetCount?: IntFieldUpdateOperationsInput | number
+    adherencePercent?: NullableFloatFieldUpdateOperationsInput | number | null
+    rolling7?: NullableJsonNullValueInput | InputJsonValue
+    rolling14?: NullableJsonNullValueInput | InputJsonValue
+    rolling30?: NullableJsonNullValueInput | InputJsonValue
+    recentProgression?: NullableJsonNullValueInput | InputJsonValue
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WorkoutAnalyticsSnapshotUncheckedUpdateManyWithoutTeamInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    athleteId?: StringFieldUpdateOperationsInput | string
+    plannedMetricCount?: IntFieldUpdateOperationsInput | number
+    aboveTargetCount?: IntFieldUpdateOperationsInput | number
+    onTargetCount?: IntFieldUpdateOperationsInput | number
+    belowTargetCount?: IntFieldUpdateOperationsInput | number
+    adherencePercent?: NullableFloatFieldUpdateOperationsInput | number | null
+    rolling7?: NullableJsonNullValueInput | InputJsonValue
+    rolling14?: NullableJsonNullValueInput | InputJsonValue
+    rolling30?: NullableJsonNullValueInput | InputJsonValue
+    recentProgression?: NullableJsonNullValueInput | InputJsonValue
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TeamCreateManyInstitutionInput = {
+    id?: string
+    name: string
+    sport: $Enums.Sport
+    seasonId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type SeasonCreateManyInstitutionInput = {
+    id?: string
+    name: string
+    startDate: Date | string
+    endDate: Date | string
+    sport: $Enums.Sport
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TeamUpdateWithoutInstitutionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    season?: SeasonUpdateOneWithoutTeamsNestedInput
+    athletes?: AthleteUpdateManyWithoutTeamNestedInput
+    events?: EventUpdateManyWithoutTeamNestedInput
+    workoutTemplates?: WorkoutTemplateUpdateManyWithoutTeamNestedInput
+    meetEntries?: MeetEntryUpdateManyWithoutTeamNestedInput
+    performanceSnapshots?: AthletePerformanceSnapshotUpdateManyWithoutTeamNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUpdateManyWithoutTeamNestedInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUpdateManyWithoutTeamNestedInput
+  }
+
+  export type TeamUncheckedUpdateWithoutInstitutionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
+    seasonId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    athletes?: AthleteUncheckedUpdateManyWithoutTeamNestedInput
+    events?: EventUncheckedUpdateManyWithoutTeamNestedInput
+    workoutTemplates?: WorkoutTemplateUncheckedUpdateManyWithoutTeamNestedInput
+    meetEntries?: MeetEntryUncheckedUpdateManyWithoutTeamNestedInput
+    performanceSnapshots?: AthletePerformanceSnapshotUncheckedUpdateManyWithoutTeamNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedUpdateManyWithoutTeamNestedInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUncheckedUpdateManyWithoutTeamNestedInput
+  }
+
+  export type TeamUncheckedUpdateManyWithoutInstitutionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
+    seasonId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SeasonUpdateWithoutInstitutionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    teams?: TeamUpdateManyWithoutSeasonNestedInput
+  }
+
+  export type SeasonUncheckedUpdateWithoutInstitutionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    teams?: TeamUncheckedUpdateManyWithoutSeasonNestedInput
+  }
+
+  export type SeasonUncheckedUpdateManyWithoutInstitutionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TeamCreateManySeasonInput = {
+    id?: string
+    name: string
+    sport: $Enums.Sport
+    institutionId?: string | null
+    createdAt?: Date | string
+  }
+
+  export type TeamUpdateWithoutSeasonInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    institution?: InstitutionUpdateOneWithoutTeamsNestedInput
+    athletes?: AthleteUpdateManyWithoutTeamNestedInput
+    events?: EventUpdateManyWithoutTeamNestedInput
+    workoutTemplates?: WorkoutTemplateUpdateManyWithoutTeamNestedInput
+    meetEntries?: MeetEntryUpdateManyWithoutTeamNestedInput
+    performanceSnapshots?: AthletePerformanceSnapshotUpdateManyWithoutTeamNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUpdateManyWithoutTeamNestedInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUpdateManyWithoutTeamNestedInput
+  }
+
+  export type TeamUncheckedUpdateWithoutSeasonInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
+    institutionId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    athletes?: AthleteUncheckedUpdateManyWithoutTeamNestedInput
+    events?: EventUncheckedUpdateManyWithoutTeamNestedInput
+    workoutTemplates?: WorkoutTemplateUncheckedUpdateManyWithoutTeamNestedInput
+    meetEntries?: MeetEntryUncheckedUpdateManyWithoutTeamNestedInput
+    performanceSnapshots?: AthletePerformanceSnapshotUncheckedUpdateManyWithoutTeamNestedInput
+    eventPerformanceTrends?: EventPerformanceTrendUncheckedUpdateManyWithoutTeamNestedInput
+    workoutAnalyticsSnapshots?: WorkoutAnalyticsSnapshotUncheckedUpdateManyWithoutTeamNestedInput
+  }
+
+  export type TeamUncheckedUpdateManyWithoutSeasonInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    sport?: EnumSportFieldUpdateOperationsInput | $Enums.Sport
+    institutionId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type AcademicRecordCreateManyAthleteInput = {
     id?: string
     semester: string
@@ -32019,6 +44742,26 @@ export namespace Prisma {
     title?: string | null
     body: string
     visibility?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type EventPerformanceTrendCreateManyAthleteInput = {
+    id?: string
+    teamId: string
+    eventName: string
+    metricType: string
+    baseline?: number | null
+    recentAverage?: number | null
+    latestValue?: number | null
+    latestRank?: number | null
+    recentDelta?: number | null
+    slope?: number | null
+    confidenceLabel: string
+    sampleSize?: number
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: string | null
+    refreshedAt?: Date | string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -32319,6 +45062,66 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
     body?: StringFieldUpdateOperationsInput | string
     visibility?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventPerformanceTrendUpdateWithoutAthleteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventName?: StringFieldUpdateOperationsInput | string
+    metricType?: StringFieldUpdateOperationsInput | string
+    baseline?: NullableFloatFieldUpdateOperationsInput | number | null
+    recentAverage?: NullableFloatFieldUpdateOperationsInput | number | null
+    latestValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    latestRank?: NullableIntFieldUpdateOperationsInput | number | null
+    recentDelta?: NullableFloatFieldUpdateOperationsInput | number | null
+    slope?: NullableFloatFieldUpdateOperationsInput | number | null
+    confidenceLabel?: StringFieldUpdateOperationsInput | string
+    sampleSize?: IntFieldUpdateOperationsInput | number
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    team?: TeamUpdateOneRequiredWithoutEventPerformanceTrendsNestedInput
+  }
+
+  export type EventPerformanceTrendUncheckedUpdateWithoutAthleteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    teamId?: StringFieldUpdateOperationsInput | string
+    eventName?: StringFieldUpdateOperationsInput | string
+    metricType?: StringFieldUpdateOperationsInput | string
+    baseline?: NullableFloatFieldUpdateOperationsInput | number | null
+    recentAverage?: NullableFloatFieldUpdateOperationsInput | number | null
+    latestValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    latestRank?: NullableIntFieldUpdateOperationsInput | number | null
+    recentDelta?: NullableFloatFieldUpdateOperationsInput | number | null
+    slope?: NullableFloatFieldUpdateOperationsInput | number | null
+    confidenceLabel?: StringFieldUpdateOperationsInput | string
+    sampleSize?: IntFieldUpdateOperationsInput | number
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventPerformanceTrendUncheckedUpdateManyWithoutAthleteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    teamId?: StringFieldUpdateOperationsInput | string
+    eventName?: StringFieldUpdateOperationsInput | string
+    metricType?: StringFieldUpdateOperationsInput | string
+    baseline?: NullableFloatFieldUpdateOperationsInput | number | null
+    recentAverage?: NullableFloatFieldUpdateOperationsInput | number | null
+    latestValue?: NullableFloatFieldUpdateOperationsInput | number | null
+    latestRank?: NullableIntFieldUpdateOperationsInput | number | null
+    recentDelta?: NullableFloatFieldUpdateOperationsInput | number | null
+    slope?: NullableFloatFieldUpdateOperationsInput | number | null
+    confidenceLabel?: StringFieldUpdateOperationsInput | string
+    sampleSize?: IntFieldUpdateOperationsInput | number
+    summaryJson?: NullableJsonNullValueInput | InputJsonValue
+    aiSummary?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

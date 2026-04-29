@@ -131,8 +131,29 @@ exports.Prisma.TeamScalarFieldEnum = {
   id: 'id',
   name: 'name',
   sport: 'sport',
-  institution: 'institution',
+  institutionId: 'institutionId',
+  seasonId: 'seasonId',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.InstitutionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  type: 'type',
+  address: 'address',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SeasonScalarFieldEnum = {
+  id: 'id',
+  institutionId: 'institutionId',
+  name: 'name',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  sport: 'sport',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.AthleteScalarFieldEnum = {
@@ -307,6 +328,78 @@ exports.Prisma.UserSettingsScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.AthletePerformanceSnapshotScalarFieldEnum = {
+  id: 'id',
+  athleteId: 'athleteId',
+  teamId: 'teamId',
+  trainingStatus: 'trainingStatus',
+  readinessScore: 'readinessScore',
+  readinessLabel: 'readinessLabel',
+  riskLevel: 'riskLevel',
+  lastWorkoutAt: 'lastWorkoutAt',
+  summaryJson: 'summaryJson',
+  aiSummary: 'aiSummary',
+  refreshedAt: 'refreshedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.EventPerformanceTrendScalarFieldEnum = {
+  id: 'id',
+  athleteId: 'athleteId',
+  teamId: 'teamId',
+  eventName: 'eventName',
+  metricType: 'metricType',
+  baseline: 'baseline',
+  recentAverage: 'recentAverage',
+  latestValue: 'latestValue',
+  latestRank: 'latestRank',
+  recentDelta: 'recentDelta',
+  slope: 'slope',
+  confidenceLabel: 'confidenceLabel',
+  sampleSize: 'sampleSize',
+  summaryJson: 'summaryJson',
+  aiSummary: 'aiSummary',
+  refreshedAt: 'refreshedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.WorkoutAnalyticsSnapshotScalarFieldEnum = {
+  id: 'id',
+  athleteId: 'athleteId',
+  teamId: 'teamId',
+  plannedMetricCount: 'plannedMetricCount',
+  aboveTargetCount: 'aboveTargetCount',
+  onTargetCount: 'onTargetCount',
+  belowTargetCount: 'belowTargetCount',
+  adherencePercent: 'adherencePercent',
+  rolling7: 'rolling7',
+  rolling14: 'rolling14',
+  rolling30: 'rolling30',
+  recentProgression: 'recentProgression',
+  summaryJson: 'summaryJson',
+  aiSummary: 'aiSummary',
+  refreshedAt: 'refreshedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.IntegrationRunScalarFieldEnum = {
+  id: 'id',
+  provider: 'provider',
+  triggerType: 'triggerType',
+  status: 'status',
+  startedAt: 'startedAt',
+  finishedAt: 'finishedAt',
+  triggeredByUserId: 'triggeredByUserId',
+  scopeJson: 'scopeJson',
+  resultSummary: 'resultSummary',
+  errorMessage: 'errorMessage',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -403,6 +496,8 @@ exports.MeasurementUnit = exports.$Enums.MeasurementUnit = {
 exports.Prisma.ModelName = {
   User: 'User',
   Team: 'Team',
+  Institution: 'Institution',
+  Season: 'Season',
   Athlete: 'Athlete',
   AcademicRecord: 'AcademicRecord',
   HealthRecord: 'HealthRecord',
@@ -416,7 +511,11 @@ exports.Prisma.ModelName = {
   PersonalRecord: 'PersonalRecord',
   MeetEntry: 'MeetEntry',
   AthleteJournal: 'AthleteJournal',
-  UserSettings: 'UserSettings'
+  UserSettings: 'UserSettings',
+  AthletePerformanceSnapshot: 'AthletePerformanceSnapshot',
+  EventPerformanceTrend: 'EventPerformanceTrend',
+  WorkoutAnalyticsSnapshot: 'WorkoutAnalyticsSnapshot',
+  IntegrationRun: 'IntegrationRun'
 };
 
 /**

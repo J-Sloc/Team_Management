@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -9,6 +10,10 @@ import {
   toApiErrorMessage,
   toJsonBody,
 } from "@/lib/clientApi";
+import {
+  analyzeWorkoutResults,
+  summarizeWorkoutPerformance,
+} from "@/lib/workoutAnalysis";
 
 type Team = {
   id: string;
@@ -48,6 +53,26 @@ type WorkoutInstance = {
   } | null;
 };
 
+type WorkoutAnalyticsResponse = {
+  athleteId: string;
+  snapshot: {
+    plannedMetricCount: number;
+    aboveTargetCount: number;
+    onTargetCount: number;
+    belowTargetCount: number;
+    adherencePercent?: number | null;
+    aiSummary?: string | null;
+    rolling7?: {
+      workoutCount: number;
+      adherencePercent?: number | null;
+    } | null;
+    rolling30?: {
+      workoutCount: number;
+      adherencePercent?: number | null;
+    } | null;
+  } | null;
+};
+
 type TemplateMetricInput = {
   name: string;
   targetValue: string;
@@ -56,6 +81,7 @@ type TemplateMetricInput = {
 
 type ResultMetricInput = {
   metricName: string;
+  plannedValue: string;
   value: string;
   unit: string;
   note: string;
@@ -74,6 +100,7 @@ function createEmptyTemplateMetric(): TemplateMetricInput {
 function createEmptyResultMetric(): ResultMetricInput {
   return {
     metricName: "",
+    plannedValue: "",
     value: "",
     unit: "SECONDS",
     note: "",
@@ -135,9 +162,15 @@ function normalizeResultMetrics(
               : typeof record.name === "string"
                 ? record.name
                 : "",
+          plannedValue:
+            typeof record.plannedValue === "number"
+              ? record.plannedValue.toString()
+              : "",
           value:
-            typeof record.value === "number"
-              ? record.value.toString()
+            typeof record.actualValue === "number"
+              ? record.actualValue.toString()
+              : typeof record.value === "number"
+                ? record.value.toString()
               : typeof record.value === "string"
                 ? record.value
                 : "",
@@ -160,6 +193,7 @@ function normalizeResultMetrics(
   if (results && typeof results === "object" && !Array.isArray(results)) {
     const normalized = Object.entries(results).map(([key, value]) => ({
       metricName: key,
+      plannedValue: "",
       value: typeof value === "number" ? value.toString() : "",
       unit: "SECONDS",
       note:
@@ -178,6 +212,7 @@ function normalizeResultMetrics(
   if (template?.metrics?.length) {
     return template.metrics.map((metric) => ({
       metricName: metric.name,
+      plannedValue: metric.targetValue?.toString() ?? "",
       value: "",
       unit: metric.unit ?? "SECONDS",
       note: "",
@@ -250,6 +285,15 @@ export default function TrackWorkoutsPage() {
     queryFn: () =>
       apiJson<WorkoutInstance[]>(
         `/api/workouts?athleteId=${encodeURIComponent(effectiveSelectedAthleteId)}`,
+      ),
+  });
+
+  const workoutAnalyticsQuery = useQuery({
+    queryKey: ["workoutAnalytics", effectiveSelectedAthleteId],
+    enabled: Boolean(effectiveSelectedAthleteId),
+    queryFn: () =>
+      apiJson<WorkoutAnalyticsResponse>(
+        `/api/analytics/workouts?athleteId=${encodeURIComponent(effectiveSelectedAthleteId)}`,
       ),
   });
 
@@ -388,11 +432,15 @@ export default function TrackWorkoutsPage() {
     const metrics = instanceForm.metrics
       .filter(
         (metric) =>
-          metric.metricName.trim() || metric.value.trim() || metric.note.trim(),
+          metric.metricName.trim() ||
+          metric.plannedValue.trim() ||
+          metric.value.trim() ||
+          metric.note.trim(),
       )
       .map((metric) => ({
         metricName: metric.metricName.trim(),
-        value: parseNumber(metric.value),
+        plannedValue: parseNumber(metric.plannedValue),
+        actualValue: parseNumber(metric.value),
         unit: metric.unit || null,
         note: metric.note.trim() || null,
       }));
@@ -417,6 +465,7 @@ export default function TrackWorkoutsPage() {
       await invalidateQueryKeys(queryClient, [
         ["workoutInstances", currentInstanceAthleteId],
         ["workoutTemplates", effectiveSelectedTeamId],
+        ["workoutAnalytics", currentInstanceAthleteId],
       ]);
       toast.success(editingInstanceId ? "Workout log updated." : "Workout log created.");
       resetInstanceForm(instanceForm.workoutTemplateId);
@@ -446,6 +495,7 @@ export default function TrackWorkoutsPage() {
     try {
       await deleteInstanceMutation.mutateAsync(instanceId);
       await invalidateQueryKeys(queryClient, [["workoutInstances", effectiveSelectedAthleteId]]);
+      await invalidateQueryKeys(queryClient, [["workoutAnalytics", effectiveSelectedAthleteId]]);
       toast.success("Workout log deleted.");
       if (editingInstanceId === instanceId) {
         resetInstanceForm(instanceForm.workoutTemplateId);
@@ -574,6 +624,46 @@ export default function TrackWorkoutsPage() {
             {toApiErrorMessage(teamsQuery.error ?? athletesQuery.error ?? templatesQuery.error)}
           </p>
         )}
+        {workoutAnalyticsQuery.data?.snapshot ? (
+          <div className="mt-4 space-y-4">
+            {effectiveSelectedAthleteId ? (
+              <Link
+                href={`/assistant?scope=performance&athleteId=${encodeURIComponent(effectiveSelectedAthleteId)}&prompt=${encodeURIComponent("Summarize this athlete's performance trend and workload adherence.")}`}
+                className="inline-flex rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700"
+              >
+                Ask Assistant About This Athlete
+              </Link>
+            ) : null}
+            <div className="grid gap-3 md:grid-cols-4">
+            <div className="rounded-lg border border-slate-200 p-4">
+              <p className="text-xs uppercase tracking-wide text-slate-500">Planned Metrics</p>
+              <p className="mt-2 text-2xl font-semibold text-slate-900">
+                {workoutAnalyticsQuery.data.snapshot.plannedMetricCount}
+              </p>
+            </div>
+            <div className="rounded-lg border border-slate-200 p-4">
+              <p className="text-xs uppercase tracking-wide text-slate-500">Adherence</p>
+              <p className="mt-2 text-2xl font-semibold text-slate-900">
+                {workoutAnalyticsQuery.data.snapshot.adherencePercent != null
+                  ? `${workoutAnalyticsQuery.data.snapshot.adherencePercent}%`
+                  : "N/A"}
+              </p>
+            </div>
+            <div className="rounded-lg border border-slate-200 p-4">
+              <p className="text-xs uppercase tracking-wide text-slate-500">7-Day Workouts</p>
+              <p className="mt-2 text-2xl font-semibold text-slate-900">
+                {workoutAnalyticsQuery.data.snapshot.rolling7?.workoutCount ?? 0}
+              </p>
+            </div>
+            <div className="rounded-lg border border-slate-200 p-4">
+              <p className="text-xs uppercase tracking-wide text-slate-500">Trend</p>
+              <p className="mt-2 text-sm font-medium text-slate-900">
+                {workoutAnalyticsQuery.data.snapshot.aiSummary ?? "No summary yet."}
+              </p>
+            </div>
+            </div>
+          </div>
+        ) : null}
       </div>
 
       <div className="grid gap-6 xl:grid-cols-2">
@@ -849,13 +939,23 @@ export default function TrackWorkoutsPage() {
             <div className="space-y-3">
               {instanceForm.metrics.map((metric, index) => (
                 <div key={`result-metric-${index}`} className="rounded-lg border border-slate-200 p-4">
-                  <div className="grid gap-3 md:grid-cols-[1.3fr_1fr_1fr_auto]">
+                  <div className="grid gap-3 md:grid-cols-[1.2fr_1fr_1fr_1fr_auto]">
                     <input
                       value={metric.metricName}
                       onChange={(event) =>
                         updateResultMetric(index, "metricName", event.target.value)
                       }
                       placeholder="Metric"
+                      className="rounded-md border border-slate-300 px-3 py-2"
+                    />
+                    <input
+                      type="number"
+                      step="0.01"
+                      value={metric.plannedValue}
+                      onChange={(event) =>
+                        updateResultMetric(index, "plannedValue", event.target.value)
+                      }
+                      placeholder="Planned value"
                       className="rounded-md border border-slate-300 px-3 py-2"
                     />
                     <input
@@ -939,6 +1039,7 @@ export default function TrackWorkoutsPage() {
                   instance.results,
                   instance.workoutTemplate ?? null,
                 );
+                const analysis = analyzeWorkoutResults(instance.results);
 
                 return (
                   <div key={instance.id} className="rounded-lg border border-slate-200 p-4">
@@ -988,18 +1089,34 @@ export default function TrackWorkoutsPage() {
                       </div>
                     </div>
                     {instance.notes && <p className="mt-3 text-sm text-slate-700">{instance.notes}</p>}
+                    <p className="mt-3 text-sm font-medium text-slate-700">
+                      {summarizeWorkoutPerformance(instance.results)}
+                    </p>
                     <div className="mt-3 flex flex-wrap gap-2">
-                      {resultMetrics.map((metric, index) => (
-                        <span
-                          key={`${instance.id}-${metric.metricName}-${index}`}
-                          className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700"
-                        >
-                          {metric.metricName || "Untitled metric"}
-                          {metric.value ? `: ${metric.value}` : ""}
-                          {metric.unit ? ` ${metric.unit.toLowerCase()}` : ""}
-                          {metric.note ? ` • ${metric.note}` : ""}
-                        </span>
-                      ))}
+                      {resultMetrics.map((metric, index) => {
+                        const metricAnalysis = analysis[index];
+                        const badgeClass =
+                          metricAnalysis?.classification === "excellent"
+                            ? "bg-emerald-100 text-emerald-800"
+                            : metricAnalysis?.classification === "under-goal"
+                              ? "bg-rose-100 text-rose-800"
+                              : metricAnalysis?.classification === "on-plan"
+                                ? "bg-blue-100 text-blue-800"
+                                : "bg-slate-100 text-slate-700";
+
+                        return (
+                          <span
+                            key={`${instance.id}-${metric.metricName}-${index}`}
+                            className={`rounded-full px-3 py-1 text-xs font-medium ${badgeClass}`}
+                          >
+                            {metric.metricName || "Untitled metric"}
+                            {metric.plannedValue ? ` • target ${metric.plannedValue}` : ""}
+                            {metric.value ? ` • actual ${metric.value}` : ""}
+                            {metric.unit ? ` ${metric.unit.toLowerCase()}` : ""}
+                            {metric.note ? ` • ${metric.note}` : ""}
+                          </span>
+                        );
+                      })}
                     </div>
                   </div>
                 );

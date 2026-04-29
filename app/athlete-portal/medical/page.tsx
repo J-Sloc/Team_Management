@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/app/lib/auth";
 import prisma from "@/lib/prisma";
-import { UserRole } from "../../../../generated/prisma";
+import { UserRole } from "../../../generated/prisma";
 
 export default async function AthleteMedicalPage() {
   const session = await auth();
@@ -39,7 +39,15 @@ export default async function AthleteMedicalPage() {
               <p className="font-medium text-slate-900">
                 {record.injuryType ?? "General medical update"}
               </p>
-              <p className="text-sm text-slate-700">{record.status ?? "No status"}</p>
+              <div className="mt-2 grid gap-2 md:grid-cols-2">
+                <p className="text-sm text-slate-700">{record.status ?? "No status"}</p>
+                <p className="text-sm text-slate-500">
+                  Rehab Sessions: {record.rehabSessions ?? 0}
+                </p>
+                <p className="text-sm text-slate-500">
+                  Appointment Attendance: {record.appointmentAttendance != null ? `${record.appointmentAttendance}%` : "N/A"}
+                </p>
+              </div>
               {record.injuryDate ? (
                 <p className="text-sm text-slate-500">
                   {new Date(record.injuryDate).toLocaleDateString()}

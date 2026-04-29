@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import ScheduleCalendar, {
   type ScheduleCalendarEvent,
 } from "@/app/components/ScheduleCalendar";
+import DeleteConfirmationPanel from "@/app/components/DeleteConfirmationPanel";
 import {
   apiJson,
   invalidateQueryKeys,
@@ -36,6 +37,7 @@ export default function AthleteCalendarClient() {
   const [form, setForm] = useState(blankForm);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
+  const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
   const [filter, setFilter] = useState({ from: "", to: "" });
 
   const eventsQuery = useQuery({
@@ -75,6 +77,7 @@ export default function AthleteCalendarClient() {
 
   const events = eventsQuery.data ?? emptyEvents;
   const selectedEvent = events.find((event) => event.id === selectedEventId) ?? null;
+  const pendingDeleteEvent = events.find((event) => event.id === pendingDeleteId) ?? null;
 
   function resetForm() {
     setForm(blankForm);
@@ -87,6 +90,7 @@ export default function AthleteCalendarClient() {
     }
 
     setEditingId(event.id);
+    setPendingDeleteId(null);
     setSelectedEventId(event.id);
     setForm({
       title: event.title ?? "",
@@ -129,6 +133,7 @@ export default function AthleteCalendarClient() {
       await deleteEventMutation.mutateAsync(eventId);
       await invalidateQueryKeys(queryClient, [["athlete-calendar", filter.from, filter.to]]);
       toast.success("Calendar entry deleted.");
+      setPendingDeleteId(null);
       if (selectedEventId === eventId) {
         setSelectedEventId(null);
       }
@@ -139,6 +144,15 @@ export default function AthleteCalendarClient() {
 
   return (
     <div className="space-y-6">
+      {pendingDeleteEvent ? (
+        <DeleteConfirmationPanel
+          itemLabel={pendingDeleteEvent.title}
+          isPending={deleteEventMutation.isPending}
+          onCancel={() => setPendingDeleteId(null)}
+          onConfirm={() => handleDelete(pendingDeleteEvent.id)}
+        />
+      ) : null}
+
       <section className="rounded-xl bg-white p-6 shadow-sm">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
@@ -217,7 +231,7 @@ export default function AthleteCalendarClient() {
                         </button>
                         <button
                           type="button"
-                          onClick={() => handleDelete(event.id)}
+                          onClick={() => setPendingDeleteId(event.id)}
                           className="rounded-md border border-rose-300 px-3 py-2 text-sm text-rose-700"
                         >
                           Delete

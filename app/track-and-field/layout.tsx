@@ -8,6 +8,7 @@ const links = [
   { name: "Rankings", href: "/track-and-field/rankings" },
   { name: "Meet Entries", href: "/track-and-field/meet-entries" },
   { name: "Journals", href: "/track-and-field/journals" },
+  { name: "Assistant", href: "/assistant?scope=performance" },
 ];
 
 export default async function TrackAndFieldLayout({

@@ -1,7 +1,12 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/app/lib/auth";
 import prisma from "@/lib/prisma";
-import { UserRole } from "../../../../generated/prisma";
+import {
+  analyzeWorkoutResults,
+  normalizeWorkoutResults,
+  summarizeWorkoutPerformance,
+} from "@/lib/workoutAnalysis";
+import { UserRole } from "../../../generated/prisma";
 
 export default async function AthleteWorkoutsPage() {
   const session = await auth();
@@ -64,6 +69,37 @@ export default async function AthleteWorkoutsPage() {
               {workout.notes ? (
                 <p className="mt-2 text-sm text-slate-700">{workout.notes}</p>
               ) : null}
+              <p className="mt-3 text-sm font-medium text-slate-700">
+                {summarizeWorkoutPerformance(workout.results)}
+              </p>
+              <div className="mt-3 space-y-2">
+                {normalizeWorkoutResults(workout.results).map((metric, index) => {
+                  const analysis = analyzeWorkoutResults(workout.results)[index];
+                  const badgeClass =
+                    analysis?.classification === "excellent"
+                      ? "bg-emerald-100 text-emerald-800"
+                      : analysis?.classification === "under-goal"
+                        ? "bg-rose-100 text-rose-800"
+                        : analysis?.classification === "on-plan"
+                          ? "bg-blue-100 text-blue-800"
+                          : "bg-slate-100 text-slate-700";
+
+                  return (
+                    <div
+                      key={`${workout.id}-${metric.label}-${index}`}
+                      className="flex flex-wrap items-center gap-2 text-sm text-slate-700"
+                    >
+                      <span className={`rounded-full px-2 py-1 text-xs font-medium ${badgeClass}`}>
+                        {metric.label ?? "Metric"}
+                      </span>
+                      {metric.plannedValue != null ? <span>Target {metric.plannedValue}</span> : null}
+                      {metric.actualValue != null ? <span>Actual {metric.actualValue}</span> : null}
+                      {metric.unit ? <span>{metric.unit.toLowerCase()}</span> : null}
+                      {metric.note ? <span>• {metric.note}</span> : null}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           ))
         )}

@@ -34,6 +34,14 @@ function getMonthName(date: Date) {
   return date.toLocaleString("default", { month: "long", year: "numeric" });
 }
 
+function getOwnerLabel(event: ScheduleCalendarEvent) {
+  if (event.ownerType === "athlete") {
+    return event.athlete ? `Personal (${event.athlete.name})` : "Personal";
+  }
+
+  return "Team shared";
+}
+
 export default function ScheduleCalendar({
   events,
   highlightedEventId,
@@ -81,6 +89,11 @@ export default function ScheduleCalendar({
   }
 
   const selectedEvents = eventsByDate.get(selectedDay) ?? [];
+  const selectedDayLabel = new Date(`${selectedDay}T00:00:00`).toLocaleDateString([], {
+    weekday: "long",
+    month: "short",
+    day: "numeric",
+  });
 
   return (
     <div className="rounded-lg border bg-white p-4 shadow-sm">
@@ -155,7 +168,7 @@ export default function ScheduleCalendar({
       </div>
 
       <div className="mt-4 border-t pt-3">
-        <h4 className="mb-2 font-medium text-slate-900">Items on {selectedDay}</h4>
+        <h4 className="mb-2 font-medium text-slate-900">Items on {selectedDayLabel}</h4>
         {selectedEvents.length === 0 ? (
           <p className="text-sm text-slate-500">{emptyLabel}</p>
         ) : (
@@ -179,9 +192,7 @@ export default function ScheduleCalendar({
                           hour: "2-digit",
                           minute: "2-digit",
                         })}
-                        {event.ownerType === "athlete" && event.athlete
-                          ? ` • Personal (${event.athlete.name})`
-                          : " • Team"}
+                        {` • ${getOwnerLabel(event)}`}
                       </div>
                     </div>
                     <span

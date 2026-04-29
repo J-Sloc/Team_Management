@@ -1,28 +1,55 @@
 "use client";
 
+import { FormEvent, useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { FormEvent, useCallback, useEffect, useState } from "react";
-import Link from "next/link";
+import { toast } from "sonner";
+import CoachPageHeader from "@/app/components/CoachPageHeader";
+import DeleteConfirmationPanel from "@/app/components/DeleteConfirmationPanel";
+import {
+  apiJson,
+  invalidateQueryKeys,
+  toApiErrorMessage,
+  toJsonBody,
+} from "@/lib/clientApi";
 
 type AcademicRecord = {
   id: string;
   athleteId: string;
   semester: string;
-  finalScore?: number;
-  termGpa?: number;
-  academicStanding?: string;
-  complianceStatus?: string;
-  attendancePercent?: number;
-  tutoringHours?: number;
-  advisorNotes?: string;
+  finalScore?: number | null;
+  termGpa?: number | null;
+  academicStanding?: string | null;
+  complianceStatus?: string | null;
+  attendancePercent?: number | null;
+  tutoringHours?: number | null;
+  advisorNotes?: string | null;
   createdAt: string;
   athlete?: { id: string; name: string };
 };
 
-type AthleteOption = { id: string; name: string };
+type AthleteOption = {
+  id: string;
+  name: string;
+};
 
-const blankRecordForm = {
+type AcademicForm = {
+  athleteId: string;
+  semester: string;
+  finalScore: string;
+  termGpa: string;
+  academicStanding: string;
+  complianceStatus: string;
+  attendancePercent: string;
+  tutoringHours: string;
+  advisorNotes: string;
+};
+
+const inputClass =
+  "w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400";
+
+const blankRecordForm: AcademicForm = {
   athleteId: "",
   semester: "",
   finalScore: "",
@@ -34,62 +61,113 @@ const blankRecordForm = {
   advisorNotes: "",
 };
 
+function parseNullableNumber(value: string) {
+  if (!value.trim()) {
+    return null;
+  }
+
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : null;
+}
+
+function parseNullableText(value: string) {
+  return value.trim() ? value.trim() : null;
+}
+
 export default function AcademicRecordsPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [records, setRecords] = useState<AcademicRecord[]>([]);
-  const [athletes, setAthletes] = useState<AthleteOption[]>([]);
-  const [form, setForm] = useState(blankRecordForm);
+  const queryClient = useQueryClient();
+  const [form, setForm] = useState<AcademicForm>(blankRecordForm);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
   const [filter, setFilter] = useState({ athleteId: "", semester: "" });
 
-  const fetchRecords = useCallback(async () => {
-    setLoading(true);
-    try {
-      const params = new URLSearchParams();
-      if (filter.athleteId) params.set("athleteId", filter.athleteId);
-      if (filter.semester) params.set("semester", filter.semester);
-
-      const res = await fetch(`/api/academic-records?${params}`);
-      if (!res.ok) throw new Error("Failed to fetch records");
-      const data = await res.json();
-      setRecords(data);
-    } catch (error) {
-      console.error("Could not load records:", error);
-    } finally {
-      setLoading(false);
-    }
-  }, [filter.athleteId, filter.semester]);
-
-  const fetchAthletes = useCallback(async () => {
-    try {
-      const res = await fetch("/api/athletes");
-      if (!res.ok) throw new Error("Failed to fetch athletes");
-      const data: { id: string; name: string }[] = await res.json();
-      setAthletes(data.map((a) => ({ id: a.id, name: a.name })));
-    } catch (error) {
-      console.error("Could not load athletes:", error);
-    }
-  }, []);
-
   useEffect(() => {
-    if (status === "loading") return;
+    if (status === "loading") {
+      return;
+    }
+
     if (!session) {
       router.push("/login");
       return;
     }
+
     if (!["COACH", "AD"].includes(session.user?.role || "")) {
       router.push("/");
-      return;
     }
+  }, [router, session, status]);
 
-    fetchAthletes();
-    fetchRecords();
-  }, [session, status, router, fetchRecords, fetchAthletes]);
+  const athletesQuery = useQuery({
+    queryKey: ["athletes"],
+    queryFn: () => apiJson<AthleteOption[]>("/api/athletes"),
+    enabled: Boolean(session && ["COACH", "AD"].includes(session.user?.role || "")),
+  });
 
-  function setField<K extends keyof typeof blankRecordForm>(key: K, value: string) {
-    setForm((prev) => ({ ...prev, [key]: value }));
+  const recordsQuery = useQuery({
+    queryKey: ["academic-records", filter.athleteId, filter.semester],
+    queryFn: () => {
+      const params = new URLSearchParams();
+      if (filter.athleteId) params.set("athleteId", filter.athleteId);
+      if (filter.semester.trim()) params.set("semester", filter.semester.trim());
+      return apiJson<AcademicRecord[]>(
+        `/api/academic-records${params.toString() ? `?${params.toString()}` : ""}`,
+      );
+    },
+    enabled: Boolean(session && ["COACH", "AD"].includes(session.user?.role || "")),
+  });
+
+  const saveRecordMutation = useMutation({
+    mutationFn: (payload: unknown) => {
+      if (editingId) {
+        return apiJson<AcademicRecord>(
+          `/api/academic-records?id=${encodeURIComponent(editingId)}`,
+          {
+            method: "PUT",
+            body: toJsonBody(payload as never),
+          },
+        );
+      }
+
+      return apiJson<AcademicRecord>("/api/academic-records", {
+        method: "POST",
+        body: toJsonBody(payload as never),
+      });
+    },
+    onSuccess: async () => {
+      await invalidateQueryKeys(queryClient, [["academic-records"]]);
+      toast.success(editingId ? "Academic record updated." : "Academic record created.");
+      resetForm();
+    },
+    onError: (error) => {
+      toast.error(toApiErrorMessage(error));
+    },
+  });
+
+  const deleteRecordMutation = useMutation({
+    mutationFn: (recordId: string) =>
+      apiJson<{ success: true }>(`/api/academic-records?id=${encodeURIComponent(recordId)}`, {
+        method: "DELETE",
+      }),
+    onSuccess: async () => {
+      await invalidateQueryKeys(queryClient, [["academic-records"]]);
+      toast.success("Academic record deleted.");
+      if (pendingDeleteId === editingId) {
+        resetForm();
+      }
+      setPendingDeleteId(null);
+    },
+    onError: (error) => {
+      toast.error(toApiErrorMessage(error));
+    },
+  });
+
+  const athletes = athletesQuery.data ?? [];
+  const records = recordsQuery.data ?? [];
+  const pendingDeleteRecord = records.find((record) => record.id === pendingDeleteId) ?? null;
+
+  function setField<K extends keyof AcademicForm>(key: K, value: AcademicForm[K]) {
+    setForm((current) => ({ ...current, [key]: value }));
   }
 
   function resetForm() {
@@ -97,53 +175,9 @@ export default function AcademicRecordsPage() {
     setEditingId(null);
   }
 
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    if (!form.athleteId.trim() || !form.semester.trim()) return;
-
-    const payload = {
-      athleteId: form.athleteId.trim(),
-      semester: form.semester.trim(),
-      finalScore: form.finalScore ? Number(form.finalScore) : undefined,
-      termGpa: form.termGpa ? Number(form.termGpa) : undefined,
-      academicStanding: form.academicStanding.trim() || undefined,
-      complianceStatus: form.complianceStatus.trim() || undefined,
-      attendancePercent: form.attendancePercent ? Number(form.attendancePercent) : undefined,
-      tutoringHours: form.tutoringHours ? Number(form.tutoringHours) : undefined,
-      advisorNotes: form.advisorNotes.trim() || undefined,
-    };
-
-    const method = editingId ? "PUT" : "POST";
-    const url = editingId
-      ? `/api/academic-records?id=${encodeURIComponent(editingId)}`
-      : "/api/academic-records";
-
-    try {
-      const response = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      if (!response.ok) throw new Error("Save failed");
-      await fetchRecords();
-      resetForm();
-    } catch (error) {
-      console.error("Submit error:", error);
-      alert("Failed to save record");
-    }
-  }
-
-  async function handleDelete(id: string) {
-    if (!confirm("Delete academic record?")) return;
-    const res = await fetch(`/api/academic-records?id=${encodeURIComponent(id)}`, {
-      method: "DELETE",
-    });
-    if (!res.ok) throw new Error("Delete failed");
-    await fetchRecords();
-  }
-
   function prepareEdit(record: AcademicRecord) {
     setEditingId(record.id);
+    setPendingDeleteId(null);
     setForm({
       athleteId: record.athleteId ?? "",
       semester: record.semester ?? "",
@@ -157,230 +191,292 @@ export default function AcademicRecordsPage() {
     });
   }
 
-  if (status === "loading" || loading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading academic records...</div>;
+  async function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+    if (!form.athleteId.trim() || !form.semester.trim()) {
+      return;
+    }
+
+    await saveRecordMutation.mutateAsync({
+      athleteId: form.athleteId.trim(),
+      semester: form.semester.trim(),
+      finalScore: parseNullableNumber(form.finalScore),
+      termGpa: parseNullableNumber(form.termGpa),
+      academicStanding: parseNullableText(form.academicStanding),
+      complianceStatus: parseNullableText(form.complianceStatus),
+      attendancePercent: parseNullableNumber(form.attendancePercent),
+      tutoringHours: parseNullableNumber(form.tutoringHours),
+      advisorNotes: parseNullableText(form.advisorNotes),
+    });
   }
 
-  if (!session || !["COACH", "AD"].includes(session.user?.role || "")) {
+  async function confirmDelete() {
+    if (!pendingDeleteId) {
+      return;
+    }
+
+    await deleteRecordMutation.mutateAsync(pendingDeleteId);
+  }
+
+  if (status === "loading" || athletesQuery.isLoading || recordsQuery.isLoading) {
     return (
-      <div className="min-h-screen bg-slate-100 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-3xl font-semibold text-slate-900 mb-2">403 - Forbidden</h1>
-          <p className="text-slate-600 mb-4">You do not have permission to access this page.</p>
-          <Link href="/overview" className="text-blue-600 hover:underline">← Back to Dashboard</Link>
-        </div>
+      <div className="flex min-h-screen items-center justify-center">
+        Loading academic records...
       </div>
     );
   }
 
+  if (!session || !["COACH", "AD"].includes(session.user?.role || "")) {
+    return null;
+  }
+
   return (
-    <div className="min-h-screen bg-slate-200">
-      <div className="mx-auto max-w-6xl p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h1 className="text-3xl font-bold">Academic Records</h1>
-          <Link href="/overview" className="text-blue-600 hover:underline">← Back to Dashboard</Link>
-        </div>
+    <div className="min-h-screen bg-slate-100">
+      <div className="mx-auto max-w-7xl space-y-6 px-4 py-8">
+        <CoachPageHeader
+          title="Academic Records"
+          description="Track semester snapshots, compliance, attendance, and academic notes without leaving the coaching workflow."
+        />
 
-        {/* Filters */}
-        <div className="bg-white p-4 rounded-lg shadow mb-6">
-          <h2 className="text-lg font-medium mb-3">Filters</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <select
-              value={filter.athleteId}
-              onChange={(e) => setFilter(prev => ({ ...prev, athleteId: e.target.value }))}
-              className="border border-gray-300 rounded px-3 py-2"
-            >
-              <option value="">All Athletes</option>
-              {athletes.map(athlete => (
-                <option key={athlete.id} value={athlete.id}>{athlete.name}</option>
-              ))}
-            </select>
-            <input
-              type="text"
-              placeholder="Semester (e.g., Fall 2024)"
-              value={filter.semester}
-              onChange={(e) => setFilter(prev => ({ ...prev, semester: e.target.value }))}
-              className="border border-gray-300 rounded px-3 py-2"
-            />
-            <button
-              onClick={fetchRecords}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-            >
-              Apply Filters
-            </button>
-          </div>
-        </div>
+        {pendingDeleteRecord ? (
+          <DeleteConfirmationPanel
+            itemLabel={`${pendingDeleteRecord.athlete?.name ?? "Athlete"} • ${pendingDeleteRecord.semester}`}
+            isPending={deleteRecordMutation.isPending}
+            onCancel={() => setPendingDeleteId(null)}
+            onConfirm={confirmDelete}
+          />
+        ) : null}
 
-        {/* Form */}
-        <div className="bg-white p-6 rounded-lg shadow mb-6">
-          <h2 className="text-xl font-medium mb-4">
-            {editingId ? "Edit Academic Record" : "Add Academic Record"}
-          </h2>
-          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <select
-              value={form.athleteId}
-              onChange={(e) => setField("athleteId", e.target.value)}
-              className="border border-gray-300 rounded px-3 py-2"
-              required
-            >
-              <option value="">Select Athlete</option>
-              {athletes.map(athlete => (
-                <option key={athlete.id} value={athlete.id}>{athlete.name}</option>
-              ))}
-            </select>
-            <input
-              type="text"
-              placeholder="Semester"
-              value={form.semester}
-              onChange={(e) => setField("semester", e.target.value)}
-              className="border border-gray-300 rounded px-3 py-2"
-              required
-            />
-            <input
-              type="number"
-              step="0.01"
-              placeholder="Final Score"
-              value={form.finalScore}
-              onChange={(e) => setField("finalScore", e.target.value)}
-              className="border border-gray-300 rounded px-3 py-2"
-            />
-            <input
-              type="number"
-              step="0.01"
-              placeholder="Term GPA"
-              value={form.termGpa}
-              onChange={(e) => setField("termGpa", e.target.value)}
-              className="border border-gray-300 rounded px-3 py-2"
-            />
-            <select
-              value={form.academicStanding}
-              onChange={(e) => setField("academicStanding", e.target.value)}
-              className="border border-gray-300 rounded px-3 py-2"
-            >
-              <option value="">Academic Standing</option>
-              <option value="GOOD">Good</option>
-              <option value="NEUTRAL">Neutral</option>
-              <option value="BAD">Bad</option>
-            </select>
-            <select
-              value={form.complianceStatus}
-              onChange={(e) => setField("complianceStatus", e.target.value)}
-              className="border border-gray-300 rounded px-3 py-2"
-            >
-              <option value="">Compliance Status</option>
-              <option value="COMPLIANT">Compliant</option>
-              <option value="WARNING">Warning</option>
-              <option value="NON_COMPLIANT">Non-Compliant</option>
-            </select>
-            <input
-              type="number"
-              min="0"
-              max="100"
-              placeholder="Attendance %"
-              value={form.attendancePercent}
-              onChange={(e) => setField("attendancePercent", e.target.value)}
-              className="border border-gray-300 rounded px-3 py-2"
-            />
-            <input
-              type="number"
-              placeholder="Tutoring Hours"
-              value={form.tutoringHours}
-              onChange={(e) => setField("tutoringHours", e.target.value)}
-              className="border border-gray-300 rounded px-3 py-2"
-            />
-            <textarea
-              placeholder="Advisor Notes"
-              value={form.advisorNotes}
-              onChange={(e) => setField("advisorNotes", e.target.value)}
-              className="border border-gray-300 rounded px-3 py-2 md:col-span-2 lg:col-span-3"
-              rows={3}
-            />
-            <div className="md:col-span-2 lg:col-span-3 flex gap-2">
-              <button
-                type="submit"
-                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-              >
-                {editingId ? "Update" : "Add"} Record
-              </button>
-              {editingId && (
+        <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
+          <section className="rounded-xl bg-white p-6 shadow-sm">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <h2 className="text-xl font-semibold text-slate-900">
+                  {editingId ? "Edit Record" : "Add Record"}
+                </h2>
+                <p className="mt-1 text-sm text-slate-500">
+                  Use semester-level entries for the current workflow; richer course detail can layer on later.
+                </p>
+              </div>
+              {editingId ? (
                 <button
                   type="button"
                   onClick={resetForm}
-                  className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+                  className="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700"
                 >
                   Cancel
                 </button>
-              )}
+              ) : null}
             </div>
-          </form>
-        </div>
 
-        {/* Records Table */}
-        <div className="bg-white rounded-lg shadow overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-xl font-medium">Academic Records ({records.length})</h2>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Athlete
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Semester
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    GPA
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Standing
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Attendance
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {records.map((record) => (
-                  <tr key={record.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {record.athlete?.name || "Unknown"}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {record.semester}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {record.termGpa?.toFixed(2) || "-"}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {record.academicStanding || "-"}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {record.attendancePercent ? `${record.attendancePercent}%` : "-"}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <button
-                        onClick={() => prepareEdit(record)}
-                        className="text-blue-600 hover:text-blue-900 mr-3"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDelete(record.id)}
-                        className="text-red-600 hover:text-red-900"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
+            <form onSubmit={handleSubmit} className="mt-6 grid gap-4 md:grid-cols-2">
+              <select
+                value={form.athleteId}
+                onChange={(event) => setField("athleteId", event.target.value)}
+                className={inputClass}
+                required
+              >
+                <option value="">Select athlete</option>
+                {athletes.map((athlete) => (
+                  <option key={athlete.id} value={athlete.id}>
+                    {athlete.name}
+                  </option>
                 ))}
-              </tbody>
-            </table>
-          </div>
+              </select>
+              <input
+                type="text"
+                placeholder="Semester"
+                value={form.semester}
+                onChange={(event) => setField("semester", event.target.value)}
+                className={inputClass}
+                required
+              />
+              <input
+                type="number"
+                step="0.01"
+                placeholder="Final score"
+                value={form.finalScore}
+                onChange={(event) => setField("finalScore", event.target.value)}
+                className={inputClass}
+              />
+              <input
+                type="number"
+                step="0.01"
+                min="0"
+                max="4"
+                placeholder="Term GPA"
+                value={form.termGpa}
+                onChange={(event) => setField("termGpa", event.target.value)}
+                className={inputClass}
+              />
+              <select
+                value={form.academicStanding}
+                onChange={(event) => setField("academicStanding", event.target.value)}
+                className={inputClass}
+              >
+                <option value="">Academic standing</option>
+                <option value="GOOD">Good</option>
+                <option value="NEUTRAL">Neutral</option>
+                <option value="BAD">Bad</option>
+              </select>
+              <select
+                value={form.complianceStatus}
+                onChange={(event) => setField("complianceStatus", event.target.value)}
+                className={inputClass}
+              >
+                <option value="">Compliance status</option>
+                <option value="COMPLIANT">Compliant</option>
+                <option value="WARNING">Warning</option>
+                <option value="NON_COMPLIANT">Non-Compliant</option>
+              </select>
+              <input
+                type="number"
+                min="0"
+                max="100"
+                placeholder="Attendance %"
+                value={form.attendancePercent}
+                onChange={(event) => setField("attendancePercent", event.target.value)}
+                className={inputClass}
+              />
+              <input
+                type="number"
+                min="0"
+                placeholder="Tutoring hours"
+                value={form.tutoringHours}
+                onChange={(event) => setField("tutoringHours", event.target.value)}
+                className={inputClass}
+              />
+              <textarea
+                placeholder="Advisor notes"
+                value={form.advisorNotes}
+                onChange={(event) => setField("advisorNotes", event.target.value)}
+                className={`min-h-28 md:col-span-2 ${inputClass}`}
+              />
+              <button
+                type="submit"
+                disabled={saveRecordMutation.isPending}
+                className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white disabled:opacity-50"
+              >
+                {saveRecordMutation.isPending
+                  ? "Saving..."
+                  : editingId
+                    ? "Update Record"
+                    : "Create Record"}
+              </button>
+            </form>
+          </section>
+
+          <section className="rounded-xl bg-white p-6 shadow-sm">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <h2 className="text-xl font-semibold text-slate-900">Current Records</h2>
+                <p className="mt-1 text-sm text-slate-500">
+                  {records.length} result{records.length === 1 ? "" : "s"} matching the current filters.
+                </p>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-3">
+                <select
+                  value={filter.athleteId}
+                  onChange={(event) =>
+                    setFilter((current) => ({ ...current, athleteId: event.target.value }))
+                  }
+                  className={inputClass}
+                >
+                  <option value="">All athletes</option>
+                  {athletes.map((athlete) => (
+                    <option key={athlete.id} value={athlete.id}>
+                      {athlete.name}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  type="text"
+                  placeholder="Filter by semester"
+                  value={filter.semester}
+                  onChange={(event) =>
+                    setFilter((current) => ({ ...current, semester: event.target.value }))
+                  }
+                  className={inputClass}
+                />
+                <button
+                  type="button"
+                  onClick={() => setFilter({ athleteId: "", semester: "" })}
+                  className="rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700"
+                >
+                  Clear Filters
+                </button>
+              </div>
+            </div>
+
+            {recordsQuery.isError ? (
+              <p className="mt-4 rounded-lg border border-rose-200 bg-rose-50 p-4 text-sm text-rose-700">
+                {toApiErrorMessage(recordsQuery.error)}
+              </p>
+            ) : records.length === 0 ? (
+              <p className="mt-4 rounded-lg border border-dashed border-slate-300 p-6 text-sm text-slate-500">
+                No academic records found for the current filter set.
+              </p>
+            ) : (
+              <div className="mt-4 overflow-x-auto">
+                <table className="min-w-full text-sm">
+                  <thead className="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-500">
+                    <tr>
+                      <th className="px-3 py-2">Athlete</th>
+                      <th className="px-3 py-2">Semester</th>
+                      <th className="px-3 py-2">GPA</th>
+                      <th className="px-3 py-2">Standing</th>
+                      <th className="px-3 py-2">Attendance</th>
+                      <th className="px-3 py-2">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {records.map((record) => (
+                      <tr key={record.id} className="border-t border-slate-200 align-top">
+                        <td className="px-3 py-3">
+                          <p className="font-medium text-slate-900">
+                            {record.athlete?.name ?? "Unknown athlete"}
+                          </p>
+                          {record.advisorNotes ? (
+                            <p className="mt-1 max-w-xs text-xs text-slate-500">
+                              {record.advisorNotes}
+                            </p>
+                          ) : null}
+                        </td>
+                        <td className="px-3 py-3 text-slate-700">{record.semester}</td>
+                        <td className="px-3 py-3 text-slate-700">
+                          {record.termGpa != null ? record.termGpa.toFixed(2) : "-"}
+                        </td>
+                        <td className="px-3 py-3 text-slate-700">
+                          {record.academicStanding ?? "-"}
+                        </td>
+                        <td className="px-3 py-3 text-slate-700">
+                          {record.attendancePercent != null ? `${record.attendancePercent}%` : "-"}
+                        </td>
+                        <td className="px-3 py-3">
+                          <div className="flex flex-wrap gap-3">
+                            <button
+                              type="button"
+                              onClick={() => prepareEdit(record)}
+                              className="text-sm font-medium text-blue-700 hover:underline"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setPendingDeleteId(record.id)}
+                              className="text-sm font-medium text-rose-700 hover:underline"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </section>
         </div>
       </div>
     </div>

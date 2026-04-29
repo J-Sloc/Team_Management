@@ -23,6 +23,7 @@ model User {
   updatedAt                 DateTime            @updatedAt
   notes                     Note[]
   userSettings              UserSettings?
+  integrationRuns           IntegrationRun[]
 
   @@map("users")
 }
@@ -31,14 +32,50 @@ model Team {
   id               String             @id @default(cuid())
   name             String
   sport            Sport
-  institution      String?
+  institutionId    String?
+  seasonId         String?
+  institution      Institution?       @relation(fields: [institutionId], references: [id])
+  season           Season?            @relation(fields: [seasonId], references: [id])
   athletes         Athlete[]
   events           Event[]
   workoutTemplates WorkoutTemplate[]
   meetEntries      MeetEntry[]
+  performanceSnapshots AthletePerformanceSnapshot[]
+  eventPerformanceTrends EventPerformanceTrend[]
+  workoutAnalyticsSnapshots WorkoutAnalyticsSnapshot[]
   createdAt        DateTime           @default(now())
 
   @@map("teams")
+}
+
+model Institution {
+  id          String   @id @default(cuid())
+  name        String
+  type        String?  // "HIGH_SCHOOL", "COLLEGE", "CLUB", etc.
+  address     String?
+  teams       Team[]
+  seasons     Season[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("institutions")
+}
+
+model Season {
+  id             String      @id @default(cuid())
+  institutionId  String
+  name           String      // "2024-2025", "Fall 2024", etc.
+  startDate      DateTime
+  endDate        DateTime
+  sport          Sport
+  institution    Institution @relation(fields: [institutionId], references: [id])
+  teams          Team[]
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  @@unique([institutionId, name, sport])
+  @@index([institutionId, sport])
+  @@map("seasons")
 }
 
 model Athlete {
@@ -73,6 +110,9 @@ model Athlete {
   personalRecords      PersonalRecord[]
   meetEntries          MeetEntry[]
   journals             AthleteJournal[]
+  performanceSnapshot  AthletePerformanceSnapshot?
+  eventPerformanceTrends EventPerformanceTrend[]
+  workoutAnalyticsSnapshot WorkoutAnalyticsSnapshot?
 
   @@index([teamId])
   @@map("athletes")
@@ -290,6 +330,98 @@ model UserSettings {
   updatedAt      DateTime @updatedAt
 
   @@map("user_settings")
+}
+
+model AthletePerformanceSnapshot {
+  id             String   @id @default(cuid())
+  athleteId      String   @unique
+  teamId         String
+  trainingStatus String
+  readinessScore Float?
+  readinessLabel String?
+  riskLevel      RiskFlag?
+  lastWorkoutAt  DateTime?
+  summaryJson    Json?
+  aiSummary      String?
+  refreshedAt    DateTime @default(now())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  athlete        Athlete  @relation(fields: [athleteId], references: [id])
+  team           Team     @relation(fields: [teamId], references: [id])
+
+  @@index([teamId, refreshedAt])
+  @@map("athlete_performance_snapshots")
+}
+
+model EventPerformanceTrend {
+  id               String   @id @default(cuid())
+  athleteId        String
+  teamId           String
+  eventName        String
+  metricType       String
+  baseline         Float?
+  recentAverage    Float?
+  latestValue      Float?
+  latestRank       Int?
+  recentDelta      Float?
+  slope            Float?
+  confidenceLabel  String
+  sampleSize       Int      @default(0)
+  summaryJson      Json?
+  aiSummary        String?
+  refreshedAt      DateTime @default(now())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  athlete          Athlete  @relation(fields: [athleteId], references: [id])
+  team             Team     @relation(fields: [teamId], references: [id])
+
+  @@unique([athleteId, eventName, metricType])
+  @@index([teamId, eventName])
+  @@map("event_performance_trends")
+}
+
+model WorkoutAnalyticsSnapshot {
+  id                String   @id @default(cuid())
+  athleteId         String   @unique
+  teamId            String
+  plannedMetricCount Int     @default(0)
+  aboveTargetCount  Int      @default(0)
+  onTargetCount     Int      @default(0)
+  belowTargetCount  Int      @default(0)
+  adherencePercent  Float?
+  rolling7          Json?
+  rolling14         Json?
+  rolling30         Json?
+  recentProgression Json?
+  summaryJson       Json?
+  aiSummary         String?
+  refreshedAt       DateTime @default(now())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  athlete           Athlete  @relation(fields: [athleteId], references: [id])
+  team              Team     @relation(fields: [teamId], references: [id])
+
+  @@index([teamId, refreshedAt])
+  @@map("workout_analytics_snapshots")
+}
+
+model IntegrationRun {
+  id              String   @id @default(cuid())
+  provider        String
+  triggerType     String
+  status          String
+  startedAt       DateTime @default(now())
+  finishedAt      DateTime?
+  triggeredByUserId String?
+  scopeJson       Json?
+  resultSummary   Json?
+  errorMessage    String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  triggeredBy     User?    @relation(fields: [triggeredByUserId], references: [id])
+
+  @@index([provider, createdAt])
+  @@map("integration_runs")
 }
 
 enum UserRole {

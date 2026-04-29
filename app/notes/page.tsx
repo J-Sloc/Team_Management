@@ -1,84 +1,145 @@
 "use client";
 
+import { FormEvent, useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { FormEvent, useCallback, useEffect, useState } from "react";
-import Link from "next/link";
+import { toast } from "sonner";
+import CoachPageHeader from "@/app/components/CoachPageHeader";
+import DeleteConfirmationPanel from "@/app/components/DeleteConfirmationPanel";
+import {
+  apiJson,
+  invalidateQueryKeys,
+  toApiErrorMessage,
+  toJsonBody,
+} from "@/lib/clientApi";
 
 type Note = {
   id: string;
-  athleteId?: string;
+  athleteId?: string | null;
   userId: string;
   category: string;
   body: string;
   createdAt: string;
-  athlete?: { id: string; name: string };
+  athlete?: { id: string; name: string } | null;
 };
 
-type AthleteOption = { id: string; name: string };
+type AthleteOption = {
+  id: string;
+  name: string;
+};
 
-const blankNoteForm = {
+type NoteForm = {
+  athleteId: string;
+  category: string;
+  body: string;
+};
+
+const inputClass =
+  "w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400";
+
+const blankNoteForm: NoteForm = {
   athleteId: "",
   category: "",
   body: "",
 };
 
+const noteCategories = [
+  { value: "ACADEMIC", label: "Academic" },
+  { value: "MEDICAL", label: "Medical" },
+  { value: "GENERAL", label: "General" },
+  { value: "SPORT_SPECIFIC", label: "Sport Specific" },
+];
+
 export default function NotesPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [notes, setNotes] = useState<Note[]>([]);
-  const [athletes, setAthletes] = useState<AthleteOption[]>([]);
-  const [form, setForm] = useState(blankNoteForm);
+  const queryClient = useQueryClient();
+  const [form, setForm] = useState<NoteForm>(blankNoteForm);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
   const [filter, setFilter] = useState({ athleteId: "", category: "" });
 
-  const fetchNotes = useCallback(async () => {
-    setLoading(true);
-    try {
-      const params = new URLSearchParams();
-      if (filter.athleteId) params.set("athleteId", filter.athleteId);
-      if (filter.category) params.set("category", filter.category);
-
-      const res = await fetch(`/api/notes?${params}`);
-      if (!res.ok) throw new Error("Failed to fetch notes");
-      const data = await res.json();
-      setNotes(data);
-    } catch (error) {
-      console.error("Could not load notes:", error);
-    } finally {
-      setLoading(false);
-    }
-  }, [filter.athleteId, filter.category]);
-
-  const fetchAthletes = useCallback(async () => {
-    try {
-      const res = await fetch("/api/athletes");
-      if (!res.ok) throw new Error("Failed to fetch athletes");
-      const data: { id: string; name: string }[] = await res.json();
-      setAthletes(data.map((a) => ({ id: a.id, name: a.name })));
-    } catch (error) {
-      console.error("Could not load athletes:", error);
-    }
-  }, []);
-
   useEffect(() => {
-    if (status === "loading") return;
+    if (status === "loading") {
+      return;
+    }
+
     if (!session) {
       router.push("/login");
       return;
     }
+
     if (!["COACH", "AD"].includes(session.user?.role || "")) {
       router.push("/");
-      return;
     }
+  }, [router, session, status]);
 
-    fetchAthletes();
-    fetchNotes();
-  }, [session, status, router, fetchNotes, fetchAthletes]);
+  const athletesQuery = useQuery({
+    queryKey: ["athletes"],
+    queryFn: () => apiJson<AthleteOption[]>("/api/athletes"),
+    enabled: Boolean(session && ["COACH", "AD"].includes(session.user?.role || "")),
+  });
 
-  function setField<K extends keyof typeof blankNoteForm>(key: K, value: string) {
-    setForm((prev) => ({ ...prev, [key]: value }));
+  const notesQuery = useQuery({
+    queryKey: ["notes", filter.athleteId, filter.category],
+    queryFn: () => {
+      const params = new URLSearchParams();
+      if (filter.athleteId) params.set("athleteId", filter.athleteId);
+      if (filter.category) params.set("category", filter.category);
+      return apiJson<Note[]>(`/api/notes${params.toString() ? `?${params.toString()}` : ""}`);
+    },
+    enabled: Boolean(session && ["COACH", "AD"].includes(session.user?.role || "")),
+  });
+
+  const saveNoteMutation = useMutation({
+    mutationFn: (payload: unknown) => {
+      if (editingId) {
+        return apiJson<Note>(`/api/notes?id=${encodeURIComponent(editingId)}`, {
+          method: "PUT",
+          body: toJsonBody(payload as never),
+        });
+      }
+
+      return apiJson<Note>("/api/notes", {
+        method: "POST",
+        body: toJsonBody(payload as never),
+      });
+    },
+    onSuccess: async () => {
+      await invalidateQueryKeys(queryClient, [["notes"]]);
+      toast.success(editingId ? "Note updated." : "Note created.");
+      resetForm();
+    },
+    onError: (error) => {
+      toast.error(toApiErrorMessage(error));
+    },
+  });
+
+  const deleteNoteMutation = useMutation({
+    mutationFn: (noteId: string) =>
+      apiJson<{ success: true }>(`/api/notes?id=${encodeURIComponent(noteId)}`, {
+        method: "DELETE",
+      }),
+    onSuccess: async () => {
+      await invalidateQueryKeys(queryClient, [["notes"]]);
+      toast.success("Note deleted.");
+      if (pendingDeleteId === editingId) {
+        resetForm();
+      }
+      setPendingDeleteId(null);
+    },
+    onError: (error) => {
+      toast.error(toApiErrorMessage(error));
+    },
+  });
+
+  const athletes = athletesQuery.data ?? [];
+  const notes = notesQuery.data ?? [];
+  const pendingDeleteNote = notes.find((note) => note.id === pendingDeleteId) ?? null;
+
+  function setField<K extends keyof NoteForm>(key: K, value: NoteForm[K]) {
+    setForm((current) => ({ ...current, [key]: value }));
   }
 
   function resetForm() {
@@ -86,47 +147,9 @@ export default function NotesPage() {
     setEditingId(null);
   }
 
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    if (!form.category.trim() || !form.body.trim()) return;
-
-    const payload = {
-      athleteId: form.athleteId.trim() || undefined,
-      category: form.category.trim(),
-      body: form.body.trim(),
-    };
-
-    const method = editingId ? "PUT" : "POST";
-    const url = editingId
-      ? `/api/notes?id=${encodeURIComponent(editingId)}`
-      : "/api/notes";
-
-    try {
-      const response = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      if (!response.ok) throw new Error("Save failed");
-      await fetchNotes();
-      resetForm();
-    } catch (error) {
-      console.error("Submit error:", error);
-      alert("Failed to save note");
-    }
-  }
-
-  async function handleDelete(id: string) {
-    if (!confirm("Delete note?")) return;
-    const res = await fetch(`/api/notes?id=${encodeURIComponent(id)}`, {
-      method: "DELETE",
-    });
-    if (!res.ok) throw new Error("Delete failed");
-    await fetchNotes();
-  }
-
   function prepareEdit(note: Note) {
     setEditingId(note.id);
+    setPendingDeleteId(null);
     setForm({
       athleteId: note.athleteId ?? "",
       category: note.category ?? "",
@@ -134,167 +157,223 @@ export default function NotesPage() {
     });
   }
 
-  if (status === "loading" || loading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading notes...</div>;
+  async function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+    if (!form.category.trim() || !form.body.trim()) {
+      return;
+    }
+
+    await saveNoteMutation.mutateAsync({
+      athleteId: form.athleteId.trim() || undefined,
+      category: form.category.trim(),
+      body: form.body.trim(),
+    });
   }
 
-  if (!session || !["COACH", "AD"].includes(session.user?.role || "")) {
+  async function confirmDelete() {
+    if (!pendingDeleteId) {
+      return;
+    }
+
+    await deleteNoteMutation.mutateAsync(pendingDeleteId);
+  }
+
+  if (status === "loading" || athletesQuery.isLoading || notesQuery.isLoading) {
     return (
-      <div className="min-h-screen bg-slate-100 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-3xl font-semibold text-slate-900 mb-2">403 - Forbidden</h1>
-          <p className="text-slate-600 mb-4">You do not have permission to access this page.</p>
-          <Link href="/overview" className="text-blue-600 hover:underline">← Back to Dashboard</Link>
-        </div>
+      <div className="flex min-h-screen items-center justify-center">
+        Loading notes...
       </div>
     );
   }
 
+  if (!session || !["COACH", "AD"].includes(session.user?.role || "")) {
+    return null;
+  }
+
   return (
-    <div className="min-h-screen bg-slate-200">
-      <div className="mx-auto max-w-6xl p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h1 className="text-3xl font-bold">Notes</h1>
-          <Link href="/overview" className="text-blue-600 hover:underline">← Back to Dashboard</Link>
-        </div>
+    <div className="min-h-screen bg-slate-100">
+      <div className="mx-auto max-w-7xl space-y-6 px-4 py-8">
+        <CoachPageHeader
+          title="Notes"
+          description="Capture academic, medical, general, and sport-specific context with the same shared request and feedback model as the rest of the app."
+        />
 
-        {/* Filters */}
-        <div className="bg-white p-4 rounded-lg shadow mb-6">
-          <h2 className="text-lg font-medium mb-3">Filters</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <select
-              value={filter.athleteId}
-              onChange={(e) => setFilter(prev => ({ ...prev, athleteId: e.target.value }))}
-              className="border border-gray-300 rounded px-3 py-2"
-            >
-              <option value="">All Athletes</option>
-              {athletes.map(athlete => (
-                <option key={athlete.id} value={athlete.id}>{athlete.name}</option>
-              ))}
-            </select>
-            <select
-              value={filter.category}
-              onChange={(e) => setFilter(prev => ({ ...prev, category: e.target.value }))}
-              className="border border-gray-300 rounded px-3 py-2"
-            >
-              <option value="">All Categories</option>
-              <option value="ACADEMIC">Academic</option>
-              <option value="MEDICAL">Medical</option>
-              <option value="GENERAL">General</option>
-              <option value="SPORT_SPECIFIC">Sport Specific</option>
-            </select>
-            <button
-              onClick={fetchNotes}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-            >
-              Apply Filters
-            </button>
-          </div>
-        </div>
+        {pendingDeleteNote ? (
+          <DeleteConfirmationPanel
+            itemLabel={pendingDeleteNote.athlete?.name ?? "General note"}
+            isPending={deleteNoteMutation.isPending}
+            onCancel={() => setPendingDeleteId(null)}
+            onConfirm={confirmDelete}
+          />
+        ) : null}
 
-        {/* Form */}
-        <div className="bg-white p-6 rounded-lg shadow mb-6">
-          <h2 className="text-xl font-medium mb-4">
-            {editingId ? "Edit Note" : "Add Note"}
-          </h2>
-          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <select
-              value={form.athleteId}
-              onChange={(e) => setField("athleteId", e.target.value)}
-              className="border border-gray-300 rounded px-3 py-2"
-            >
-              <option value="">General Note (No Athlete)</option>
-              {athletes.map(athlete => (
-                <option key={athlete.id} value={athlete.id}>{athlete.name}</option>
-              ))}
-            </select>
-            <select
-              value={form.category}
-              onChange={(e) => setField("category", e.target.value)}
-              className="border border-gray-300 rounded px-3 py-2"
-              required
-            >
-              <option value="">Category</option>
-              <option value="ACADEMIC">Academic</option>
-              <option value="MEDICAL">Medical</option>
-              <option value="GENERAL">General</option>
-              <option value="SPORT_SPECIFIC">Sport Specific</option>
-            </select>
-            <textarea
-              placeholder="Note body"
-              value={form.body}
-              onChange={(e) => setField("body", e.target.value)}
-              className="border border-gray-300 rounded px-3 py-2 md:col-span-2"
-              rows={4}
-              required
-            />
-            <div className="md:col-span-2 flex gap-2">
-              <button
-                type="submit"
-                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-              >
-                {editingId ? "Update" : "Add"} Note
-              </button>
-              {editingId && (
+        <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
+          <section className="rounded-xl bg-white p-6 shadow-sm">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <h2 className="text-xl font-semibold text-slate-900">
+                  {editingId ? "Edit Note" : "Add Note"}
+                </h2>
+                <p className="mt-1 text-sm text-slate-500">
+                  Attach notes to an athlete when possible so they surface on the athlete detail page.
+                </p>
+              </div>
+              {editingId ? (
                 <button
                   type="button"
                   onClick={resetForm}
-                  className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+                  className="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700"
                 >
                   Cancel
                 </button>
-              )}
+              ) : null}
             </div>
-          </form>
-        </div>
 
-        {/* Notes List */}
-        <div className="bg-white rounded-lg shadow overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-xl font-medium">Notes ({notes.length})</h2>
-          </div>
-          <div className="divide-y divide-gray-200">
-            {notes.map((note) => (
-              <div key={note.id} className="p-6 hover:bg-gray-50">
-                <div className="flex justify-between items-start">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className={`px-2 py-1 text-xs rounded ${
-                        note.category === 'ACADEMIC' ? 'bg-blue-100 text-blue-800' :
-                        note.category === 'MEDICAL' ? 'bg-red-100 text-red-800' :
-                        'bg-gray-100 text-gray-800'
-                      }`}>
-                        {note.category}
-                      </span>
-                      {note.athlete && (
-                        <span className="text-sm text-gray-600">
-                          Athlete: {note.athlete.name}
-                        </span>
-                      )}
-                      <span className="text-sm text-gray-500">
-                        {new Date(note.createdAt).toLocaleDateString()}
-                      </span>
-                    </div>
-                    <p className="text-gray-900 whitespace-pre-wrap">{note.body}</p>
-                  </div>
-                  <div className="ml-4 flex gap-2">
-                    <button
-                      onClick={() => prepareEdit(note)}
-                      className="text-blue-600 hover:text-blue-900 text-sm"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDelete(note.id)}
-                      className="text-red-600 hover:text-red-900 text-sm"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
+            <form onSubmit={handleSubmit} className="mt-6 grid gap-4">
+              <select
+                value={form.athleteId}
+                onChange={(event) => setField("athleteId", event.target.value)}
+                className={inputClass}
+              >
+                <option value="">General note (no athlete)</option>
+                {athletes.map((athlete) => (
+                  <option key={athlete.id} value={athlete.id}>
+                    {athlete.name}
+                  </option>
+                ))}
+              </select>
+              <select
+                value={form.category}
+                onChange={(event) => setField("category", event.target.value)}
+                className={inputClass}
+                required
+              >
+                <option value="">Category</option>
+                {noteCategories.map((category) => (
+                  <option key={category.value} value={category.value}>
+                    {category.label}
+                  </option>
+                ))}
+              </select>
+              <textarea
+                placeholder="Write note details"
+                value={form.body}
+                onChange={(event) => setField("body", event.target.value)}
+                className={`min-h-40 ${inputClass}`}
+                required
+              />
+              <button
+                type="submit"
+                disabled={saveNoteMutation.isPending}
+                className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white disabled:opacity-50"
+              >
+                {saveNoteMutation.isPending
+                  ? "Saving..."
+                  : editingId
+                    ? "Update Note"
+                    : "Create Note"}
+              </button>
+            </form>
+          </section>
+
+          <section className="rounded-xl bg-white p-6 shadow-sm">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <h2 className="text-xl font-semibold text-slate-900">Recent Notes</h2>
+                <p className="mt-1 text-sm text-slate-500">
+                  {notes.length} note{notes.length === 1 ? "" : "s"} matching the current filters.
+                </p>
               </div>
-            ))}
-          </div>
+              <div className="grid gap-3 sm:grid-cols-3">
+                <select
+                  value={filter.athleteId}
+                  onChange={(event) =>
+                    setFilter((current) => ({ ...current, athleteId: event.target.value }))
+                  }
+                  className={inputClass}
+                >
+                  <option value="">All athletes</option>
+                  {athletes.map((athlete) => (
+                    <option key={athlete.id} value={athlete.id}>
+                      {athlete.name}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  value={filter.category}
+                  onChange={(event) =>
+                    setFilter((current) => ({ ...current, category: event.target.value }))
+                  }
+                  className={inputClass}
+                >
+                  <option value="">All categories</option>
+                  {noteCategories.map((category) => (
+                    <option key={category.value} value={category.value}>
+                      {category.label}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  type="button"
+                  onClick={() => setFilter({ athleteId: "", category: "" })}
+                  className="rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700"
+                >
+                  Clear Filters
+                </button>
+              </div>
+            </div>
+
+            {notesQuery.isError ? (
+              <p className="mt-4 rounded-lg border border-rose-200 bg-rose-50 p-4 text-sm text-rose-700">
+                {toApiErrorMessage(notesQuery.error)}
+              </p>
+            ) : notes.length === 0 ? (
+              <p className="mt-4 rounded-lg border border-dashed border-slate-300 p-6 text-sm text-slate-500">
+                No notes found for the current filter set.
+              </p>
+            ) : (
+              <div className="mt-4 space-y-3">
+                {notes.map((note) => (
+                  <article key={note.id} className="rounded-lg border border-slate-200 p-4">
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                      <div>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="rounded-full bg-slate-100 px-2 py-1 text-[10px] font-medium uppercase tracking-wide text-slate-600">
+                            {note.category.replaceAll("_", " ")}
+                          </span>
+                          <span className="text-xs text-slate-500">
+                            {new Date(note.createdAt).toLocaleString()}
+                          </span>
+                        </div>
+                        <p className="mt-2 font-medium text-slate-900">
+                          {note.athlete?.name ?? "General note"}
+                        </p>
+                        <p className="mt-2 whitespace-pre-wrap text-sm text-slate-700">
+                          {note.body}
+                        </p>
+                      </div>
+                      <div className="flex gap-3">
+                        <button
+                          type="button"
+                          onClick={() => prepareEdit(note)}
+                          className="text-sm font-medium text-blue-700 hover:underline"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setPendingDeleteId(note.id)}
+                          className="text-sm font-medium text-rose-700 hover:underline"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
+          </section>
         </div>
       </div>
     </div>

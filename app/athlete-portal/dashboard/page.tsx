@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth } from "@/app/lib/auth";
 import prisma from "@/lib/prisma";
@@ -125,15 +126,22 @@ export default async function AthleteDashboardPage() {
               <p className="text-sm text-slate-500">No upcoming events scheduled.</p>
             ) : (
               upcomingEvents.map((event) => (
-                <div key={event.id} className="rounded-lg border border-slate-200 p-4">
+                <Link
+                  key={event.id}
+                  href={`/athlete-portal/calendar`}
+                  className="block rounded-lg border border-slate-200 p-4 transition hover:border-blue-300 hover:bg-blue-50/40"
+                >
                   <p className="font-medium text-slate-900">{event.title}</p>
                   <p className="text-sm text-slate-500">
                     {new Date(event.startTime).toLocaleString()}
                   </p>
+                  <p className="mt-1 text-xs uppercase tracking-wide text-slate-500">
+                    Team shared
+                  </p>
                   {event.location && (
                     <p className="mt-1 text-sm text-slate-700">{event.location}</p>
                   )}
-                </div>
+                </Link>
               ))
             )}
           </div>

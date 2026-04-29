@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import ScheduleCalendar, {
   type ScheduleCalendarEvent,
 } from "@/app/components/ScheduleCalendar";
+import DeleteConfirmationPanel from "@/app/components/DeleteConfirmationPanel";
 import LogoutButton from "@/app/components/LogoutButton";
 import {
   apiJson,
@@ -52,7 +53,7 @@ const blankForm = {
 };
 const emptyEvents: CalendarEvent[] = [];
 
-export default function EventsPage() {
+function EventsPageContent() {
   const searchParams = useSearchParams();
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -61,6 +62,7 @@ export default function EventsPage() {
   const initialAthleteId = searchParams.get("athleteId") ?? "";
   const [selectedEventId, setSelectedEventId] = useState<string | null>(initialEventId);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
   const [form, setForm] = useState({
     ...blankForm,
     teamId: "",
@@ -124,6 +126,7 @@ export default function EventsPage() {
 
   const events = eventsQuery.data ?? emptyEvents;
   const selectedEvent = events.find((event) => event.id === selectedEventId) ?? null;
+  const pendingDeleteEvent = events.find((event) => event.id === pendingDeleteId) ?? null;
   const effectiveTeamId = form.teamId || teamsQuery.data?.[0]?.id || "";
 
   useEffect(() => {
@@ -163,6 +166,7 @@ export default function EventsPage() {
     }
 
     setEditingId(event.id);
+    setPendingDeleteId(null);
     setSelectedEventId(event.id);
     setForm({
       teamId: event.teamId,
@@ -211,6 +215,7 @@ export default function EventsPage() {
         ["events", filter.teamId, filter.athleteId, filter.from, filter.to],
       ]);
       toast.success("Calendar entry deleted.");
+      setPendingDeleteId(null);
       if (selectedEventId === eventId) {
         setSelectedEventId(null);
       }
@@ -222,6 +227,15 @@ export default function EventsPage() {
   return (
     <div className="min-h-screen bg-slate-100">
       <div className="mx-auto max-w-7xl space-y-6 px-4 py-8">
+        {pendingDeleteEvent ? (
+          <DeleteConfirmationPanel
+            itemLabel={pendingDeleteEvent.title}
+            isPending={deleteEventMutation.isPending}
+            onCancel={() => setPendingDeleteId(null)}
+            onConfirm={() => handleDelete(pendingDeleteEvent.id)}
+          />
+        ) : null}
+
         <section className="rounded-xl bg-white p-6 shadow-sm">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
@@ -313,8 +327,8 @@ export default function EventsPage() {
                       <div>
                         <div className="flex items-center gap-2">
                           <p className="font-medium text-slate-900">{event.title}</p>
-                          <span className="rounded-full bg-slate-100 px-2 py-1 text-[10px] font-medium uppercase tracking-wide text-slate-600">
-                            {event.ownerType === "athlete" ? "Personal" : "Team"}
+                        <span className="rounded-full bg-slate-100 px-2 py-1 text-[10px] font-medium uppercase tracking-wide text-slate-600">
+                            {event.ownerType === "athlete" ? "Personal" : "Team Shared"}
                           </span>
                         </div>
                         <p className="text-sm text-slate-500">
@@ -336,7 +350,7 @@ export default function EventsPage() {
                           </button>
                           <button
                             type="button"
-                            onClick={() => handleDelete(event.id)}
+                            onClick={() => setPendingDeleteId(event.id)}
                             className="rounded-md border border-rose-300 px-3 py-2 text-sm text-rose-700"
                           >
                             Delete
@@ -474,5 +488,15 @@ export default function EventsPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function EventsPage() {
+  return (
+    <Suspense
+      fallback={<div className="flex min-h-screen items-center justify-center">Loading calendar...</div>}
+    >
+      <EventsPageContent />
+    </Suspense>
   );
 }
