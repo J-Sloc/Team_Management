@@ -564,6 +564,7 @@ export default function TrackWorkoutsPage() {
   }
 
   const isLoading = teamsQuery.isLoading || athletesQuery.isLoading || templatesQuery.isLoading;
+  const inputClass = "text-slate-900 placeholder:text-slate-400";
 
   return (
     <div className="space-y-6">
@@ -585,7 +586,7 @@ export default function TrackWorkoutsPage() {
                   athleteId: "",
                 }));
               }}
-              className="w-full rounded-md border border-slate-300 px-3 py-2"
+              className="w-full rounded-md border border-slate-300 px-3 py-2 text-slate-900"
             >
               {teams.map((team) => (
                 <option key={team.id} value={team.id}>
@@ -609,7 +610,7 @@ export default function TrackWorkoutsPage() {
                   athleteId: event.target.value,
                 }));
               }}
-              className="w-full rounded-md border border-slate-300 px-3 py-2"
+              className="w-full rounded-md border border-slate-300 px-3 py-2 text-slate-900"
             >
               {athletes.map((athlete) => (
                 <option key={athlete.id} value={athlete.id}>
@@ -695,7 +696,7 @@ export default function TrackWorkoutsPage() {
                 setTemplateForm((current) => ({ ...current, name: event.target.value }))
               }
               placeholder="Template name"
-              className="w-full rounded-md border border-slate-300 px-3 py-2"
+              className={`w-full rounded-md border border-slate-300 px-3 py-2 ${inputClass}`}
               required
             />
             <textarea
@@ -708,7 +709,7 @@ export default function TrackWorkoutsPage() {
               }
               placeholder="Description"
               rows={3}
-              className="w-full rounded-md border border-slate-300 px-3 py-2"
+              className={`w-full rounded-md border border-slate-300 px-3 py-2 ${inputClass}`}
             />
             <div className="space-y-3">
               {templateForm.metrics.map((metric, index) => (
@@ -718,7 +719,7 @@ export default function TrackWorkoutsPage() {
                       value={metric.name}
                       onChange={(event) => updateTemplateMetric(index, "name", event.target.value)}
                       placeholder="Metric name"
-                      className="rounded-md border border-slate-300 px-3 py-2"
+                      className={`rounded-md border border-slate-300 px-3 py-2 ${inputClass}`}
                     />
                     <input
                       type="number"
@@ -728,12 +729,12 @@ export default function TrackWorkoutsPage() {
                         updateTemplateMetric(index, "targetValue", event.target.value)
                       }
                       placeholder="Target value"
-                      className="rounded-md border border-slate-300 px-3 py-2"
+                      className={`rounded-md border border-slate-300 px-3 py-2 ${inputClass}`}
                     />
                     <select
                       value={metric.unit}
                       onChange={(event) => updateTemplateMetric(index, "unit", event.target.value)}
-                      className="rounded-md border border-slate-300 px-3 py-2"
+                      className="rounded-md border border-slate-300 px-3 py-2 text-slate-900"
                     >
                       {unitOptions.map((unit) => (
                         <option key={unit} value={unit}>

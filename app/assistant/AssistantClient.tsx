@@ -50,6 +50,7 @@ export default function AssistantClient({
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const promptSuggestions = useMemo(() => promptsByScope[scope], [scope]);
+  const inputClass = "text-slate-900 placeholder:text-slate-400";
 
   async function handleSubmit() {
     if (!prompt.trim()) {
@@ -101,7 +102,7 @@ export default function AssistantClient({
           <select
             value={scope}
             onChange={(event) => setScope(event.target.value as Scope)}
-            className="rounded-md border border-slate-300 px-3 py-2"
+            className="rounded-md border border-slate-300 px-3 py-2 text-slate-900"
           >
             <option value="global">Global</option>
             <option value="athlete">Athlete</option>
@@ -111,13 +112,13 @@ export default function AssistantClient({
             value={athleteId}
             onChange={(event) => setAthleteId(event.target.value)}
             placeholder="Athlete ID (optional)"
-            className="rounded-md border border-slate-300 px-3 py-2"
-          />
+            className={`rounded-md border border-slate-300 px-3 py-2 ${inputClass}`}
+           />
           <input
             value={teamId}
             onChange={(event) => setTeamId(event.target.value)}
             placeholder="Team ID (optional)"
-            className="rounded-md border border-slate-300 px-3 py-2"
+            className={`rounded-md border border-slate-300 px-3 py-2 ${inputClass}`}
           />
         </div>
 
@@ -139,7 +140,7 @@ export default function AssistantClient({
           onChange={(event) => setPrompt(event.target.value)}
           placeholder="Ask for a scoped athlete or performance summary."
           rows={5}
-          className="mt-4 w-full rounded-md border border-slate-300 px-3 py-2"
+          className={`mt-4 w-full rounded-md border border-slate-300 px-3 py-2 ${inputClass}`}
         />
         <button
           type="button"

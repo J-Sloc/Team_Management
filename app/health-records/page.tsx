@@ -43,7 +43,8 @@ type HealthForm = {
 };
 
 const inputClass =
-  "w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400";
+  "w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm";
+const classOption =  "text-slate-900 placeholder:text-slate-400";
 
 const blankRecordForm: HealthForm = {
   athleteId: "",
@@ -260,7 +261,7 @@ export default function HealthRecordsPage() {
               <select
                 value={form.athleteId}
                 onChange={(event) => setField("athleteId", event.target.value)}
-                className={inputClass}
+                className={`${inputClass} ${form.athleteId === '' ? 'text-slate-400' : 'text-slate-900'}`}
                 required
               >
                 <option value="">Select athlete</option>
@@ -275,18 +276,18 @@ export default function HealthRecordsPage() {
                 placeholder="Injury type or update title"
                 value={form.injuryType}
                 onChange={(event) => setField("injuryType", event.target.value)}
-                className={inputClass}
+                className={`${inputClass} ${classOption}`}
               />
               <input
                 type="date"
                 value={form.injuryDate}
                 onChange={(event) => setField("injuryDate", event.target.value)}
-                className={inputClass}
+                className={`${inputClass} text-slate-900`}
               />
               <select
                 value={form.status}
                 onChange={(event) => setField("status", event.target.value)}
-                className={inputClass}
+                className={`${inputClass} ${form.status === '' ? 'text-slate-400' : 'text-slate-900'}`}
               >
                 <option value="">Medical status</option>
                 <option value="CLEARED">Cleared</option>
@@ -299,7 +300,7 @@ export default function HealthRecordsPage() {
                 placeholder="Rehab sessions"
                 value={form.rehabSessions}
                 onChange={(event) => setField("rehabSessions", event.target.value)}
-                className={inputClass}
+                className={`${inputClass} ${classOption}`}
               />
               <input
                 type="number"
@@ -308,13 +309,13 @@ export default function HealthRecordsPage() {
                 placeholder="Appointment attendance %"
                 value={form.appointmentAttendance}
                 onChange={(event) => setField("appointmentAttendance", event.target.value)}
-                className={inputClass}
-              />
+                className={`${inputClass} ${classOption}`}
+               />
               <textarea
                 placeholder="Notes"
                 value={form.notes}
                 onChange={(event) => setField("notes", event.target.value)}
-                className={`min-h-28 md:col-span-2 ${inputClass}`}
+                className={`min-h-28 md:col-span-2 ${inputClass} ${classOption}`}
               />
               <button
                 type="submit"
@@ -420,9 +421,7 @@ export default function HealthRecordsPage() {
                           {record.rehabSessions ?? "-"}
                         </td>
                         <td className="px-3 py-3 text-slate-700">
-                          {record.appointmentAttendance != null
-                            ? `${record.appointmentAttendance}%`
-                            : "-"}
+                          {record.appointmentAttendance != null ? `${record.appointmentAttendance}%` : "-"}
                         </td>
                         <td className="px-3 py-3">
                           <div className="flex flex-wrap gap-3">

@@ -52,6 +52,7 @@ const blankForm = {
   opponent: "",
 };
 const emptyEvents: CalendarEvent[] = [];
+const inputClass = "text-slate-900 placeholder:text-slate-400";
 
 function EventsPageContent() {
   const searchParams = useSearchParams();
@@ -261,7 +262,7 @@ function EventsPageContent() {
             <select
               value={filter.teamId}
               onChange={(event) => setFilter((current) => ({ ...current, teamId: event.target.value }))}
-              className="rounded-md border border-slate-300 px-3 py-2"
+              className={`rounded-md border border-slate-300 px-3 py-2 ${inputClass}`}
               disabled={Boolean(filter.athleteId)}
             >
               <option value="">All Teams</option>
@@ -274,7 +275,7 @@ function EventsPageContent() {
             <select
               value={filter.athleteId}
               onChange={(event) => setFilter((current) => ({ ...current, athleteId: event.target.value }))}
-              className="rounded-md border border-slate-300 px-3 py-2"
+              className={`rounded-md border border-slate-300 px-3 py-2 ${inputClass}`}
             >
               <option value="">All Athletes</option>
               {(athletesQuery.data ?? []).map((athlete) => (
@@ -287,13 +288,13 @@ function EventsPageContent() {
               type="date"
               value={filter.from}
               onChange={(event) => setFilter((current) => ({ ...current, from: event.target.value }))}
-              className="rounded-md border border-slate-300 px-3 py-2"
+              className={`rounded-md border border-slate-300 px-3 py-2 ${inputClass}`}
             />
             <input
               type="date"
               value={filter.to}
               onChange={(event) => setFilter((current) => ({ ...current, to: event.target.value }))}
-              className="rounded-md border border-slate-300 px-3 py-2"
+              className={`rounded-md border border-slate-300 px-3 py-2 ${inputClass}`}
             />
           </div>
 
@@ -388,7 +389,7 @@ function EventsPageContent() {
                 <button
                   type="button"
                   onClick={resetForm}
-                  className="rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-700"
+                  className="rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-900"
                 >
                   Cancel
                 </button>
@@ -405,7 +406,7 @@ function EventsPageContent() {
               <select
                 value={effectiveTeamId}
                 onChange={(event) => setForm((current) => ({ ...current, teamId: event.target.value }))}
-                className="w-full rounded-md border border-slate-300 px-3 py-2"
+                className="w-full rounded-md border border-slate-300 px-3 py-2 text-slate-900"
                 required
               >
                 <option value="">Select Team</option>
@@ -418,7 +419,7 @@ function EventsPageContent() {
               <select
                 value={form.type}
                 onChange={(event) => setForm((current) => ({ ...current, type: event.target.value }))}
-                className="w-full rounded-md border border-slate-300 px-3 py-2"
+                className="w-full rounded-md border border-slate-300 px-3 py-2 text-slate-900"
               >
                 <option value="GAME">Game</option>
                 <option value="PRACTICE">Practice</option>
@@ -432,7 +433,7 @@ function EventsPageContent() {
                 value={form.title}
                 onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))}
                 placeholder="Title"
-                className="w-full rounded-md border border-slate-300 px-3 py-2"
+                className={`w-full rounded-md border border-slate-300 px-3 py-2 ${inputClass}`}
                 required
               />
               <div className="grid gap-4 md:grid-cols-2">
@@ -440,14 +441,14 @@ function EventsPageContent() {
                   type="datetime-local"
                   value={form.startTime}
                   onChange={(event) => setForm((current) => ({ ...current, startTime: event.target.value }))}
-                  className="rounded-md border border-slate-300 px-3 py-2"
+                  className="rounded-md border border-slate-300 px-3 py-2 text-slate-900"
                   required
                 />
                 <input
                   type="datetime-local"
                   value={form.endTime}
                   onChange={(event) => setForm((current) => ({ ...current, endTime: event.target.value }))}
-                  className="rounded-md border border-slate-300 px-3 py-2"
+                  className="rounded-md border border-slate-300 px-3 py-2 text-slate-900"
                   required
                 />
               </div>
@@ -456,21 +457,21 @@ function EventsPageContent() {
                 value={form.location}
                 onChange={(event) => setForm((current) => ({ ...current, location: event.target.value }))}
                 placeholder="Location"
-                className="w-full rounded-md border border-slate-300 px-3 py-2"
+                className={`w-full rounded-md border border-slate-300 px-3 py-2 ${inputClass}`}
               />
               <input
                 type="text"
                 value={form.opponent}
                 onChange={(event) => setForm((current) => ({ ...current, opponent: event.target.value }))}
                 placeholder="Opponent"
-                className="w-full rounded-md border border-slate-300 px-3 py-2"
+                className={`w-full rounded-md border border-slate-300 px-3 py-2 ${inputClass}`}
               />
               <textarea
                 value={form.description}
                 onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))}
                 placeholder="Description"
                 rows={4}
-                className="w-full rounded-md border border-slate-300 px-3 py-2"
+                className={`w-full rounded-md border border-slate-300 px-3 py-2 ${inputClass}`}
               />
               <button
                 type="submit"
